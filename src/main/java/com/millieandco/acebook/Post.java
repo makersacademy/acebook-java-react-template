@@ -1,4 +1,4 @@
-package com.makersacademy.acebook;
+package com.millieandco.acebook;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
