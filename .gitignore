@@ -6,3 +6,5 @@ dependency-reduced-pom.xml
 /tests_output
 package-lock.json
 selenium-debug.log
+.DS_Store
+
