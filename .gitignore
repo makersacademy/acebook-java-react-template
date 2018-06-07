@@ -3,3 +3,6 @@
 /node_modules
 dependency-reduced-pom.xml
 *.iml
+/tests_output
+package-lock.json
+selenium-debug.log
