@@ -12,8 +12,8 @@ env:
   - secure: K2aOdcbpkfFKF/j1Oib1ViKfe1RgcRvmasXaSs/5skBEb9t5b6D5ceYqb1TxT6eHRdrGmXnYoPItUM7JZb2cOuHC0DnMyyqzjRFnMIxohAPdd5CLCw2x1Y3XyIqyU80KrCORLMW4E8/uzGQ93Eqk97h14ZT/YtvNkzqV/yTimxJszCgNuhWRRua6gnG+6+GTQ5FyTatqXrk/sqfC8LwZ66iQZZfr7yBzunn2Vp3N/PGLHHf/M56ZCJdxfCC2p9KfG41sbPGM924Srx9AsR2MyG8xisSb1Ztcy21aa8WL+iFwBb/RP4IBvhU6xpVsXgcULSQV9HgliKYqmBZoS6fF6AvJwsEyaIhHCvGIo0qEpdWeTicqDvsGOg3TfAWH9PCTg5WopHuehuBzBKIPOAYO78DbdV+NOsq1uYiLvyprx4CVcK+eKNKodY1Qvqn8MUp8EVqKvIJ4liXplYeYZUjjkhFd7TBx0sOhnZL+evhoJdW2mbU+LPV2VuBap3qs69X7vCrr1L9iM/GMVbkv2LhoXX17VBJjcv8J2aLX+sbYvvssrr/y00R5Mlz1vVF6gyVTjvnNfEbXmZ0JCHOguOnKSz5Z6LhoNnrJ6DPOlCmyZSxet45+Rx0idiEvqTXxhZUDXnE5X49GqL44B2ez3v0UzJrnUf4+Wuge3ySp4ZuO5/0=
 
 script:
-- mvn clean install -B
 - docker login --username=_ --password=$HEROKU_API registry.heroku.com
+- wget -qO- https://toolbelt.heroku.com/install.sh | sh
 
 after_success:
 - docker login -u $DOCKER_USER -p $DOCKER_PASS
