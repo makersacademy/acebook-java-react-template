@@ -17,6 +17,8 @@ after_success:
 - docker tag acebook-millieandco williampowell/acebook-millieandco:1.0-SNAPSHOT
 - docker push williampowell/acebook-millieandco:1.0-SNAPSHOT
 
+before_script:
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
 deploy:
   provider: script
   script:
