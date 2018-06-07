@@ -9,6 +9,9 @@ configure({ adapter: new Adapter() });
 
 describe('a test', function(){
     it('testing posts', function(){
-        shallow(<Posts />);
+      const tree = renderer.create(
+        <Posts />
+      ).toJSON();
+      expect(tree).toMatchSnapshot();
     })
 })
