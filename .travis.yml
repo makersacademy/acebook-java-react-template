@@ -22,3 +22,9 @@ after_success:
 - docker build -t acebook-millieandco .
 - docker tag acebook-millieandco williampowell/acebook-millieandco:1.0-SNAPSHOT
 - docker push williampowell/acebook-millieandco:1.0-SNAPSHOT
+
+deploy:
+  provider: script
+  script: bash scripts/deploy.sh
+  on:
+    branch: docker-setup-again
