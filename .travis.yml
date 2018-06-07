@@ -27,8 +27,8 @@ addons:
 deploy:
   provider: script
   script:
-    - docker login --username=_ --password=$HEROKU_API registry.heroku.com
-    - heroku container:push web --app acebook-millieandco
-    - heroku container:release web --app acebook-millieandco
+    # - docker login --username=_ --password=$HEROKU_API registry.heroku.com
+    # - heroku container:push web --app acebook-millieandco
+    # - heroku container:release web --app acebook-millieandco
   on:
     branch: docker-setup-again
