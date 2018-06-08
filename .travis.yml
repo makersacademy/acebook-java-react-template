@@ -17,4 +17,5 @@ deploy:
   script: bash scripts/deploy_heroku.sh
   skip_cleanup: true
   on:
-    branch: docker-setup-again
+    branch: master
+    condition: $TRAVIS_EVENT_TYPE = push
