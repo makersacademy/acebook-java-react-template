@@ -1,6 +1,7 @@
 sudo: required
 services:
 - docker
+install: true
 language: java
 env:
   global:
