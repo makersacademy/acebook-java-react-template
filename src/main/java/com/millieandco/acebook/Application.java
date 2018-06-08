@@ -14,6 +14,7 @@ public class Application {
             System.getProperties().put("server.port", ENV_PORT);
         }
 
+
         SpringApplication.run(Application.class, args);
     }
 }
