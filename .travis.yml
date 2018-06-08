@@ -12,4 +12,4 @@ after_success:
 - sh scripts/deploy_dockerhub.sh
 - mvn install -f pom.xml
 - sh scripts/deploy_heroku.sh
-  if: branch = master
+  if: branch = docker-setup-again
