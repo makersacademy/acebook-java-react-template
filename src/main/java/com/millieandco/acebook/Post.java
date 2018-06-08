@@ -8,12 +8,12 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "Post")
-public class Post implements Serializable {
+@Table(name = "post")
+public class Post {
 
-    private static final long serialVersionUID = -3009157732242241606L;
     @Id
-    @GeneratedValue long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     @Column(name = "comment")
     private String comment;
@@ -27,6 +27,6 @@ public class Post implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Post [id=%d, comment='%s']", id, comment);
+        return String.format("Post[id=%d, comment='%s']", id, comment);
     }
 }

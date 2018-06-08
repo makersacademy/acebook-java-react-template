@@ -16,15 +16,5 @@ public class HomeController {
 		return "index";
 	}
 
-	@RequestMapping("/findall")
-	public String findAll(){
-		String result = "";
-
-		for(Post post : repository.findAll()){
-			result += post.toString() + "<br>";
-		}
-
-		return result;
-	}
 
 }
