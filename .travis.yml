@@ -13,8 +13,8 @@ after_success:
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH;
   fi`
 - docker build -t acebook-millieandco .
-- docker tag acebook-millieandco williampowell/acebook-millieandco:$TAG
-- docker push williampowell/acebook-millieandco:$TAG
+- docker tag acebook-millieandco williampowell/acebook-millieandco:latest
+- docker push williampowell/acebook-millieandco:latest
 
 deploy:
   provider: script
