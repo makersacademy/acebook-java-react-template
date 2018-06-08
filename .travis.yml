@@ -11,5 +11,9 @@ env:
 
 after_success:
 - test $TRAVIS_BRANCH = "master" && sh scripts/deploy_dockerhub.sh
-- test $TRAVIS_BRANCH = "master" && mvn install -f pom.xml
-- test $TRAVIS_BRANCH = "master" && sh scripts/deploy_heroku.sh
+
+deploy:
+  provider: script
+  script: bash scripts/deploy_heroku.sh
+  on:
+    branch: docker-setup-again
