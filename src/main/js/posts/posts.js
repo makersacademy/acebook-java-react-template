@@ -1,6 +1,10 @@
 import React from 'react';
 import Post from './post'
 
+const defaultProps = {
+    posts: []
+};
+
 class Posts extends React.Component {
 	render() {
 		var posts = this.props.posts.map(post =>
@@ -18,5 +22,7 @@ class Posts extends React.Component {
 		)
 	}
 }
+
+Posts.defaultProps = defaultProps;
 
 export default Posts;
