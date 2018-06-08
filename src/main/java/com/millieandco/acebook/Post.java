@@ -1,22 +1,32 @@
 package com.millieandco.acebook;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
 @Entity
+@Table(name = "post")
 public class Post {
 
-    private @Id @GeneratedValue Long id;
-    private String content;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    private Post() {}
+    @Column(name = "comment")
+    private String comment;
 
-    public Post(String content) {
-        this.content = content;
+    protected Post() {
     }
 
+    public Post(String comment) {
+        this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Post[id=%d, comment='%s']", id, comment);
+    }
 }
