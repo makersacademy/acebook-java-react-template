@@ -3,9 +3,6 @@
 /node_modules
 dependency-reduced-pom.xml
 *.iml
-package-lock.json
 /tests_output
-package-lock.json
 selenium-debug.log
 .DS_Store
-
