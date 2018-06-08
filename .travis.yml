@@ -10,7 +10,6 @@ env:
 
 
 after_success:
-- sh scripts/deploy_dockerhub.sh
-- mvn install -f pom.xml
-- sh scripts/deploy_heroku.sh
-
+- test $TRAVIS_BRANCH = "master" && sh scripts/deploy_dockerhub.sh
+- test $TRAVIS_BRANCH = "master" && mvn install -f pom.xml
+- test $TRAVIS_BRANCH = "master" && sh scripts/deploy_heroku.sh
