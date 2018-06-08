@@ -1,7 +1,6 @@
 sudo: required
 services:
 - docker
-install: true
 language: java
 env:
   global:
@@ -16,5 +15,6 @@ after_success:
 deploy:
   provider: script
   script: bash scripts/deploy_heroku.sh
+  skip_cleanup: true
   on:
     branch: docker-setup-again
