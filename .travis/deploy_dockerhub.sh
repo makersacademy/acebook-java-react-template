@@ -5,6 +5,6 @@ if [ "$TRAVIS_BRANCH" = "master" ]; then
 else
     TAG="$TRAVIS_BRANCH"
 fi
-SLUGNAME= echo $TRAVIS_REPO_SLUG | tr '[:upper:]' '[:lower:]'
-docker build -t $TRAVIS_REPO_SLUG:$TAG .
-docker push $TRAVIS_REPO_SLUG
+docker build -t acebook-blunicorn .
+docker tag acebook-blunicorn georgesykes86/acebook-blunicorn:$TAG
+docker push georgesykes86/acebook-blunicorn:$TAG
