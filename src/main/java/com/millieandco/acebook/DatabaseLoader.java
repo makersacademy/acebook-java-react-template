@@ -15,12 +15,10 @@ public class DatabaseLoader implements CommandLineRunner {
   	this.repository = repository;
   }
 
-  public static void main(String[] args) {
-      SpringApplication.run(DatabaseLoader.class, args);
-  }
 
   @Override
   public void run(String... strings) throws Exception {
   	this.repository.save(new Post("Hey, folks! Welcome to Acebook!"));
+    this.repository.save(new Post("yo"));
   }
 }
