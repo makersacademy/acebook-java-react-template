@@ -2,6 +2,7 @@ package com.millieandco.acebook;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,6 +13,10 @@ public class DatabaseLoader implements CommandLineRunner {
   @Autowired
   public DatabaseLoader(PostRepository repository) {
   	this.repository = repository;
+  }
+
+  public static void main(String[] args) {
+      SpringApplication.run(DatabaseLoader.class, args);
   }
 
   @Override
