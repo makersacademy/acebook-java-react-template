@@ -16,5 +16,10 @@ public class HomeController {
 		return "index";
 	}
 
+	@RequestMapping(value = "/signup")
+	public String signup() {
+		return "index";
+	}
+
 
 }

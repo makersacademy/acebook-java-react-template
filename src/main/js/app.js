@@ -2,14 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Home from './home';
-import SignUp from './signup';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
+import Signup from './signup';
+import { BrowserRouter as Switch, Route} from 'react-router-dom';
 
 
 ReactDOM.render(
-	        <Router>
-                <Route path={"/"} component = {Home} />
-                 <Route path={"/signup"} component = {SignUp} />
-            </Router>,
+	        <Switch>
+	            <div>
+                    <Route exact path={"/"} component = {Home} />
+                    <Route path={"/signup"} component = {Signup} />
+                </div>
+            </Switch>,
 	document.getElementById('app')
 )
