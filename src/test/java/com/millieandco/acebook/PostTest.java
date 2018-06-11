@@ -1,11 +1,7 @@
 package com.millieandco.acebook;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
-
-import com.millieandco.acebook.Post;
 import org.junit.Test;
-
 public class PostTest {
 
 	private Post post = new Post("hello");
@@ -24,4 +20,5 @@ public class PostTest {
 	public void toStringReturnsCorrectString() {
 		assertEquals(post.toString(), "Post[id=0, comment='hello']");
 	}
+	
 }
