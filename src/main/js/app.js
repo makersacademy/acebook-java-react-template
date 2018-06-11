@@ -18,8 +18,9 @@ class App extends React.Component {
   }
 
   render() {
-    return (
+    return (<div>
       <Posts posts={this.state.posts}/>
+      </div>
     )
   }
 }

@@ -3,8 +3,10 @@ package com.millieandco.acebook;
 import javax.persistence.*;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -17,6 +19,11 @@ public class Post {
 
     @Column(name = "comment")
     private String comment;
+
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private LocalDate createdAt;
+
 
     protected Post() {
     }
