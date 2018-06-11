@@ -1,6 +1,8 @@
-package com.millieandco.acebook;
+package com.millieandco.acebook.Unit;
 
 import static org.junit.Assert.*;
+
+import com.millieandco.acebook.Post;
 import org.junit.Test;
 public class PostTest {
 
@@ -20,5 +22,5 @@ public class PostTest {
 	public void toStringReturnsCorrectString() {
 		assertEquals(post.toString(), "Post[id=0, comment='hello']");
 	}
-	
+
 }
