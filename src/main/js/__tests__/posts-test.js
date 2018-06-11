@@ -1,17 +1,30 @@
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import Posts from '../posts/posts';
-import { configure } from 'enzyme';
-import renderer from 'react-test-renderer';
+import { render } from "react-testing-library";
+import "dom-testing-library/extend-expect";
 
-configure({ adapter: new Adapter() });
+jest.mock(Post, () => ({
+    Post : "<div className='post-content'> Post </div>"
+}))
 
-describe('a test', function(){
-    it('testing posts', function(){
-      const tree = renderer.create(
-        <Posts />
-      ).toJSON();
-      expect(tree).toMatchSnapshot();
+describe('Display multiple posts', function(){
+
+    const {getByTestId} = render(
+       <Posts posts = {["String", "String 2"]} />
+    );
+
+    it('displays a title', function(){
+
+        expect(getByTestId("title-content")).toHaveTextContent("Posts")
+
     })
+
+
+    it('renders a Post component', function(){
+
+        expect(posts).toEqual("<div className='post-content'> Post </div> <div className='post-content'> Post </div>")
+
+
+    })
+
 })
