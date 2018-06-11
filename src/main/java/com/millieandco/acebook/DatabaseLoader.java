@@ -6,20 +6,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DatabaseLoader implements CommandLineRunner {
-
+public class  DatabaseLoader implements CommandLineRunner {
   private final PostRepository repository;
 
   @Autowired
   public DatabaseLoader(PostRepository repository) {
-  	this.repository = repository;
+    this.repository = repository;
   }
-
 
   @Override
   public void run(String... strings) throws Exception {
-    this.repository.deleteAll();
     this.repository.save(new Post("Hey, folks! Welcome to Acebook!"));
-    this.repository.save(new Post("yo"));
   }
 }

@@ -37,3 +37,4 @@ public class Post {
         return String.format("Post[id=%d, comment='%s']", id, comment);
     }
 }
+
