@@ -1,5 +1,6 @@
+DROP TABLE IF EXISTS posts;
+
 CREATE TABLE posts (
-  id bigint,
-  content varchar(250) NOT NULL,
-  PRIMARY KEY (id)
+  id bigserial PRIMARY KEY,
+  content varchar(250) NOT NULL
 );
