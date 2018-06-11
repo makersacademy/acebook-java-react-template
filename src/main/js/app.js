@@ -1,31 +1,15 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const client = require('./client');
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import Posts from './posts/posts'
+import Home from './home';
+import SignUp from './signup';
+import { BrowserRouter as Router, Route} from 'react-router-dom';
 
-class App extends React.Component {
-
-	constructor(props) {
-		super(props);
-		this.state = {posts: []};
-	}
-
-  componentDidMount() {
-    client({method: 'GET', path: '/api/posts'}).then(response => {
-      this.setState({posts: response.entity._embedded.posts});
-    });
-  }
-
-  render() {
-    return (<div>
-      <Posts posts={this.state.posts.reverse()}/>
-      </div>
-    )
-  }
-}
 
 ReactDOM.render(
-	<App />,
+	        <Router>
+                <Route path={"/"} component = {Home} />
+                 <Route path={"/signup"} component = {SignUp} />
+            </Router>,
 	document.getElementById('app')
 )
