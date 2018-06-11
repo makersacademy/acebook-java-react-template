@@ -7,6 +7,7 @@ It uses:
   - `webpack` to bundle the javacript
   - `thymeleaf` to serve `index.html`
   - `react` to make requests to the api and render the component views
+  - `flyway` to manage db migrations
 
 ### QuickStart Instructions
 
@@ -22,6 +23,11 @@ curl -X POST "localhost:8080/api/posts" -d "{\"content\": \"Hi, Folks!\"}" -H "C
 ```
 
 (At some point a form would be implemented sends data to the API)
+
+### Deployment
+
+- https://springboot-react-template.herokuapp.com/
+- Set the right profile in your properties file eg: `spring.profiles.active=dev`
 
 ### To Do
 
