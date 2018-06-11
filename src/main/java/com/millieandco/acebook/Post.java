@@ -5,7 +5,6 @@ import javax.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
@@ -37,4 +36,3 @@ public class Post {
         return String.format("Post[id=%d, comment='%s']", id, comment);
     }
 }
-
