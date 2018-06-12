@@ -37,7 +37,8 @@
     "start": "npm run webpack",
     "webpack": "webpack -d --watch",
     "test": "jest",
-    "feature-tests": "nightwatch"
+    "feature-tests": "nightwatch",
+    "local": "java $JAVA_OPTS -Dspring.profiles.active=local -Dserver.port=$PORT -jar target/*.jar"
   },
   "author": "dearshrewdwit",
   "license": "ISC"
