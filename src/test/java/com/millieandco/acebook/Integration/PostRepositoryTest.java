@@ -45,7 +45,7 @@ public class PostRepositoryTest {
 
         List<Post> posts = postRepository.findAll();
 
-        assertEquals(posts.get(0).getComment(), "first post");
-        assertEquals(posts.get(1).getComment(), "second post");
+        assertEquals(posts.get(0).getContent(), "first post");
+        assertEquals(posts.get(1).getContent(), "second post");
     }
 }

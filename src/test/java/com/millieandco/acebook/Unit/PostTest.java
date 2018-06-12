@@ -15,12 +15,12 @@ public class PostTest {
 
 	@Test
 	public void postHasContent() {
-		assertEquals(post.getComment(), "hello");
+		assertEquals(post.getContent(), "hello");
 	}
 
 	@Test
 	public void toStringReturnsCorrectString() {
-		assertEquals(post.toString(), "Post[id=0, comment='hello']");
+		assertEquals(post.toString(), "Post[id=0, content='hello']");
 	}
 
 }
