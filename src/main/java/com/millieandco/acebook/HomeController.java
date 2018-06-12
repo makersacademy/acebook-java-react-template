@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
 	@Autowired
-	PostRepository repository;
+	PostRepository postrepository;
 
 	@RequestMapping(value = "/")
 	public String index() {
 		return "index";
 	}
+
+	@RequestMapping(value = "/signup")
+	public String signup() { return "index"; }
 
 
 }
