@@ -10,7 +10,6 @@ public class HomeController {
 
 	@Autowired
 	PostRepository postrepository;
-	UserRepository userrepository;
 
 	@RequestMapping(value = "/")
 	public String index() {
@@ -18,8 +17,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/signup")
-	public String signup() { return "index";
-	}
+	public String signup() { return "index"; }
 
 
 }

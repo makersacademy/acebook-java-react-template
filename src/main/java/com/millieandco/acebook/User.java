@@ -1,24 +1,25 @@
 package com.millieandco.acebook;
 
-import javax.persistence.*;
-
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "firstname")
-    private String firstname;
+    @Column(name = "first_name")
+    private String firstName;
 
-    @Column(name = "lastname")
-    private String lastname;
+    @Column(name = "last_name")
+    private String lastName;
 
     @Column(name = "email")
     private String email;
@@ -29,16 +30,16 @@ public class User {
     protected User() {
     }
 
-    public User(String firstname, String lastname, String email, String password) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
 
     @Override
     public String toString() {
-        return String.format("User[id=%d, firstname='%s', lastname='%s', email='%s', password='%s',id, firstname, lastname, email, password");
+        return String.format("User[id=%d, firstName='%s', lastName='%s', email='%s', password='%s']", id, firstName, lastName, email, password);
     }
 }
 

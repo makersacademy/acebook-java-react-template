@@ -10,15 +10,15 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-@Table(name = "post")
+@Table(name = "posts")
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "comment")
-    private String comment;
+    @Column(name = "content")
+    private String content;
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -29,12 +29,12 @@ public class Post {
     }
 
     public Post(String comment) {
-        this.comment = comment;
+        this.content = comment;
     }
 
     @Override
     public String toString() {
-        return String.format("Post[id=%d, comment='%s']", id, comment);
+        return String.format("Post[id=%d, content='%s']", id, content);
     }
 }
 
