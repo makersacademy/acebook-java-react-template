@@ -24,6 +24,7 @@ This app has a somewhat typical API structure: in this case a springboot API ser
 This project will ultimately be really rewarding if you follow these three points:
   1. **Work as a team.** Don't be tempted to split up to learn solo. At the very least pair on learning, and share knowledge as a team.
   2. As a team, **plan your learning**. There's a ton of new things in this project, purposefully so. That's ok. As always with everything, **take it slowly & in small steps**: ask a coach if you want more ideas how to plan your team learning.
+  3. As an individual, **plan your learning**. Use `Diode` to keep yourself focused on setting and achieving your learning goals.
 
 ### QuickStart Instructions
 
