@@ -14,7 +14,7 @@ It uses:
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/CLTPayne/acebook-honey-comb.svg?columns=all)](https://waffle.io/CLTPayne/acebook-honey-comb)
 
 ### Learning documentation
-[!Medium Blog](https://medium.com/honeycombdev)
+[Medium Blog](https://medium.com/honeycombdev)
 
 ### Design
 
