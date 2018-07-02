@@ -60,3 +60,21 @@ Flyway is being used to manage your database migrations. Use the flyway docs to 
 ### CI
 
 - to be configured
+
+### Team Goals
+- High quality code base 
+- Being a good team 
+- Quality over quantity 
+- Have effective processes 
+- Sharing learning amoungst team members
+- Try to implement 2 coach validated ‘ambitious features’ 
+
+### Team Structure
+- Each team member creates two blog posts over the two week project
+- Blog post format to be documenting our learning and project process and filling in the time gap since the previous blog post
+- Morning stand up at 10am 
+- Retro at 4.45pm
+- Feature freeze on second Wednesday, all styling to take place after that point
+- Estimation of tickets to follow the t-shirt size model
+- Code reviews to be done by the pair who did not write the code and are a key point to ensure the whole team understands the code and has shared learning.
+
