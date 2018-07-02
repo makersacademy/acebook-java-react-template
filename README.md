@@ -11,6 +11,10 @@ It uses:
 
 ### Card wall
 
+For Learning Objectives:
+[Trello Board](https://trello.com/b/AzGRLDcV/learning-for-honeycomb)
+
+For Development:
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/CLTPayne/acebook-honey-comb.svg?columns=all)](https://waffle.io/CLTPayne/acebook-honey-comb)
 
 ### Learning documentation
