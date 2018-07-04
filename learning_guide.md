@@ -50,3 +50,17 @@ module.exports = {
 This basically defines the program that has dependencies (entry), and defines what the output files name should be, and where it is located
 
 If you wanted webpack to run automatically during a node build, you can add the following line to `package.json` in the script category: `”build”: “webpack”`
+
+
+###Lombok
+Project Lombok is a java library that automatically plugs into your editor and build tools, spicing up your java.
+
+The way it works is by plugging into your build process and autogenerating Java bytecode into your .class files as per a number of project annotations you introduce in your code.
+
+How to use Getter and Setter methods: [see the awesomeness]http://www.baeldung.com/intro-to-project-lombok
+
+Post.java ->@Data -> @Data is a convenient shortcut annotation that bundles the features of @ToString, @EqualsAndHashCode, @Getter / @Setter and @RequiredArgsConstructor together.
+@Data is like having implicit @Getter, @Setter, @ToString, @EqualsAndHashCode and @RequiredArgsConstructor annotations on the class (except that no constructor will be generated if any explicitly written constructors already exist). However, the parameters of these annotations (such as callSuper, includeFieldNames and exclude) cannot be set with @Data. If you need to set non-default values for any of these parameters, just add those annotations explicitly; @Data is smart enough to defer to those annotations.
+
+All generated getters and setters will be public. To override the access level, annotate the field or class with an explicit @Setter and/or @Getter annotation. You can also use this annotation (by combining it with AccessLevel.NONE) to suppress generating a getter and/or setter altogether.
+[lombok data]https://projectlombok.org/features/Data
