@@ -16,7 +16,7 @@ public class UserController {
 	UserRepository userRepository;
 
 
-	@PostMapping("/user")
+	@PostMapping("/users")
 	public User createUser(@RequestBody Map<String,String> body){
 		String firstname = body.get("firstname");
 		String lastname = body.get("lastname");
