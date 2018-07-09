@@ -1,4 +1,5 @@
 import React from "react";
+import client from "../client";
 
 class SignUp extends React.Component {
     constructor(props){
@@ -22,13 +23,27 @@ class SignUp extends React.Component {
     }
 
     handleSubmit(event) {
-        alert("Submitted");
-        event.preventDefault();
+     event.preventDefault();
+     var data = {
+               firstname : this.state.Firstname,
+               lastname : this.state.Lastname,
+               username : this.state.Username,
+               email : this.state.Email,
+               password : this.state.Password
+
+               }
+
+               $.ajax({
+                  url: "http://localhost:8080/api/users",
+                  type: "POST",
+                  data: JSON.stringify(data),
+                  contentType:"application/json"
+               });
     }
 
     render() {
         return(
-            <form onSubmit={this.handleSubmit}>
+            <form id="form" onSubmit={this.handleSubmit}>
                 <label>
                     First Name
                     <input type="text" name ="Firstname" value={this.state.Firstname} onChange={this.handleChange}/>
