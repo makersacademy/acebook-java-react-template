@@ -1,5 +1,6 @@
 package com.makersacademy.acebook.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,6 +16,8 @@ public class User {
     private String lastname;
     private String username;
     private String email;
+
+//    @JsonIgnore
     private String password;
 
     private User() {}
