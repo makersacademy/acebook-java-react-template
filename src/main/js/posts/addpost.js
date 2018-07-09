@@ -19,13 +19,13 @@ class AddPost extends React.Component {
         });
     }
 
-    handleChange(event) {
+    handleSubmit(event) {
         event.preventDefault();
         let data = {
                   content : this.state.content
         }
         $.ajax({
-                  url: "http://localhost:8080/posts",
+                  url: "http://localhost:8080/api/posts",
                   type: "POST",
                   data: JSON.stringify(data),
                   contentType:"application/json"
