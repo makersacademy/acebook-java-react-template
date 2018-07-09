@@ -34,7 +34,7 @@ class SignUp extends React.Component {
                }
 
                $.ajax({
-                  url: "http://localhost:8080/api/users",
+                  url: "http://localhost:8080/users",
                   type: "POST",
                   data: JSON.stringify(data),
                   contentType:"application/json"
