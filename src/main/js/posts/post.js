@@ -8,13 +8,12 @@ const Post = (props) => {
 		    </div>
 		    <div className='content-timestamp'>
 		        <div className='post-timestamp'>
+		           <span>Posted at: </span>
                     {props.post.time_created}
                 </div>
                 <div className='post-content'>
-                    <span>Posted at: </span>
                     {props.post.content}
                 </div>
-
             </div>
 		</div>
 	)
