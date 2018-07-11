@@ -1,6 +1,8 @@
 import React from 'react';
 import Posts from './posts'
+import AddPost from "./addpost"
 const client = require('../client');
+
 
 class PostsBuilder extends React.Component {
   constructor(props) {
@@ -16,7 +18,10 @@ class PostsBuilder extends React.Component {
 
 	render() {
 		return (
-      <Posts posts={this.state.posts}/>
+		<div>
+		    <AddPost />
+            <Posts posts={this.state.posts}/>
+        </div>
 		)
 	}
 }
