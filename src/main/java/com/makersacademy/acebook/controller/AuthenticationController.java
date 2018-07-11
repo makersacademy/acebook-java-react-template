@@ -38,8 +38,6 @@ public class AuthenticationController {
     public ResponseEntity logout(@RequestBody Map<String,String> body){
         String token = body.get("token");
         User user = userRepository.findByToken(token);
-        System.out.println(token);
-        System.out.println(userRepository.findByUsername("x").getToken());
         if(user != null) {
             user.removeToken();
             userRepository.save(user);
