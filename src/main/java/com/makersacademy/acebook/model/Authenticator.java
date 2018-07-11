@@ -15,7 +15,6 @@ public class Authenticator {
     }
 
     public static Boolean passwordValid(UserRepository userRepository,String username, String password){
-        System.out.println(username);
         User user = userRepository.findByUsername(username);
         if(user.getPassword().equals(password)){
             return true;
