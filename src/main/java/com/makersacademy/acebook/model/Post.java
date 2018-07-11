@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 @Data
 @Entity
 @Table(name = "POSTS")
@@ -17,6 +19,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
+    private Timestamp time_created;
 
     private Post() {}
 
