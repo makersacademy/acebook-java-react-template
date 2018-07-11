@@ -1,4 +1,5 @@
 import React from "react";
+const client = require('../client');
 
 class SignIn extends React.Component {
     constructor(props) {
@@ -22,15 +23,13 @@ class SignIn extends React.Component {
             username: this.state.username,
             password: this.state.password
         }
-        console.log("Form values: " + data);
+        console.log("Form values: ", data);
         event.preventDefault();
 
-        $.ajax({
-                url: "http://localhost:8080/users",
-                type: "POST",
-                data: JSON.stringify(data),
-                contentType:"application/json"
-              });
+        client({method: 'POST', path: '/login', entity: data}).then(response => {
+        console.log(response)
+              this.setState({posts: response.entity._embedded.posts});
+            });
      }
 
       render() {
