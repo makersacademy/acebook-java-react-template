@@ -8,3 +8,15 @@
     text-align: left;
     margin-bottom: 0.5rem;;
 }
+
+.image, .content-timestamp {
+    display: inline;
+}
+
+.post-content, .post-timestamp {
+    display: inline-block;
+}
+
+.post-content {
+    padding-left: 3rem;
+}
