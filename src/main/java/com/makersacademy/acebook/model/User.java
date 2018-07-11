@@ -28,37 +28,9 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
-    public String getPassword(){
-        return this.password;
-    }
-
-    public Long getId(){
-        return this.id;
-    }
-
-    public String getFirstname(){
-        return this.firstname;
-    }
-
-    public String getLastname(){
-        return this.lastname;
-    }
-
-    public String getEmail(){
-        return  this.email;
-    }
-
-    public String getUsername(){
-        return this.username;
-    }
-
+    
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public String getToken(){
-        return this.token;
     }
 
     public void removeToken(){
