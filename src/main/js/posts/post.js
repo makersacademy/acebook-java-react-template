@@ -11,7 +11,7 @@ const Post = (props) => {
                     {props.post.content}
                 </div>
                 <div className='post-timestamp'>
-                    {props.post.timestamp}
+                    {props.post.time_created}
                  </div>
             </div>
 		</div>
