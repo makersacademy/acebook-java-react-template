@@ -26,18 +26,17 @@ function getCookie(cname) {
 //    }
 //}
 
+function getCookie(cookieName){
+    var decodedcookie = decodeURIComponent(document.cookie);
+    var tokenindex = decodedcookie.indexOf(cookieName+"=");
+    var aftertoken = decodedcookie.slice(tokenindex);
+    if(aftertoken.indexOf(';')){
+        return aftertoken.slice(aftertoken.indexOf('=') + 1, aftertoken.indexOf(';'))
+    }else{
+        return aftertoken.slice(aftertoken.indexOf('=') + 1);
+    }}
 
-function getCookie(cookieName) {
-    var cookieObject = document.cookie;
-    var decodedCookie = decodeURIComponent(cookieObject);
-    var cookieIndex = decodedCookie.indexOf(cookieName + "=");
-    var cookieT = decodedCookie.slice(cookieIndex);
-    if (!cookieT.indexOf(";")) {
-        return cookieT.slice(cookieT.indexOf("=") + 1, cookieT.indexOf(";"))
-    } else {
-        return cookieT.slice(cookieT.indexOf("=") + 1)
-    }
-}
+
 
 function checkCookie() {
     var cookie = getCookie("token");
