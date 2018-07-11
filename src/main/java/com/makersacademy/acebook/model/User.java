@@ -15,6 +15,7 @@ public class User {
     private String lastname;
     private String username;
     private String email;
+    private String token;
 
     private String password;
 
@@ -27,6 +28,24 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
+    public String getPassword(){
+        return this.password;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getToken(){
+        return this.token;
+    }
+
+    public void removeToken(){
+        this.token = null;
+    }
+
+
 
 
 }
