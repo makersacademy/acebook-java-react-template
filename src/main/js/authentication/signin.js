@@ -30,25 +30,7 @@ class SignIn extends React.Component {
 
         event.preventDefault();
 
-
-//        client({method: 'POST', path: '/login', entity: data}).then(response => {
-//        console.log(response)
-//              this.setState({posts: response.entity._embedded.time_create});
-//            });
-
-        const loginRequest = Object.assign({}, data);
-        let options = {
-                          headers: {
-                              'Accept': 'application/json',
-                              'Content-Type': 'application/json'
-                          },
-                          url:  "/login",
-                          method: 'POST',
-                          body: JSON.stringify(loginRequest)
-
-                      }
-
-        fetch('/login', {
+       fetch('/login', {
             method: 'post',
             body: JSON.stringify(data),
             headers: {
@@ -63,11 +45,6 @@ class SignIn extends React.Component {
             history.push('/signup')
           });
 
-//        fetch(options.url, options).then(response => {
-//                   console.log("after fetch: ", response);
-//                   history.push('/signup')
-//                   console.log("after push: ");
-//                });
      }
 
       render() {
