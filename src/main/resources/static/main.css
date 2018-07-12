@@ -10,17 +10,22 @@
     font-family: Times, serif;
     width:80%;
     margin: auto;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+    display:flex;
+    flex-direction: row;
+    box-shadow: 2px 2px #dbd9d7;
 }
 
-.image, .content-timestamp {
-    display: inline;
-}
-
-.post-content, .post-timestamp {
-    display: inline-block;
+.content-timestamp {
+    display:flex;
+    flex-direction: column;
+    padding-left: 3rem;
+    padding-right: 3rem;
 }
 
 .post-content {
-    padding-left: 3rem;
+    padding-top: 0.5rem;
 }
+
+
+

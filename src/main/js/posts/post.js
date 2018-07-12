@@ -7,12 +7,13 @@ const Post = (props) => {
 		        <img src="/user-placeholder.png"  height="100" width="100"/>
 		    </div>
 		    <div className='content-timestamp'>
+		        <div className='post-timestamp'>
+		           <span>Posted at: </span>
+                    {props.post.time_created}
+                </div>
                 <div className='post-content'>
                     {props.post.content}
                 </div>
-                <div className='post-timestamp'>
-                    {props.post.time_created}
-                 </div>
             </div>
 		</div>
 	)
