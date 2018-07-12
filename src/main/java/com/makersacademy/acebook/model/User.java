@@ -37,6 +37,9 @@ public class User {
         this.token = null;
     }
 
+    public String getPassword() {
+        return this.password;
+    }
 
 
 

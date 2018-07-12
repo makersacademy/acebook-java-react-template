@@ -1,4 +1,9 @@
 import React from "react";
+const client = require('../client');
+import SignUp from './signup'
+import history from '../history'
+
+
 
 class SignIn extends React.Component {
     constructor(props) {
@@ -22,15 +27,24 @@ class SignIn extends React.Component {
             username: this.state.username,
             password: this.state.password
         }
-        console.log("Form values: " + data);
+
         event.preventDefault();
 
-        $.ajax({
-                url: "http://localhost:8080/users",
-                type: "POST",
-                data: JSON.stringify(data),
-                contentType:"application/json"
-              });
+       fetch('/login', {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+                                      }
+          }).then(function(response) {
+            return response.json();
+          }).then(function(data) {
+            console.log('Created Gist:', data);
+            document.cookie = "ACKL_token="+data.message;
+            history.push('/signup')
+          });
+
      }
 
       render() {
@@ -42,6 +56,8 @@ class SignIn extends React.Component {
                 <input type="text" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange}/>
                 <input type="submit" value="Submit"/>
             </form>
+            What sup Khie.
+            <SignUp />
         </div>
        );
     }

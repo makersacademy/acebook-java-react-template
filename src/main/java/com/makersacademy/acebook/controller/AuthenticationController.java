@@ -3,6 +3,7 @@ package com.makersacademy.acebook.controller;
 import com.makersacademy.acebook.model.Authenticator;
 import com.makersacademy.acebook.model.User;
 import com.makersacademy.acebook.repository.UserRepository;
+import main.java.com.makersacademy.acebook.model.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,10 +29,13 @@ public class AuthenticationController {
             String token = Authenticator.generateToken();
             user.setToken(token);
             userRepository.save(user);
-            return ResponseEntity.status(HttpServletResponse.SC_OK).body(token);
+            System.out.println(token);
+            return ResponseEntity.status(HttpServletResponse.SC_OK).body(new Response(token));
         }
-        return ResponseEntity.status(HttpServletResponse.SC_UNAUTHORIZED).body("Incorrect details");
+        return ResponseEntity.status(HttpServletResponse.SC_UNAUTHORIZED).body(new Response("Incorrect details"));
         }
+
+
 
 
     @PostMapping("/logout")
@@ -45,5 +49,6 @@ public class AuthenticationController {
         }
         return ResponseEntity.status(HttpServletResponse.SC_BAD_REQUEST).body("Token invalid");
     }
+
 
 }
