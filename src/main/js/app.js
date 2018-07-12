@@ -22,9 +22,9 @@ s
     return (
 
                 <div>
-                     <SignUp />
+
                      <PostsBuilder />
-                     <SignIn />
+
                 </div>
 
     )

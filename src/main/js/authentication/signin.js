@@ -1,5 +1,9 @@
 import React from "react";
 const client = require('../client');
+import SignUp from './signup'
+import history from '../history'
+
+
 
 class SignIn extends React.Component {
     constructor(props) {
@@ -23,13 +27,47 @@ class SignIn extends React.Component {
             username: this.state.username,
             password: this.state.password
         }
-        console.log("Form values: ", data);
+
         event.preventDefault();
 
-        client({method: 'POST', path: '/login', entity: data}).then(response => {
-        console.log(response)
-              this.setState({posts: response.entity._embedded.posts});
-            });
+
+//        client({method: 'POST', path: '/login', entity: data}).then(response => {
+//        console.log(response)
+//              this.setState({posts: response.entity._embedded.time_create});
+//            });
+
+        const loginRequest = Object.assign({}, data);
+        let options = {
+                          headers: {
+                              'Accept': 'application/json',
+                              'Content-Type': 'application/json'
+                          },
+                          url:  "/login",
+                          method: 'POST',
+                          body: JSON.stringify(loginRequest)
+
+                      }
+
+        fetch('/login', {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+                                      }
+          }).then(function(response) {
+            return response.json();
+          }).then(function(data) {
+            console.log('Created Gist:', data);
+            document.cookie = "ACKL_token="+data.message;
+            history.push('/signup')
+          });
+
+//        fetch(options.url, options).then(response => {
+//                   console.log("after fetch: ", response);
+//                   history.push('/signup')
+//                   console.log("after push: ");
+//                });
      }
 
       render() {
@@ -41,6 +79,8 @@ class SignIn extends React.Component {
                 <input type="text" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange}/>
                 <input type="submit" value="Submit"/>
             </form>
+            What sup Khie.
+            <SignUp />
         </div>
        );
     }

@@ -18,7 +18,6 @@ function getCookie(cookieName){
     if (cookie != "") {
         history.push('/')
     } else {
-    console.log(history)
          history.push('/signin')
 
 
