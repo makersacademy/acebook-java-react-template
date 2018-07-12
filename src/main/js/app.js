@@ -15,7 +15,6 @@ import CookieChecker from './cookie/checkCookie'
 class App extends React.Component {
     constructor(props){
         super(props);
-s
     };
 
   render() {
