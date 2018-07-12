@@ -5,3 +5,5 @@ dependency-reduced-pom.xml
 *.iml
 .log
 /src/main/resources/static/built
+/src/main/resources/static/built/bundle.js
+/src/main/resources/static/built/bundle.js.map
