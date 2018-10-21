@@ -1,21 +1,20 @@
 ## Acebook
 
-This is a java/springboot and react project to be developed on.
+This is a java/springboot project to be developed on.  It's a modified version of the original template, which also included a React front end.  There may be some remaining traces of React.  If you spot them, please raise an issue or make the fix and open a pull request :)
 
 It uses:
   - `maven` to build the project
   - `webpack` to bundle the javascript
-  - `thymeleaf` to serve `index.html`
-  - `react` to make requests to the api and render the component views
+  - `Jade` to serve templates
   - `flyway` to manage `postgres` db migrations
 
 ### Card wall
 
-REPLACE THIS TEXT WITH A LINK TO YOUR CARD WALL
+*REPLACE THIS TEXT WITH A LINK TO YOUR CARD WALL*
 
 ### Design
 
-This app has a somewhat typical API structure: in this case a springboot API serving data which a react frontend consumes.
+This app uses what should seem like a familiar CRUD pattern.  Think back to Bookmark Manager! ;)
 
 **IMPORTANT:** Test your understanding by diagramming the request/response cycles that occur when you load the app by visiting `localhost:8080`
 
@@ -31,8 +30,9 @@ This project will ultimately be really rewarding if you follow these three point
 - Fork and clone this repository to your machine
 - Use an IDE, like `intellij`, and select the project directory to load into the editor (you may need to set the source folder in the project settings)
 - From the command line create a dev database `createdb acebook_springboot_development`
-- run the main application
-- visit `localhost:8080`
+- Install maven `brew install maven`
+- Build the app and start the server `mvn spring-boot:run`
+- Once the app stops spewing text into your terminal, visit `localhost:8080`
 
 - Temporarily, if you want to add some posts you can use `curl` to post data to the API and then refresh the page.
 ```
