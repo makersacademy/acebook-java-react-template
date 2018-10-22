@@ -11,7 +11,7 @@ It uses:
 
 ### Card wall
 
-REPLACE THIS TEXT WITH A LINK TO YOUR CARD WALL
+https://trello.com/b/Fv3rQ7Fp/acebook
 
 ### Design
 
