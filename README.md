@@ -8,6 +8,11 @@ It uses:
   - `thymeleaf` to serve `index.html`
   - `react` to make requests to the api and render the component views
   - `flyway` to manage `postgres` db migrations
+  
+  ###Link to app on Heroku
+  ```
+  https://makers-acebook.herokuapp.com/
+  ```
 
 ### Card wall
 
@@ -53,3 +58,11 @@ Flyway is being used to manage your database migrations. Use the flyway docs to 
 ### CI
 
 - to be configured
+
+### Heroku
+
+pushing changes to heroku 
+```
+$ git push heroku master
+```
+
