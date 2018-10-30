@@ -6,7 +6,7 @@ class PostsBuilder extends React.Component {
   constructor(props) {
     super(props)
     this.state = {posts: []};
-  }
+     }
 
   componentDidMount() {
     client({method: 'GET', path: '/api/posts'}).then(response => {
