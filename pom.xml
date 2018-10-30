@@ -121,6 +121,11 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.webjars.npm</groupId>-->
+			<!--<artifactId>react-router-dom</artifactId>-->
+			<!--<version>4.1.2</version>-->
+		<!--</dependency>-->
     </dependencies>
 
 

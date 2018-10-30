@@ -18,7 +18,6 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long post_id;
     private String content;
 
@@ -27,8 +26,8 @@ public class Post {
     @CreatedDate
     private Date createdAt;
 
-//    @ManyToOne(optional = false)
-//    private User author;
+    @ManyToOne(optional = true)
+    private User author_user_id;
 
     private Post() {}
 
