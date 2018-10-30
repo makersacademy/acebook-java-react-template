@@ -8,8 +8,8 @@ class InputPost extends React.Component {
 
     render() {
         return (
-            <article className='test'>
-                <h1 className='test2'>
+            <article className='Input-post'>
+                <h1 className='Input-post-header'>
                     Input post
                 </h1>
                 <form>
