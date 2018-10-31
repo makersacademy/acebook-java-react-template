@@ -1,5 +1,6 @@
 import React from 'react';
 import Comment from './comment'
+import InputComment from './inputComment'
 
 class Comments extends React.Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class Comments extends React.Component {
                 <div className='comments-items'>
                     {this.getComments()}
                 </div>
+                <InputComment/>
             </article>
         )
     }

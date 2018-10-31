@@ -14,7 +14,7 @@ class InputPost extends React.Component {
                 </h1>
                 <form>
                     <textarea name="message" placeholder="Don't worry, be happy"/>
-                    <button type="submit" name="Take a Longshot" value="Take a Longshot">Take a Longshot</button>
+                    <button type="submit" name="submitPost">Take a Longshot</button>
                 </form>
             </article>
         )

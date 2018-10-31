@@ -1,4 +1,5 @@
 import React from 'react';
+import InputComment from './inputComment'
 
 
 class Comment extends React.Component {
@@ -12,10 +13,7 @@ class Comment extends React.Component {
                 <div className='comment-content'>
                     {/*{props.comment.content}*/}
                 </div>
-                <form>
-                    <textarea name="message" placeholder="Whatcha thinkin'?"/>
-                    <button type="submit" name="Get Involved" value="Get Involved">Get Involved</button>
-                </form>
+                <InputComment/>
             </article>
         )
     }
