@@ -21,6 +21,7 @@ class CreatePost extends React.Component {
         },
       }).then(response => {
         response.json().then(data => {
+        console.log(this.props)
           this.props.setpost()
           console.log("Post successful" + JSON.stringify(data));
         })

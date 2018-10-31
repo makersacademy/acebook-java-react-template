@@ -7,7 +7,9 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -26,8 +28,11 @@ public class Post {
     @CreatedDate
     private Date createdAt;
 
-    @ManyToOne(optional = true)
-    private User author_user_id;
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    private User author;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Comment> commentList = new ArrayList<>();
 
     private Post() {}
 
@@ -53,5 +58,21 @@ public class Post {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }
