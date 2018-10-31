@@ -8,3 +8,13 @@
     text-align: left;
     margin-bottom: 0.5rem;;
 }
+
+.delete-btn {
+    text-align: right;
+
+}
+
+.del-btn {
+    background-color: LightGray;
+    color: #f44e42
+}
