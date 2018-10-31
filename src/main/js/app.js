@@ -4,6 +4,7 @@ const ReactDOM = require('react-dom');
 import PostsBuilder from './posts/postsBuilder'
 import InputPost from './posts/inputPost'
 import SignUp from './users/signUp'
+import LogIn from './users/login'
 
 class App extends React.Component {
 
@@ -11,7 +12,7 @@ class App extends React.Component {
     return (
         <div>
             <SignUp />
-            {/*<LogIn />*/}
+            <LogIn />
             <InputPost />
             <PostsBuilder />
         </div>
