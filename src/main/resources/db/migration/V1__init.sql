@@ -29,5 +29,5 @@ CREATE TABLE comments (
 CREATE TABLE likes (
   id bigserial PRIMARY KEY,
   user_id  integer references users(id),
-  post_id integer references posts(id),
+  post_id integer references posts(id)
 );
