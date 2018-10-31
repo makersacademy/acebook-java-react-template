@@ -8,6 +8,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -34,6 +38,12 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    @OneToMany(mappedBy = "author")
+    private List<Post> postList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "author")
+    private List<Comment> commentList = new ArrayList<>();
+
     private User() {}
 
     public User(String username, @NotNull @NotEmpty String fullName, @Size(min = 1, max = 50) String passwordHash, @Email @Size(max = 100) @NotNull String email) {
@@ -46,7 +56,6 @@ public class User {
     public Long getUser_id() {
         return user_id;
     }
-
 
     public String getUsername() {
         return username;
@@ -78,6 +87,22 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Post> getPostList() {
+        return postList;
+    }
+
+    public void setPostList(List<Post> postList) {
+        this.postList = postList;
+    }
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
     }
 
 

@@ -9,20 +9,19 @@ class Posts extends React.Component {
 
 	render() {
 		return (
+
       <article className='posts-main'>
-        <h1 className='posts-title'>
-          Posts
-        </h1>
-  			<div className='posts-items'>
-  				{this.getPosts()}
-  			</div>
+      <h1 className='posts-title'>Posts</h1>
+        <div className='posts-items'>
+            {this.getPosts()}
+        </div>
       </article>
 		)
 	}
 
   getPosts() {
     return this.props.posts.map(post =>
-			<Post key={post._links.self.href} post={post}/>
+			<Post key={post._links.self.href} post={post} setpost = {this.props.setpost}/>
 		);
   }
 }

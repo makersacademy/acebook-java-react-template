@@ -27,8 +27,8 @@ class PostsBuilder extends React.Component {
 	render() {
 		return (
       <div>
+        <Posts posts={this.state.posts} setpost = {this.setNewPost}/>
         <CreatePost setpost = {this.setNewPost}/>
-        <Posts posts={this.state.posts}/>
       </div>
       
 		)
