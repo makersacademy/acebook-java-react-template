@@ -13,15 +13,23 @@ class PostsBuilder extends React.Component {
 
   componentDidMount() {
     this.setNewPost()
-    // client({method: 'GET', path: '/api/posts'}).then(response => {
-    //   this.setState({posts: response.entity._embedded.posts});
-    // });
+
   }
 
   setNewPost(){
     client({method: 'GET', path: '/api/posts'}).then(response => {
       this.setState({posts: response.entity._embedded.posts});
+
+      const posts = this.state.posts
+      let newPostList = posts.reverse()
+
+      this.setState({
+      posts: newPostList.sort((a,b) => a.createdAt < b.createdAt )
+      })
+
     });
+
+
   }
 
 	render() {
