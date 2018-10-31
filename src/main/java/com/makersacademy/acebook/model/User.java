@@ -8,28 +8,25 @@ import javax.persistence.GenerationType;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
-
 @Data
 @Entity
-@Table(name = "POSTS")
-public class Post {
+@Table(name = "USERS")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String content;
-    private int user_id;
-    private Timestamp date_time;
+    private String email;
+    private String password;
+    private String name;
 
-    private Post() {}
+    private User() {}
 
-    public Post(Long id, String content, int user_id, Timestamp date_time) {
-
+    public User(Long id, String email, String password, String name) {
         this.id = id;
-        this.content = content;
-        this.user_id = user_id;
-        this.date_time = date_time;
+        this.email = email;
+        this.password = password;
+        this.name = name;
     }
 
 }
