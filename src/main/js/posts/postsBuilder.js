@@ -19,6 +19,9 @@ class PostsBuilder extends React.Component {
       <Posts posts={this.state.posts}/>
 		)
 	}
+
 }
+
+
 
 export default PostsBuilder;

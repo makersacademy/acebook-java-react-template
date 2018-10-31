@@ -7,11 +7,11 @@ import org.junit.Test;
 
 public class PostTest {
 
-	private Post post = new Post("hello");
+	private Post post = new Post("I like being happy");
 
 	@Test
 	public void postHasContent() {
-		assertThat(post.getContent(), containsString("hello"));
+		assertThat(post.getContent(), containsString("I like being happy"));
 	}
 
 }
