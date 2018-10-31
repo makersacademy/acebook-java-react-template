@@ -20,18 +20,18 @@ public class Comment {
     private Long id;
     private int user_id;
     private int post_id;
-    private String content_comment;
-    private Timestamp comment_date_time;
+    private String content;
+    private Timestamp date_time;
 
 
     private Comment() {}
 
-    public Comment(Long id, int user_id, int post_id, String content_comment, Timestamp comment_date_time) {
+    public Comment(Long id, int user_id, int post_id, String content, Timestamp date_time) {
         this.id = id;
         this.user_id = user_id;
         this.post_id = post_id;
-        this.content_comment = content_comment;
-        this.comment_date_time = comment_date_time;
+        this.content = content;
+        this.date_time = date_time;
     }
 
 }

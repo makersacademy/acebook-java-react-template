@@ -13,17 +13,17 @@ CREATE TABLE users (
 
 CREATE TABLE posts (
   id bigserial PRIMARY KEY,
-  content_post varchar(250) NOT NULL,
+  content varchar(250) NOT NULL,
   user_id  integer references users(id),
-  post_date_time timestamp
+  date_time timestamp
 );
 
 CREATE TABLE comments (
   id bigserial PRIMARY KEY,
   user_id  integer references users(id),
   post_id integer references posts(id),
-  content_comment varchar(250) NOT NULL,
-  comment_date_time timestamp
+  content varchar(250) NOT NULL,
+  date_time timestamp
 );
 
 CREATE TABLE likes (
