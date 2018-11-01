@@ -22,7 +22,5 @@ class InputComment extends React.Component {
 
 }
 
-
-
 export default InputComment;
 
