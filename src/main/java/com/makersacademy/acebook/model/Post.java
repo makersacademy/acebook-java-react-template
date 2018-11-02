@@ -24,11 +24,11 @@ public class Post {
 
     private Post() {}
 
-    public Post(Long id, String content, /* int user_id, */ Timestamp date_time) {
+    public Post(Long id, String content /*,  int user_id */ ) {
         this.id = id;
         this.content = content;
 //        this.user_id = user_id;
-        this.date_time = date_time;
+        this.date_time = new Timestamp(System.currentTimeMillis());;
     }
 
 }

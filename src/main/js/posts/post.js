@@ -8,6 +8,9 @@ const Post = (props) => {
 			<div className='post-content'>
 				{props.post.content}
 			</div>
+			<div>
+				<span>Created at: </span><span>{props.post.date_time}</span>
+			</div>
             <Like />
 			<Comment />
 		</div>

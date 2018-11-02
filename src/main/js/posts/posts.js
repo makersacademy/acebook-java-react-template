@@ -21,9 +21,10 @@ class Posts extends React.Component {
 	}
 
   getPosts() {
-    return this.props.posts.map(post =>
-			<Post key={post._links.self.href} post={post}/>
-		);
+    const posts = this.props.posts.map(post =>
+        <Post key={"post-" + post.id} post={post} />
+    );
+    return posts;
   }
 }
 
