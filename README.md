@@ -36,7 +36,7 @@ This project will ultimately be really rewarding if you follow these three point
 
 - Temporarily, if you want to add some posts you can use `curl` to post data to the API and then refresh the page.
 ```
-curl -X POST "localhost:8080/api/posts" -d "{\"content\": \"Hi, Folks!\"}" -H "Content-Type: application/json"
+curl -X POST 'localhost:8080/api/posts' -d '{"content": "Hi, Folks!"}' -H 'Content-Type: application/json'
 ```
 
 (At some point a form would be implemented sends data to the API)
