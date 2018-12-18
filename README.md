@@ -48,8 +48,13 @@ Flyway is being used to manage your database migrations. Use the flyway docs to 
 
 ### Deployment
 
-- the template is currently hosted on heroku at https://springboot-react-template.herokuapp.com/
-- Remember to set the right profile in your `application.properties` file eg: `spring.profiles.active=dev` for when you want to use your dev environment, and when you want to use your prod environment.
+- This template application is hosted on heroku at https://springboot-react-template.herokuapp.com/
+- Have a look at `application.properties`, `application-dev.properties` and `application-prod.properties`
+- The first line in `application.properties` specifies that the application is run using the config in `application-dev.properties`.
+- The config in `application-dev.properties` specifies that the development datebase be used.
+- This ensures that you do not manipulate the production database whilst developing new features.
+- Before deploying your application, you'll need to add some config to `application-prod.properties` so that the deployed application uses the production database.
+- Then, make sure the deployed app will use `application-prod.properties` by using `spring.profiles.active=dev` in your deployment script.
 
 ### CI
 
