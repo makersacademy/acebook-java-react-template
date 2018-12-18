@@ -31,8 +31,9 @@ This project will ultimately be really rewarding if you follow these three point
 - Fork and clone this repository to your machine
 - Use an IDE, like `intellij`, and select the project directory to load into the editor (you may need to set the source folder in the project settings)
 - From the command line create a dev database `createdb acebook_springboot_development`
-- run the main application
-- visit `localhost:8080`
+- Install Maven `brew install maven`
+- Build the app and start the server, using the Maven command `mvn spring-boot:run`
+- Visit `localhost:8080`
 
 - Temporarily, if you want to add some posts you can use `curl` to post data to the API and then refresh the page.
 ```
