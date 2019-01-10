@@ -40,9 +40,6 @@ public class HomeController {
 
 	@PostMapping("/post")
 	public String post(@ModelAttribute Post post) {
-		System.out.println(post);
-		postRepository.save(post);
-		System.out.println(postRepository.findAll());
 		return "result";
 	}
 
