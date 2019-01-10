@@ -10,7 +10,7 @@ class PostsBuilder extends React.Component {
 
   componentDidMount() {
     client({method: 'GET', path: '/api/posts'}).then(response => {
-      this.setState({posts: response.entity._embedded.posts});
+      this.setState({posts: response.entity});
     });
   }
 
