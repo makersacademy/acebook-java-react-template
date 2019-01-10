@@ -18,10 +18,10 @@ public class Post {
     private Long id;
     private String content;
 
-    private Post() {}
+    private Post() {
+    }
 
     public Post(String content) {
         this.content = content;
     }
-
 }
