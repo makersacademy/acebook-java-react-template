@@ -1,15 +1,21 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
-    <meta charset="UTF-8"/>
-    <title>Acebook</title>
-    <link rel="stylesheet" href="/main.css" />
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+<!-- @posts.each do |post|-->
+<!-- make a div for each post-->
+<!-- end -->
 
-    <div id="app"></div>
-
-    <script src="built/bundle.js"></script>
+<table>
+    <th:block th:each="post : ${posts}">
+        <tr>
+            <td th:text="${post.content}">...</td>
+        </tr>
+    </th:block>
+</table>
 
 </body>
 </html>

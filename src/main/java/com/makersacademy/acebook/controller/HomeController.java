@@ -17,12 +17,6 @@ public class HomeController {
 		this.postRepository = postRepository;
 	}
 
-	@RequestMapping(value = "/")
-	public String index() {
-		return "index";
-	}
-
-	@RequestMapping(value = "/greeting")
 	@GetMapping("/greeting")
 	public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
 		model.addAttribute("name", name);
@@ -30,6 +24,12 @@ public class HomeController {
 		return "greeting";
 	}
 
+    @GetMapping("/posts")
+	public String show(Model model) {
+	    Iterable<Post> posts = postRepository.findAll();
+        model.addAttribute("posts", posts);
 
-
+	    return "index";
+    }
 }
+
