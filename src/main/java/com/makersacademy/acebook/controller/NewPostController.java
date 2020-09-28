@@ -26,7 +26,7 @@ public class NewPostController {
     public String sendNewPost(@RequestParam(value="name") String name,
                               @RequestParam(value="message") String message) {
 
-        Post post = new Post(message);
+        Post post = new Post(name, message);
         postDAO.save(post);
 
         return "redirect:/";
