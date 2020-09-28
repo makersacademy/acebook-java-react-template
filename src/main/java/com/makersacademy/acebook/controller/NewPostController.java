@@ -11,7 +11,6 @@ public class NewPostController {
 
     private PostDAO postDAO;
 
-
     @Autowired
     public void setPostDAO(PostDAO postDAO) {
         this.postDAO = postDAO;
@@ -28,7 +27,6 @@ public class NewPostController {
                               @RequestParam(value="message") String message) {
 
         Post post = new Post(message);
-
         postDAO.save(post);
 
         return "redirect:/";
