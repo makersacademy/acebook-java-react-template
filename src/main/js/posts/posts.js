@@ -21,8 +21,6 @@ class Posts extends React.Component {
 	}
 
   getPosts() {
-      console.log("son")
-      console.log(this.props)
     return this.props.posts.map(post =>
 			<Post key={post._links.self.href} post={post}/>
 		);
