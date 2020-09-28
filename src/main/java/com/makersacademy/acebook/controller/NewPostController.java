@@ -11,6 +11,7 @@ public class NewPostController {
 
     private PostDAO postDAO;
 
+
     @Autowired
     public void setPostDAO(PostDAO postDAO) {
         this.postDAO = postDAO;
@@ -25,8 +26,7 @@ public class NewPostController {
     @PostMapping("/makepost")
     public String sendNewPost(@RequestParam(value="name") String name,
                               @RequestParam(value="message") String message) {
-        System.out.println(name);
-        System.out.println(message);
+
         Post post = new Post(message);
 
         postDAO.save(post);
