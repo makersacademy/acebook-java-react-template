@@ -3,13 +3,17 @@ import React from 'react';
 const Post = (props) => {
 	return (
 		<div className='post-main'>
-			<div className="post-name">
+
+			<div className='post-name'>
 				{props.post.name}
 			</div>
+
 			<div className='post-content'>
 				{props.post.content}
 			</div>
+
 		</div>
+
 	)
 }
 
