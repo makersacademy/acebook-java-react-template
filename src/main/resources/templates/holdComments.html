@@ -1,0 +1,56 @@
+<div class="comments-app" ng-app="commentsApp" ng-controller="CommentsController as cmntCtrl">
+    <h1>Comments App - AngularJS</h1>
+
+    <!-- Comments List -->
+    <div class="comments">
+        <!-- Comment - Dummy -->
+        <div class="comment">
+            <!-- Comment Avatar -->
+            <div class="comment-avatar">
+                <img src="https://vignette.wikia.nocookie.net/lotr/images/8/8d/Gandalf-2.jpg/revision/latest/scale-to-width-down/340?cb=20130209172436">
+            </div>
+
+            <!-- Comment Box -->
+            <div class="comment-box">
+                <div class="comment-text">Text here.</div>
+                <div class="comment-footer">
+                    <div class="comment-info">
+            <span class="comment-author">
+              <a href="mailto:sexar@pagelab.io">Person</a>
+            </span>
+                        <span class="comment-date">Feb 2, 2013 11:32:04 PM</span>
+                    </div>
+
+                    <div class="comment-actions">
+                        <a href="#">Reply</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--CURRENT-->
+<article className='posts-main'>
+    <h1 className='posts-title'>
+        Posts
+    </h1>
+    <div className='posts-items'>
+        {this.getPosts()}
+    </div>
+</article>
+
+{this.getPosts()} ==
+<div className='post-main'>
+
+    <div className='post-name'>
+        {props.post.name}
+    </div>
+    <div className='post-content'>
+        {props.post.content}
+    </div>
+    <div className='post-time'>
+        {props.post.post_time}
+    </div>
+</div>
