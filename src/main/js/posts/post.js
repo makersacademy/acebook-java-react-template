@@ -6,8 +6,12 @@ const Post = (props) => {
 			<div className='post-content'>
 				{props.post.content}
 			</div>
+			<div className"post-name">
+				{props.post.name}
+			</div>
 		</div>
 	)
+	console.log(props)
 }
 
 export default Post;
