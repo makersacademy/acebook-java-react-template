@@ -16,7 +16,7 @@ class PostsBuilder extends React.Component {
 
 	render() {
 		return (
-      <Posts posts={this.state.posts}/>
+          <Posts posts={this.state.posts}/>
 		)
 	}
 }
