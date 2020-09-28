@@ -12,31 +12,26 @@ public class NewPostController {
 
     private PostDAO postDAO;
 
+
     @Autowired
     public void setPostDAO(PostDAO postDAO) {
         this.postDAO = postDAO;
     }
-//    @Autowired
-//    PostDAO postDAO;
 
     @GetMapping("/makepost")
-    public String makeNewPost(Model model) {
-        model.addAttribute("content", new Post());
+    public String makeNewPost() {
+
 
         return "postForm";
     }
 
     @PostMapping("/makepost")
-    @ResponseBody
     public String sendNewPost(@RequestParam(value="name") String name,
-                              @RequestParam(value="message") String message,
-                              @ModelAttribute Model model) {
-        System.out.println(name);
-        System.out.println(message);
+                              @RequestParam(value="message") String message)
+                              {
+        Post post = new Post(message);
 
-//        curl -v -X POST 'localhost:8080/api/posts' -d '{"content": "Bilbo my old friend!"}' -H 'Content-Type: application/json'
-        model.addAttribute("content", message);
-        postDAO.save(message);
+        postDAO.save(post);
 
         return "redirect:/";
 
