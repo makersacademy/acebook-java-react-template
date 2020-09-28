@@ -14,7 +14,7 @@ class Posts extends React.Component {
           Posts
         </h1>
   			<div className='posts-items'>
-  				{this.getPosts()}
+  				{this.getPosts().reverse()}
   			</div>
       </article>
 		)
