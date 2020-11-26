@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="login-card">
+    <h1>Sign Up to Acebook!</h1><br>
+    <form th:action="@{/register}" th:object="${users}" method="post">
+        <input type="text" class="form-control" placeholder="First Name" id="firstName" th:field="*{firstName}">
+        <input type="text" class="form-control" placeholder="Last Name" id="lastName" th:field="*{lastName}">
+        <input type="text" class="form-control" placeholder="Email" id="email" th:field="*{email}">
+        <input type="password" placeholder="Enter your Password"  id="password" class="form-control" th:field="*{password}">
+        <input type="submit" name="login" class="login login-submit" value="Submit">
+    </form>
+
+    <div class="login-help">
+        <a href="/login">Log In</a>
+    </div>
+</div>
+</body>
+</html>

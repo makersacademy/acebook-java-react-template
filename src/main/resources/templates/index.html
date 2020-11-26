@@ -7,7 +7,17 @@
 </head>
 <body>
 
+<!--We display the username by using Spring Security’s integration with-->
+<!--HttpServletRequest#getRemoteUser()-->
+<h1 th:inline="text">Here is your feed, [[${#httpServletRequest.remoteUser}]]!</h1>
+
     <div id="app"></div>
+
+<!--The “Sign Out” form submits a POST to /logout. Upon successfully logging out, -->
+<!--it redirects the user to /login?logout.-->
+<form th:action="@{/logout}" method="post">
+<input type="submit" value="Sign Out"/>
+</form>
 
     <script src="built/bundle.js"></script>
 
