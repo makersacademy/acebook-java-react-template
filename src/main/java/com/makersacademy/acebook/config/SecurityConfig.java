@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -52,6 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     to view it.
      */
     protected void configure(HttpSecurity http) throws Exception {
+        //Required to allow logged in users to make post requests, BAD PRACTICE!!
+        //Look into CSRF tokens
+        http.sessionManagement()
+                .sessionCreationPolicy((SessionCreationPolicy.ALWAYS));
         http
                 .csrf().disable()
                 .authorizeRequests()

@@ -20,8 +20,8 @@ public class UserController {
     @Autowired
     UserDAO userDAO;
 
-    // GET with no params, just shows you the form on the /login page
     @GetMapping("/login")
+    // GET with no params, just shows you the form on the /login page
     public String showLoginForm(){
         // returns the view named 'login'
         return "login";

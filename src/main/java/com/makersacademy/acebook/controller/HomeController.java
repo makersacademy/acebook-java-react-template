@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,25 +27,26 @@ public class HomeController {
 		this.repository = repository;
 	}
 
-
 	@Autowired
 	UserDAO userDAO;
 
-	@GetMapping(value = "/")
+	@GetMapping("/")
 	public String showIndex(Model model, Principal principal, Users user){
 		if(principal == null){
 			return "login";
 		}
 		model.addAttribute("message", "Hello everyone, we are go to back to Spring with together");
 		model.addAttribute("date", new Date());
-		model.addAttribute("users", userDAO.getOne(principal.getName()));
+		model.addAttribute("user", userDAO.getOne(principal.getName()));
 
+//		System.out.println(userDAO.getOne(principal.getName()).getEmail());
+		System.out.println(principal);
 
 		return "index";
 	}
 
-	//READS ALL RECORDS IN POSTS TABLE
 	@GetMapping("/all")
+	//READS ALL RECORDS IN POSTS TABLE
 	public List<Post> findAll() {
 		List<Post> posts = new ArrayList<>();
 		repository.findAll().forEach(posts::add);
@@ -53,7 +55,6 @@ public class HomeController {
 	}
 
 
-	@GetMapping("/add")
 	public String test() {
 		return "add";
 	}
@@ -62,12 +63,10 @@ public class HomeController {
 	@PostMapping("/add")
 	@ResponseBody
 	public void processData(@RequestParam String message) {
-		System.out.println(message);
 		Post post = new Post(message);
 		repository.save(post);
 	}
 
-	@GetMapping("/delete")
 	public String delete() {
 		return "delete";
 	}
@@ -85,7 +84,6 @@ public class HomeController {
 	}
 
 
-	@GetMapping("/update")
 	public String update() {
 		return "update";
 	}

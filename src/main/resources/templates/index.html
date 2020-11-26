@@ -10,6 +10,7 @@
 <!--We display the username by using Spring Security’s integration with-->
 <!--HttpServletRequest#getRemoteUser()-->
 <h1 th:inline="text">Here is your feed, [[${#httpServletRequest.remoteUser}]]!</h1>
+<h1 th:inline="text">Here is your feed, [[${user.getFirstName()}]]!</h1>
 
     <div id="app"></div>
 
