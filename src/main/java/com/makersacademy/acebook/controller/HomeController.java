@@ -16,6 +16,7 @@ public class HomeController {
 	@Autowired
 	UserDAO userDAO;
 
+
 	@GetMapping(value = "/")
 	public String showIndex(Model model, Principal principal, Users user){
 		if(principal == null){
@@ -25,8 +26,8 @@ public class HomeController {
 		model.addAttribute("date", new Date());
 		model.addAttribute("users", userDAO.getOne(principal.getName()));
 
-
 		return "index";
 	}
+
 
 }

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Post</title>
+</head>
+<body>
+
+<form th:action="@{/add}" method="post">
+    <input name="text" type="text" placeholder="What's on your mind?"><br>
+    <input type="submit" value="Post"><br>
+</form>
+
+</body>
+</html>
