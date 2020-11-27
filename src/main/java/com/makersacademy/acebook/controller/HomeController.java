@@ -54,7 +54,7 @@ public class HomeController {
 		return posts;
 	}
 
-
+	@GetMapping("/add")
 	public String test() {
 		return "add";
 	}
@@ -67,6 +67,7 @@ public class HomeController {
 		repository.save(post);
 	}
 
+	@GetMapping("/delete")
 	public String delete() {
 		return "delete";
 	}
@@ -83,7 +84,7 @@ public class HomeController {
 		}
 	}
 
-
+	@GetMapping("/update")
 	public String update() {
 		return "update";
 	}
