@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     to view it.
      */
     protected void configure(HttpSecurity http) throws Exception {
+
         //Required to allow logged in users to make post requests, BAD PRACTICE!!
         //Look into CSRF tokens
         http.sessionManagement()
@@ -61,8 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .anyRequest().permitAll();
-
-        http.authorizeRequests().antMatchers("/register", "/login").permitAll()
+        http.authorizeRequests().antMatchers("/register", "/login", "/built/*").permitAll()
+          
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

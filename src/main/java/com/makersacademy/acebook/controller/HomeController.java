@@ -35,12 +35,6 @@ public class HomeController {
 		if(principal == null){
 			return "login";
 		}
-		model.addAttribute("message", "Hello everyone, we are go to back to Spring with together");
-		model.addAttribute("date", new Date());
-		model.addAttribute("user", userDAO.getOne(principal.getName()));
-
-//		System.out.println(userDAO.getOne(principal.getName()).getEmail());
-		System.out.println(principal);
 
 		return "index";
 	}
