@@ -27,7 +27,7 @@ public class Role {
     @ManyToMany(mappedBy = "role")
 
     // A list of users
-    private List<Users> users;
+    private List<User> users;
 
     /* getters & setters act as encapsulation (the aim is to make sure
     that sensitive data is hidden from users. To achieve this you:
@@ -42,11 +42,11 @@ public class Role {
         this.name = name;
     }
 
-    public List<Users> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<Users> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 

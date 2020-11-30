@@ -1,9 +1,9 @@
 package com.makersacademy.acebook.controller;
 
+import com.makersacademy.acebook.dao.PostDAO;
 import com.makersacademy.acebook.dao.UserDAO;
 import com.makersacademy.acebook.model.Post;
-import com.makersacademy.acebook.model.Users;
-import com.makersacademy.acebook.repository.PostRepository;
+import com.makersacademy.acebook.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +21,9 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-	private final PostRepository repository;
+	private final PostDAO repository;
 
-	public HomeController(PostRepository repository) {
+	public HomeController(PostDAO repository) {
 		this.repository = repository;
 	}
 
@@ -31,7 +31,7 @@ public class HomeController {
 	UserDAO userDAO;
 
 	@GetMapping("/")
-	public String showIndex(Model model, Principal principal, Users user){
+	public String showIndex(Model model, Principal principal, User user){
 		if(principal == null){
 			return "login";
 		}
