@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.List;
 
 /* @Entity defines that a class can be mapped to a table.
@@ -20,9 +21,12 @@ entity is mapped to a table named Users)
 /* This is where you create variables for your class,
 generate getters & setters.
  */
-public class User {
+public class User implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     // checks for invalid email
     @Email
     // validates that the field is not empty
@@ -115,5 +119,24 @@ public class User {
     // somehow interacts with line 37 in UserController?
     //The default constructor exists only for the sake of JPA.
     public User() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

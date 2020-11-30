@@ -36765,6 +36765,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
+var _client = __webpack_require__(/*! ./client */ "./src/main/js/client.js");
+
+var _client2 = _interopRequireDefault(_client);
+
 var _postsBuilder = __webpack_require__(/*! ./components/posts/postsBuilder */ "./src/main/js/components/posts/postsBuilder.js");
 
 var _postsBuilder2 = _interopRequireDefault(_postsBuilder);
@@ -36795,13 +36799,24 @@ var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/in
 var App = function (_React$Component) {
 	_inherits(App, _React$Component);
 
-	function App() {
+	function App(props) {
 		_classCallCheck(this, App);
 
-		return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+		_this.state = { user: null };
+		return _this;
 	}
 
 	_createClass(App, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			(0, _client2.default)({ method: 'GET', path: '/getuser' }).then(function (response) {
+				console.log(response);
+				// this.setState({posts: response.entity._embedded.posts});
+			});
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			var routes = React.createElement(
@@ -37073,7 +37088,7 @@ var Button = function Button(props) {
         {
             disabled: props.disabled,
             hidden: props.hidden,
-            className: [Button, props.btnType].join(" "),
+            className: ["Button", props.btnType].join(" "),
             onClick: props.clicked },
         props.children
     );
