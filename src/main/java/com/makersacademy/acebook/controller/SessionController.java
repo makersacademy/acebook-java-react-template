@@ -21,10 +21,9 @@ public class SessionController {
   public Map<String, String> getLoggedInUser(Principal principal) {
     String email = principal.getName();
     User user = userDAO.findByEmail(email);
-    System.out.println(user);
     HashMap<String, String> userMap = new HashMap<>();
     userMap.put("id", Long.toString(user.getId()));
-    userMap.put("fistName", user.getFirstName());
+    userMap.put("firstName", user.getFirstName());
     userMap.put("lastName", user.getLastName());
     userMap.put("email", user.getEmail());
     return userMap;

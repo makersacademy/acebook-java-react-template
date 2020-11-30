@@ -10,25 +10,32 @@ import Users from "./components/Users/Users";
 class App extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {user: null};
+		this.state = {
+			user: null,
+			loaded: false
+		};
 	}
 
 	componentDidMount() {
 		client({method: 'GET', path: '/getuser'}).then(response => {
 			console.log(response);
-			// this.setState({posts: response.entity._embedded.posts});
+			this.setState({user: response.entity, loaded: true});
 		});
 	}
 
 	render() {
-			let routes = (
+		let routes = "loading..."
+		if(this.state.loaded) {
+			routes = (
 					<Switch>
 						<Route path="/users" component={Users} />
-						<Route path="/posts" component={PostsBuilder} />
-						<Route path="/" exact component={Home} />
+						<Route path="/posts" render={(props) => <PostsBuilder {...props} user={this.state.user} />} />
+						<Route path="/" exact render={(props) => <Home {...props} user={this.state.user} />} />
 						<Redirect to="/" />
 					</Switch>
 			)
+		}
+
 		return (
 				<Layout>
 					<div>

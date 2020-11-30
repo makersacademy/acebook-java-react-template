@@ -36761,6 +36761,8 @@ module.exports = g;
 "use strict";
 
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
@@ -36804,29 +36806,44 @@ var App = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-		_this.state = { user: null };
+		_this.state = {
+			user: null,
+			loaded: false
+		};
 		return _this;
 	}
 
 	_createClass(App, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
+			var _this2 = this;
+
 			(0, _client2.default)({ method: 'GET', path: '/getuser' }).then(function (response) {
 				console.log(response);
-				// this.setState({posts: response.entity._embedded.posts});
+				_this2.setState({ user: response.entity, loaded: true });
 			});
 		}
 	}, {
 		key: 'render',
 		value: function render() {
-			var routes = React.createElement(
-				_reactRouterDom.Switch,
-				null,
-				React.createElement(_reactRouterDom.Route, { path: '/users', component: _Users2.default }),
-				React.createElement(_reactRouterDom.Route, { path: '/posts', component: _postsBuilder2.default }),
-				React.createElement(_reactRouterDom.Route, { path: '/', exact: true, component: _Home2.default }),
-				React.createElement(_reactRouterDom.Redirect, { to: '/' })
-			);
+			var _this3 = this;
+
+			var routes = "loading...";
+			if (this.state.loaded) {
+				routes = React.createElement(
+					_reactRouterDom.Switch,
+					null,
+					React.createElement(_reactRouterDom.Route, { path: '/users', component: _Users2.default }),
+					React.createElement(_reactRouterDom.Route, { path: '/posts', render: function render(props) {
+							return React.createElement(_postsBuilder2.default, _extends({}, props, { user: _this3.state.user }));
+						} }),
+					React.createElement(_reactRouterDom.Route, { path: '/', exact: true, render: function render(props) {
+							return React.createElement(_Home2.default, _extends({}, props, { user: _this3.state.user }));
+						} }),
+					React.createElement(_reactRouterDom.Redirect, { to: '/' })
+				);
+			}
+
 			return React.createElement(
 				_Layout2.default,
 				null,
@@ -36907,7 +36924,9 @@ var Home = function Home(props) {
     _react2.default.createElement(
       "h2",
       null,
-      "Welcome to Acebook!"
+      "Welcome to Acebook, ",
+      props.user.firstName,
+      "!"
     ),
     _react2.default.createElement(
       "p",
@@ -37356,7 +37375,7 @@ var PostsBuilder = function (_React$Component) {
     value: function postTester() {
       client({ method: 'POST',
         path: '/api/posts',
-        entity: { "content": "Test Post" },
+        entity: { "content": "Test Post", "user_id": this.props.user.id },
         headers: { "Content-Type": "application/json" }
       }).then(function (response) {
         console.log(response);

@@ -6,7 +6,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /* @Entity defines that a class can be mapped to a table.
 This is just how JPA is designed- needs a bare minimum of
@@ -41,6 +43,10 @@ public class User implements Serializable {
 
     @NotEmpty
     private String lastName;
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private Set<Post> posts = new HashSet<>();
 
     /* @ManyToMany is defined in both entities but ONLY
     one entity can own the relationship! Here, Users class is the owner

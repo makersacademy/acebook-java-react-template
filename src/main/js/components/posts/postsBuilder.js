@@ -21,7 +21,7 @@ class PostsBuilder extends React.Component {
   postTester() {
     client({method: 'POST',
       path: '/api/posts',
-      entity: {"content": "Test Post"},
+      entity: {"content": "Test Post", "user_id": this.props.user.id },
       headers: {"Content-Type": "application/json"}
     }).then(response => {
       console.log(response);

@@ -15,6 +15,9 @@ public class Post {
     private Long id;
     private String content;
 
+    @ManyToOne
+    private User user;
+
     private Post() {}
 
     public Post(String content) {
