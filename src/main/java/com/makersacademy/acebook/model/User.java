@@ -44,8 +44,7 @@ public class User implements Serializable {
     @NotEmpty
     private String lastName;
 
-    @OneToMany
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "user")
     private Set<Post> posts = new HashSet<>();
 
     /* @ManyToMany is defined in both entities but ONLY
@@ -144,5 +143,20 @@ public class User implements Serializable {
                 ", lastName='" + lastName + '\'' +
                 ", role=" + role +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }
