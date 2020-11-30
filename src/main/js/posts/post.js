@@ -6,6 +6,8 @@ const Post = (props) => {
 			<div className='post-content'>
 				{props.post.content}
 			</div>
+        <button onClick={props.handleDelete}>Delete</button>
+        <h1> {props.post.id} </h1>
 		</div>
 	)
 }
