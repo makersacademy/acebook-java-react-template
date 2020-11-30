@@ -16,7 +16,7 @@ As opposed to writing separate Java methods with tons of queries.
 
 CMD + click opens up all the methods added by JpaRepository
  */
-public interface UserDAO extends JpaRepository<User, String> {
+public interface UserDAO extends JpaRepository<User, Long> {
 
     User findByEmail(String email);
 }

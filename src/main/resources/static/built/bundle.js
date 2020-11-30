@@ -36761,9 +36761,15 @@ module.exports = g;
 "use strict";
 
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+var _client = __webpack_require__(/*! ./client */ "./src/main/js/client.js");
+
+var _client2 = _interopRequireDefault(_client);
 
 var _postsBuilder = __webpack_require__(/*! ./components/posts/postsBuilder */ "./src/main/js/components/posts/postsBuilder.js");
 
@@ -36795,23 +36801,49 @@ var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/in
 var App = function (_React$Component) {
 	_inherits(App, _React$Component);
 
-	function App() {
+	function App(props) {
 		_classCallCheck(this, App);
 
-		return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+		_this.state = {
+			user: null,
+			loaded: false
+		};
+		return _this;
 	}
 
 	_createClass(App, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			(0, _client2.default)({ method: 'GET', path: '/getuser' }).then(function (response) {
+				console.log(response);
+				_this2.setState({ user: response.entity, loaded: true });
+			});
+		}
+	}, {
 		key: 'render',
 		value: function render() {
-			var routes = React.createElement(
-				_reactRouterDom.Switch,
-				null,
-				React.createElement(_reactRouterDom.Route, { path: '/users', component: _Users2.default }),
-				React.createElement(_reactRouterDom.Route, { path: '/posts', component: _postsBuilder2.default }),
-				React.createElement(_reactRouterDom.Route, { path: '/', exact: true, component: _Home2.default }),
-				React.createElement(_reactRouterDom.Redirect, { to: '/' })
-			);
+			var _this3 = this;
+
+			var routes = "loading...";
+			if (this.state.loaded) {
+				routes = React.createElement(
+					_reactRouterDom.Switch,
+					null,
+					React.createElement(_reactRouterDom.Route, { path: '/users', component: _Users2.default }),
+					React.createElement(_reactRouterDom.Route, { path: '/posts', render: function render(props) {
+							return React.createElement(_postsBuilder2.default, _extends({}, props, { user: _this3.state.user }));
+						} }),
+					React.createElement(_reactRouterDom.Route, { path: '/', exact: true, render: function render(props) {
+							return React.createElement(_Home2.default, _extends({}, props, { user: _this3.state.user }));
+						} }),
+					React.createElement(_reactRouterDom.Redirect, { to: '/' })
+				);
+			}
+
 			return React.createElement(
 				_Layout2.default,
 				null,
@@ -36892,7 +36924,9 @@ var Home = function Home(props) {
     _react2.default.createElement(
       "h2",
       null,
-      "Welcome to Acebook!"
+      "Welcome to Acebook, ",
+      props.user.firstName,
+      "!"
     ),
     _react2.default.createElement(
       "p",
@@ -37073,13 +37107,92 @@ var Button = function Button(props) {
         {
             disabled: props.disabled,
             hidden: props.hidden,
-            className: [Button, props.btnType].join(" "),
+            className: ["Button", props.btnType].join(" "),
             onClick: props.clicked },
         props.children
     );
 };
 
 exports.default = Button;
+
+/***/ }),
+
+/***/ "./src/main/js/components/UI/Spinner/Spinner.js":
+/*!******************************************************!*\
+  !*** ./src/main/js/components/UI/Spinner/Spinner.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var classes = {};
+
+
+var Spinner = function Spinner(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: 'Loader' },
+        'Loading...'
+    );
+};
+
+exports.default = Spinner;
+
+/***/ }),
+
+/***/ "./src/main/js/components/Users/User.js":
+/*!**********************************************!*\
+  !*** ./src/main/js/components/Users/User.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var User = function User(props) {
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'p',
+      null,
+      'Name: ',
+      props.user.firstName
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'Email: ',
+      props.user.email
+    )
+  );
+};
+
+exports.default = User;
 
 /***/ }),
 
@@ -37107,6 +37220,18 @@ var _client = __webpack_require__(/*! ../../client */ "./src/main/js/client.js")
 
 var _client2 = _interopRequireDefault(_client);
 
+var _Aux = __webpack_require__(/*! ../../hoc/Aux/Aux */ "./src/main/js/hoc/Aux/Aux.js");
+
+var _Aux2 = _interopRequireDefault(_Aux);
+
+var _User = __webpack_require__(/*! ./User */ "./src/main/js/components/Users/User.js");
+
+var _User2 = _interopRequireDefault(_User);
+
+var _Spinner = __webpack_require__(/*! ../UI/Spinner/Spinner */ "./src/main/js/components/UI/Spinner/Spinner.js");
+
+var _Spinner2 = _interopRequireDefault(_Spinner);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37123,7 +37248,7 @@ var Users = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Users.__proto__ || Object.getPrototypeOf(Users)).call(this, props));
 
-    _this.state = { users: [] };
+    _this.state = { users: [], loaded: false };
     return _this;
   }
 
@@ -37134,18 +37259,32 @@ var Users = function (_Component) {
 
       (0, _client2.default)({ method: 'GET', path: '/api/users' }).then(function (response) {
         console.log(response);
-        _this2.setState({ users: response.entity._embedded.users });
+        _this2.setState({ users: response.entity._embedded.users, loaded: true });
       });
     }
   }, {
     key: 'render',
     value: function render() {
+      var users = _react2.default.createElement(_Spinner2.default, null);
+
+      if (this.state.loaded) {
+        users = this.state.users.map(function (user) {
+          return _react2.default.createElement(_User2.default, {
+            key: user.id,
+            user: user });
+        });
+      }
       return _react2.default.createElement(
-        'p',
+        _Aux2.default,
         null,
-        'There are ',
-        this.state.users.length,
-        ' users in the database.'
+        _react2.default.createElement(
+          'p',
+          null,
+          'There are ',
+          this.state.users.length,
+          ' users in the database.'
+        ),
+        users
       );
     }
   }]);
@@ -37184,7 +37323,8 @@ var Post = function Post(props) {
 		_react2.default.createElement(
 			'div',
 			{ className: 'post-content' },
-			props.post.content
+			props.post.content,
+			props.post.user
 		)
 	);
 };
@@ -37322,6 +37462,7 @@ var PostsBuilder = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (PostsBuilder.__proto__ || Object.getPrototypeOf(PostsBuilder)).call(this, props));
 
     _this.state = { posts: [] };
+    _this.postTester = _this.postTester.bind(_this);
     return _this;
   }
 
@@ -37341,7 +37482,7 @@ var PostsBuilder = function (_React$Component) {
     value: function postTester() {
       client({ method: 'POST',
         path: '/api/posts',
-        entity: { "content": "Test Post" },
+        entity: { "content": "Test Post", "user_id": 2 },
         headers: { "Content-Type": "application/json" }
       }).then(function (response) {
         console.log(response);

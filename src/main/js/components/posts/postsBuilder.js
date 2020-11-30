@@ -8,6 +8,7 @@ class PostsBuilder extends React.Component {
   constructor(props) {
     super(props)
     this.state = {posts: []};
+    this.postTester = this.postTester.bind(this);
   }
 
   componentDidMount() {
@@ -21,7 +22,7 @@ class PostsBuilder extends React.Component {
   postTester() {
     client({method: 'POST',
       path: '/api/posts',
-      entity: {"content": "Test Post"},
+      entity: {"content": "Test Post", "user_id": 2 },
       headers: {"Content-Type": "application/json"}
     }).then(response => {
       console.log(response);

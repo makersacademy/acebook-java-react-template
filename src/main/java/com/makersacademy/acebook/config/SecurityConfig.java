@@ -58,10 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //Look into CSRF tokens
         http.sessionManagement()
                 .sessionCreationPolicy((SessionCreationPolicy.ALWAYS));
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .anyRequest().permitAll();
+
         http.authorizeRequests().antMatchers("/register", "/login", "/built/*").permitAll()
           
                 .anyRequest().authenticated()
@@ -72,6 +69,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .anyRequest().permitAll();
     }
 
 
