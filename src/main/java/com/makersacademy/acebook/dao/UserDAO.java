@@ -1,6 +1,6 @@
 package com.makersacademy.acebook.dao;
 
-import com.makersacademy.acebook.model.Users;
+import com.makersacademy.acebook.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /* JpaRepository & CrudRepository are the same thing except Jpa
@@ -16,9 +16,9 @@ As opposed to writing separate Java methods with tons of queries.
 
 CMD + click opens up all the methods added by JpaRepository
  */
-public interface UserDAO extends JpaRepository<Users, String> {
+public interface UserDAO extends JpaRepository<User, String> {
 
-    Users findByEmail(String email);
+    User findByEmail(String email);
 }
 
 /* UserDAO extends the JpaRepository interface. The type of entity and ID

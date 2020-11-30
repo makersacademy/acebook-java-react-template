@@ -1,5 +1,7 @@
 package com.makersacademy.acebook.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -13,10 +15,12 @@ This is just how JPA is designed- needs a bare minimum of
 entity is mapped to a table named Users)
  */
 @Entity
+@Data
+@Table(name = "USERS")
 /* This is where you create variables for your class,
 generate getters & setters.
  */
-public class Users {
+public class User {
 
     @Id
     // checks for invalid email
@@ -101,7 +105,7 @@ public class Users {
     /* constructors(acts as an initializer).
     Creates an instance of a user to be saved into a db.
      */
-    public Users(String email, String firstName, String lastName, String password ) {
+    public User(String email, String firstName, String lastName, String password ) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -110,6 +114,6 @@ public class Users {
 
     // somehow interacts with line 37 in UserController?
     //The default constructor exists only for the sake of JPA.
-    public Users() {
+    public User() {
     }
 }
