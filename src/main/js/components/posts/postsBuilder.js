@@ -9,19 +9,35 @@ class PostsBuilder extends React.Component {
     super(props)
     this.state = {posts: []};
     this.postTester = this.postTester.bind(this);
+    this.deletePost = this.deletePost.bind(this);
+    this.getPosts = this.getPosts.bind(this);
   }
 
   componentDidMount() {
+    this.getPosts();
+  }
+
+  getPosts() {
     console.log("get posts")
-    client({method: 'GET', path: '/api/posts'}).then(response => {
+    client({method: 'GET', path: '/posts'}).then(response => {
       console.log(response);
-      this.setState({posts: response.entity._embedded.posts});
+      this.setState({posts: response.entity});
     });
+  }
+
+  deletePost(id) {
+    console.log("deleting")
+    client({method: 'DELETE',
+      path: '/api/posts/' + id
+    }).then(response => {
+      console.log(response);
+      this.getPosts();
+    })
   }
 
   postTester() {
     client({method: 'POST',
-      path: '/api/posts',
+      path: '/posts',
       entity: {"content": "Test Post", "user_id": 2 },
       headers: {"Content-Type": "application/json"}
     }).then(response => {
@@ -33,7 +49,7 @@ class PostsBuilder extends React.Component {
 		return (
 		    <Aux>
           <Button btnType="Success" clicked={this.postTester}>Test Post</Button>
-          <Posts posts={this.state.posts}/>
+          <Posts posts={this.state.posts} deletePost={this.deletePost}/>
         </Aux>
 		)
 	}

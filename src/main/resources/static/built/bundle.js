@@ -37314,6 +37314,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Button = __webpack_require__(/*! ../UI/Button/Button */ "./src/main/js/components/UI/Button/Button.js");
+
+var _Button2 = _interopRequireDefault(_Button);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Post = function Post(props) {
@@ -37322,9 +37326,18 @@ var Post = function Post(props) {
 		{ className: 'post-main' },
 		_react2.default.createElement(
 			'div',
+			{ className: 'post-author' },
+			'By: ' + props.post.user.firstName + ' ' + props.post.user.lastName
+		),
+		_react2.default.createElement(
+			'div',
 			{ className: 'post-content' },
-			props.post.content,
-			props.post.user
+			props.post.content
+		),
+		_react2.default.createElement(
+			_Button2.default,
+			{ btnType: 'Danger', clicked: props.deletePost },
+			'Delete'
 		)
 	);
 };
@@ -37356,6 +37369,10 @@ var _react2 = _interopRequireDefault(_react);
 var _post = __webpack_require__(/*! ./post */ "./src/main/js/components/posts/post.js");
 
 var _post2 = _interopRequireDefault(_post);
+
+var _client = __webpack_require__(/*! ../../client */ "./src/main/js/client.js");
+
+var _client2 = _interopRequireDefault(_client);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37398,8 +37415,16 @@ var Posts = function (_React$Component) {
   }, {
     key: 'getPosts',
     value: function getPosts() {
+      var _this2 = this;
+
       return this.props.posts.map(function (post) {
-        return _react2.default.createElement(_post2.default, { key: post._links.self.href, post: post });
+        return _react2.default.createElement(_post2.default, {
+          key: post.id,
+          post: post,
+          deletePost: function deletePost() {
+            return _this2.props.deletePost(post.id);
+          }
+        });
       });
     }
   }]);
@@ -37463,25 +37488,46 @@ var PostsBuilder = function (_React$Component) {
 
     _this.state = { posts: [] };
     _this.postTester = _this.postTester.bind(_this);
+    _this.deletePost = _this.deletePost.bind(_this);
+    _this.getPosts = _this.getPosts.bind(_this);
+    ;
     return _this;
   }
 
   _createClass(PostsBuilder, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.getPosts();
+    }
+  }, {
+    key: 'getPosts',
+    value: function getPosts() {
       var _this2 = this;
 
       console.log("get posts");
-      client({ method: 'GET', path: '/api/posts' }).then(function (response) {
+      client({ method: 'GET', path: '/posts' }).then(function (response) {
         console.log(response);
-        _this2.setState({ posts: response.entity._embedded.posts });
+        _this2.setState({ posts: response.entity });
+      });
+    }
+  }, {
+    key: 'deletePost',
+    value: function deletePost(id) {
+      var _this3 = this;
+
+      console.log("deleting");
+      client({ method: 'DELETE',
+        path: '/api/posts/' + id
+      }).then(function (response) {
+        console.log(response);
+        _this3.getPosts();
       });
     }
   }, {
     key: 'postTester',
     value: function postTester() {
       client({ method: 'POST',
-        path: '/api/posts',
+        path: '/posts',
         entity: { "content": "Test Post", "user_id": 2 },
         headers: { "Content-Type": "application/json" }
       }).then(function (response) {
@@ -37499,7 +37545,7 @@ var PostsBuilder = function (_React$Component) {
           { btnType: 'Success', clicked: this.postTester },
           'Test Post'
         ),
-        _react2.default.createElement(_posts2.default, { posts: this.state.posts })
+        _react2.default.createElement(_posts2.default, { posts: this.state.posts, deletePost: this.deletePost })
       );
     }
   }]);

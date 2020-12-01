@@ -4,9 +4,21 @@
 
 .post-main {
     border: 1px solid #999;
-    padding: 0.5rem;
     text-align: left;
-    margin-bottom: 0.5rem;;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}
+
+.post-author {
+    background-color: #027BCE;
+    color: white;
+    border-radius: 4px 4px 0 0;
+    border-bottom: 1px solid black;
+    padding: 5px;
+}
+
+.post-content {
+    padding: 5px;
 }
 
 body {
