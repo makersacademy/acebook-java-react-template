@@ -17,9 +17,7 @@ class PostsBuilder extends React.Component {
 
   onDelete(post) {
   console.log(post);
-  	client({method: 'DELETE', path: `/api/posts/${post.id}`}).done(response => {
-  		this.loadFromServer(this.state.pageSize);
-  	});
+  	client({method: 'DELETE', path: post})
   }
 
 	render() {

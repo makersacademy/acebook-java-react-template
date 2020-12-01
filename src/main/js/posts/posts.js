@@ -6,10 +6,13 @@ class Posts extends React.Component {
     super(props);
     this.getPosts = this.getPosts.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+
   }
 
-  handleDelete() {
-  		this.props.onDelete(this.props.posts);
+  handleDelete(event) {
+  const id = event.target.id;
+  console.log(id)
+  		this.props.onDelete(id);
   }
 
 	render() {
