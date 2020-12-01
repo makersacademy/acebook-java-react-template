@@ -37486,11 +37486,10 @@ var PostsBuilder = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (PostsBuilder.__proto__ || Object.getPrototypeOf(PostsBuilder)).call(this, props));
 
-    _this.state = { posts: [] };
-    _this.postTester = _this.postTester.bind(_this);
+    _this.state = { posts: [], newPostText: "" };
     _this.deletePost = _this.deletePost.bind(_this);
     _this.getPosts = _this.getPosts.bind(_this);
-    ;
+    _this.createPost = _this.createPost.bind(_this);
     return _this;
   }
 
@@ -37524,26 +37523,60 @@ var PostsBuilder = function (_React$Component) {
       });
     }
   }, {
-    key: 'postTester',
-    value: function postTester() {
+    key: 'inputChangeHandler',
+    value: function inputChangeHandler(event) {
+      this.setState({
+        newPostText: event.target.value
+      });
+    }
+  }, {
+    key: 'createPost',
+    value: function createPost(event) {
+      var _this4 = this;
+
+      event.preventDefault();
       client({ method: 'POST',
         path: '/posts',
-        entity: { "content": "Test Post", "user_id": 2 },
+        entity: { "content": this.state.newPostText, "user_id": this.props.user.id },
         headers: { "Content-Type": "application/json" }
       }).then(function (response) {
         console.log(response);
+        _this4.getPosts();
+        _this4.setState({
+          newPostText: ""
+        });
       });
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this5 = this;
+
       return _react2.default.createElement(
         _Aux2.default,
         null,
         _react2.default.createElement(
-          _Button2.default,
-          { btnType: 'Success', clicked: this.postTester },
-          'Test Post'
+          'h3',
+          null,
+          'New Post'
+        ),
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.createPost },
+          _react2.default.createElement('textarea', {
+            cols: '80',
+            rows: '6',
+            value: this.state.newPostText,
+            onChange: function onChange(event) {
+              return _this5.inputChangeHandler(event);
+            } }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            _Button2.default,
+            { btnType: 'Success' },
+            'Post'
+          )
         ),
         _react2.default.createElement(_posts2.default, { posts: this.state.posts, deletePost: this.deletePost })
       );
