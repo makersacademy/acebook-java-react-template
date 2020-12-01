@@ -1,9 +1,14 @@
 package com.makersacademy.acebook.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /* @Entity defines that a class can be mapped to a table.
 This is just how JPA is designed- needs a bare minimum of
@@ -13,12 +18,17 @@ This is just how JPA is designed- needs a bare minimum of
 entity is mapped to a table named Users)
  */
 @Entity
+@Data
+@Table(name = "USERS")
 /* This is where you create variables for your class,
 generate getters & setters.
  */
-public class Users {
+public class User implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     // checks for invalid email
     @Email
     // validates that the field is not empty
@@ -33,6 +43,9 @@ public class Users {
 
     @NotEmpty
     private String lastName;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Post> posts = new HashSet<>();
 
     /* @ManyToMany is defined in both entities but ONLY
     one entity can own the relationship! Here, Users class is the owner
@@ -101,7 +114,7 @@ public class Users {
     /* constructors(acts as an initializer).
     Creates an instance of a user to be saved into a db.
      */
-    public Users(String email, String firstName, String lastName, String password ) {
+    public User(String email, String firstName, String lastName, String password ) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -110,6 +123,40 @@ public class Users {
 
     // somehow interacts with line 37 in UserController?
     //The default constructor exists only for the sake of JPA.
-    public Users() {
+    public User() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role=" + role +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }

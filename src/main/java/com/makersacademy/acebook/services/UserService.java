@@ -2,7 +2,7 @@ package com.makersacademy.acebook.services;
 
 import com.makersacademy.acebook.dao.UserDAO;
 import com.makersacademy.acebook.model.Role;
-import com.makersacademy.acebook.model.Users;
+import com.makersacademy.acebook.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class UserService {
     @Autowired
     private UserDAO userRepository;
 
-    public Users createUser(Users user) {
+    public User createUser(User user) {
         // encrypts the password
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
