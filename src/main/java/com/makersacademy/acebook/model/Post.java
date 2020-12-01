@@ -3,8 +3,8 @@ package com.makersacademy.acebook.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Data
 @Entity
 @Table(name = "POSTS")
 public class Post {
@@ -47,6 +47,15 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+
+                '}';
     }
 
     @Override

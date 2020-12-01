@@ -1,5 +1,7 @@
 package com.makersacademy.acebook.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,13 +19,14 @@ This is just how JPA is designed- needs a bare minimum of
 (Because no @Table annotation exists, it is assumed that this
 entity is mapped to a table named Users)
  */
+@JsonIgnoreProperties(value={"posts", "role"})
 @Entity
-@Data
 @Table(name = "USERS")
 /* This is where you create variables for your class,
 generate getters & setters.
  */
 public class User implements Serializable {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +48,7 @@ public class User implements Serializable {
     private String lastName;
 
     @OneToMany(mappedBy = "user")
-    private Set<Post> posts = new HashSet<>();
+    private List<Post> posts;
 
     /* @ManyToMany is defined in both entities but ONLY
     one entity can own the relationship! Here, Users class is the owner
@@ -134,6 +137,14 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -141,7 +152,6 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", role=" + role +
                 '}';
     }
 
