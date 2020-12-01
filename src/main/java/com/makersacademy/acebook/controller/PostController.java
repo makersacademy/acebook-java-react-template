@@ -32,7 +32,6 @@ public class PostController {
 
   @PostMapping("/posts")
   Post newPost(@RequestBody Map<String,Object> body) {
-    System.out.println(body.get("user_id"));
     Post newPost = new Post();
     newPost.setContent(body.get("content").toString());
     Optional<User> author = userDAO.findById(Long.parseLong(body.get("user_id").toString()));

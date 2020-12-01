@@ -28,7 +28,7 @@ class App extends React.Component {
 		if(this.state.loaded) {
 			routes = (
 					<Switch>
-						<Route path="/users" component={Users} />
+						<Route path="/users" render={(props) => <Users {...props} user={this.state.user} />} />
 						<Route path="/posts" render={(props) => <PostsBuilder {...props} user={this.state.user} />} />
 						<Route path="/" exact render={(props) => <Home {...props} user={this.state.user} />} />
 						<Redirect to="/" />
