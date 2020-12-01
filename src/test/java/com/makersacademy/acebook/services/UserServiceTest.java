@@ -2,14 +2,15 @@ package com.makersacademy.acebook.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import com.makersacademy.acebook.dao.UserDAO;
-import com.makersacademy.acebook.model.Users;
-import org.junit.jupiter.api.Test;
+import com.makersacademy.acebook.model.User;
+import org.junit.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -28,9 +29,9 @@ public class UserServiceTest {
 
     @Test
     public void UserServiceTest() {
-        entityManager.persist(new Users("test@gmail.com","bob","billybob","china"));
+        entityManager.persist(new User("test@gmail.com","bob","billybob","china"));
         //userDao.save(user);
-        Users user = userDao.findByEmail("test@gmail.com");
+        User user = userDao.findByEmail("test@gmail.com");
         assertThat(user.getEmail()).isEqualTo("test@gmail.com");
 
 
