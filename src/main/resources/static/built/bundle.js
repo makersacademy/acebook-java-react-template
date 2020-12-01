@@ -36833,7 +36833,9 @@ var App = function (_React$Component) {
 				routes = React.createElement(
 					_reactRouterDom.Switch,
 					null,
-					React.createElement(_reactRouterDom.Route, { path: '/users', component: _Users2.default }),
+					React.createElement(_reactRouterDom.Route, { path: '/users', render: function render(props) {
+							return React.createElement(_Users2.default, _extends({}, props, { user: _this3.state.user }));
+						} }),
 					React.createElement(_reactRouterDom.Route, { path: '/posts', render: function render(props) {
 							return React.createElement(_postsBuilder2.default, _extends({}, props, { user: _this3.state.user }));
 						} }),
@@ -37173,7 +37175,6 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var User = function User(props) {
-
   return _react2.default.createElement(
     'div',
     null,
@@ -37232,7 +37233,13 @@ var _Spinner = __webpack_require__(/*! ../UI/Spinner/Spinner */ "./src/main/js/c
 
 var _Spinner2 = _interopRequireDefault(_Spinner);
 
+var _Button = __webpack_require__(/*! ../UI/Button/Button */ "./src/main/js/components/UI/Button/Button.js");
+
+var _Button2 = _interopRequireDefault(_Button);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -37248,35 +37255,103 @@ var Users = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Users.__proto__ || Object.getPrototypeOf(Users)).call(this, props));
 
-    _this.state = { users: [], loaded: false };
+    _this.state = {
+      users: [],
+      displayedUsers: [],
+      loaded: false,
+      search: ""
+    };
+    _this.getUsers = _this.getUsers.bind(_this);
+    _this.getFriends = _this.getFriends.bind(_this);
+    _this.onSearch = _this.onSearch.bind(_this);
     return _this;
   }
 
   _createClass(Users, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.getUsers();
+    }
+  }, {
+    key: 'getUsers',
+    value: function getUsers() {
       var _this2 = this;
 
       (0, _client2.default)({ method: 'GET', path: '/api/users' }).then(function (response) {
         console.log(response);
-        _this2.setState({ users: response.entity._embedded.users, loaded: true });
+        _this2.setState({
+          users: response.entity._embedded.users,
+          displayedUsers: response.entity._embedded.users,
+          loaded: true });
+      });
+    }
+  }, {
+    key: 'getFriends',
+    value: function getFriends() {
+      (0, _client2.default)({ method: 'GET', path: '/users/' }).then(function (response) {
+        console.log(response);
+      });
+    }
+  }, {
+    key: 'inputChangeHandler',
+    value: function inputChangeHandler(event) {
+      this.setState({
+        search: event.target.value.toLowerCase()
+      });
+    }
+  }, {
+    key: 'onSearch',
+    value: function onSearch(event) {
+      var _this3 = this;
+
+      event.preventDefault();
+      if (this.state.search === "") {
+        this.getUsers();
+        return;
+      }
+      var usersToDisplay = [].concat(_toConsumableArray(this.state.users));
+      usersToDisplay = usersToDisplay.filter(function (user) {
+        return user.firstName.toLowerCase().includes(_this3.state.search) || user.lastName.toLowerCase().includes(_this3.state.search) || user.email.toLowerCase().includes(_this3.state.search);
+      });
+      this.setState({
+        displayedUsers: usersToDisplay
       });
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this4 = this;
+
       var users = _react2.default.createElement(_Spinner2.default, null);
 
       if (this.state.loaded) {
-        users = this.state.users.map(function (user) {
+        users = this.state.displayedUsers.map(function (user) {
           return _react2.default.createElement(_User2.default, {
             key: user.id,
-            user: user });
+            user: user
+          });
         });
       }
       return _react2.default.createElement(
         _Aux2.default,
         null,
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.onSearch },
+          _react2.default.createElement('input', { type: 'text', value: this.state.search, onChange: function onChange(event) {
+              return _this4.inputChangeHandler(event);
+            } }),
+          _react2.default.createElement(
+            _Button2.default,
+            { btnType: 'Success' },
+            'Search'
+          )
+        ),
+        _react2.default.createElement(
+          _Button2.default,
+          { btnType: 'Success', clicked: this.getFriends },
+          'Test Friends'
+        ),
         _react2.default.createElement(
           'p',
           null,
@@ -37570,7 +37645,6 @@ var PostsBuilder = function (_React$Component) {
             onChange: function onChange(event) {
               return _this5.inputChangeHandler(event);
             } }),
-          _react2.default.createElement('br', null),
           _react2.default.createElement('br', null),
           _react2.default.createElement(
             _Button2.default,

@@ -54,7 +54,6 @@ class PostsBuilder extends React.Component {
         newPostText: ""
       })
     })
-
   }
 
 	render() {
@@ -67,7 +66,7 @@ class PostsBuilder extends React.Component {
                 rows="6"
                 value={this.state.newPostText}
                 onChange={(event) => this.inputChangeHandler(event)}></textarea>
-            <br/><br/>
+            <br/>
             <Button btnType="Success">Post</Button>
           </form>
           <Posts posts={this.state.posts} deletePost={this.deletePost}/>
