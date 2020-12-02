@@ -19,13 +19,17 @@ public class SessionController {
 
   @GetMapping("/getuser")
   public Map<String, String> getLoggedInUser(Principal principal) {
+    //get unique email from principal
     String email = principal.getName();
+    //use that email to find the correct user
     User user = userDAO.findByEmail(email);
+    //create object and add info we want to receive in the front end
     HashMap<String, String> userMap = new HashMap<>();
     userMap.put("id", Long.toString(user.getId()));
     userMap.put("firstName", user.getFirstName());
     userMap.put("lastName", user.getLastName());
     userMap.put("email", user.getEmail());
+    //return that object to the frontend
     return userMap;
   }
 }
