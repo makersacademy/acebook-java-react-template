@@ -3,11 +3,12 @@ package com.makersacademy.acebook.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.Objects;
 
+@Data
 @Entity
-@Table(name = "POSTS")
-public class Post {
+@Table(name = "COMMENTS")
+public class Comment {
 
     @Id
     //@GeneratedValue annotates that the ID should be generated automatically.
@@ -19,17 +20,13 @@ public class Post {
     @JoinColumn(name="user_id")
     private User user;
 
-    public Post() {}
+    @ManyToOne
+    @JoinColumn(name="post_id")
+    private Post post;
 
-    public Post(String content) {
-        this.content = content;
-    }
+    public Comment() {}
 
-    public String getContent(){
-        return content;
-    }
-
-    public void setContent(String content){
+    public Comment(String content) {
         this.content = content;
     }
 
@@ -41,6 +38,14 @@ public class Post {
         this.id = id;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public User getUser() {
         return user;
     }
@@ -49,27 +54,27 @@ public class Post {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
+    public Post getPost() {
+        return post;
+    }
 
-                '}';
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        Post post = (Post) o;
-
-        return id != null ? id.equals(post.id) : post.id == null;
+        Comment comment = (Comment) o;
+        return Objects.equals(id, comment.id) &&
+                Objects.equals(content, comment.content) &&
+                Objects.equals(user, comment.user) &&
+                Objects.equals(post, comment.post);
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return Objects.hash(id, content, user, post);
     }
 }

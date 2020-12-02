@@ -7,33 +7,69 @@ const client = require('../../client');
 class PostsBuilder extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {posts: []};
-    this.postTester = this.postTester.bind(this);
+    this.state = {posts: [], newPostText: ""};
+    this.deletePost = this.deletePost.bind(this);
+    this.getPosts = this.getPosts.bind(this);
+    this.createPost = this.createPost.bind(this);
   }
 
   componentDidMount() {
+    this.getPosts();
+  }
+
+  getPosts() {
     console.log("get posts")
-    client({method: 'GET', path: '/api/posts'}).then(response => {
+    client({method: 'GET', path: '/posts'}).then(response => {
       console.log(response);
-      this.setState({posts: response.entity._embedded.posts});
+      this.setState({posts: response.entity});
     });
   }
 
-  postTester() {
+  deletePost(id) {
+    console.log("deleting")
+    client({method: 'DELETE',
+      path: '/api/posts/' + id
+    }).then(response => {
+      console.log(response);
+      this.getPosts();
+    })
+  }
+
+  inputChangeHandler(event) {
+    this.setState({
+      newPostText: event.target.value
+    });
+  }
+
+  createPost(event) {
+    event.preventDefault();
     client({method: 'POST',
-      path: '/api/posts',
-      entity: {"content": "Test Post", "user_id": 2 },
+      path: '/posts',
+      entity: {"content": this.state.newPostText, "user_id": this.props.user.id },
       headers: {"Content-Type": "application/json"}
     }).then(response => {
       console.log(response);
+      this.getPosts();
+      this.setState({
+        newPostText: ""
+      })
     })
   }
 
 	render() {
 		return (
 		    <Aux>
-          <Button btnType="Success" clicked={this.postTester}>Test Post</Button>
-          <Posts posts={this.state.posts}/>
+          <h3>New Post</h3>
+          <form onSubmit={this.createPost}>
+            <textarea
+                cols="80"
+                rows="6"
+                value={this.state.newPostText}
+                onChange={(event) => this.inputChangeHandler(event)}></textarea>
+            <br/>
+            <Button btnType="Success">Post</Button>
+          </form>
+          <Posts posts={this.state.posts} deletePost={this.deletePost}/>
         </Aux>
 		)
 	}

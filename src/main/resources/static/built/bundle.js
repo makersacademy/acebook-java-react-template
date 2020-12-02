@@ -36833,7 +36833,9 @@ var App = function (_React$Component) {
 				routes = React.createElement(
 					_reactRouterDom.Switch,
 					null,
-					React.createElement(_reactRouterDom.Route, { path: '/users', component: _Users2.default }),
+					React.createElement(_reactRouterDom.Route, { path: '/users', render: function render(props) {
+							return React.createElement(_Users2.default, _extends({}, props, { user: _this3.state.user }));
+						} }),
 					React.createElement(_reactRouterDom.Route, { path: '/posts', render: function render(props) {
 							return React.createElement(_postsBuilder2.default, _extends({}, props, { user: _this3.state.user }));
 						} }),
@@ -37173,20 +37175,19 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var User = function User(props) {
-
   return _react2.default.createElement(
-    'div',
+    "div",
     null,
     _react2.default.createElement(
-      'p',
+      "p",
       null,
-      'Name: ',
-      props.user.firstName
+      "Name: ",
+      props.user.firstName + " " + props.user.lastName
     ),
     _react2.default.createElement(
-      'p',
+      "p",
       null,
-      'Email: ',
+      "Email: ",
       props.user.email
     )
   );
@@ -37232,7 +37233,13 @@ var _Spinner = __webpack_require__(/*! ../UI/Spinner/Spinner */ "./src/main/js/c
 
 var _Spinner2 = _interopRequireDefault(_Spinner);
 
+var _Button = __webpack_require__(/*! ../UI/Button/Button */ "./src/main/js/components/UI/Button/Button.js");
+
+var _Button2 = _interopRequireDefault(_Button);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -37248,35 +37255,103 @@ var Users = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Users.__proto__ || Object.getPrototypeOf(Users)).call(this, props));
 
-    _this.state = { users: [], loaded: false };
+    _this.state = {
+      users: [],
+      displayedUsers: [],
+      loaded: false,
+      search: ""
+    };
+    _this.getUsers = _this.getUsers.bind(_this);
+    _this.getFriends = _this.getFriends.bind(_this);
+    _this.onSearch = _this.onSearch.bind(_this);
     return _this;
   }
 
   _createClass(Users, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.getUsers();
+    }
+  }, {
+    key: 'getUsers',
+    value: function getUsers() {
       var _this2 = this;
 
       (0, _client2.default)({ method: 'GET', path: '/api/users' }).then(function (response) {
         console.log(response);
-        _this2.setState({ users: response.entity._embedded.users, loaded: true });
+        _this2.setState({
+          users: response.entity._embedded.users,
+          displayedUsers: response.entity._embedded.users,
+          loaded: true });
+      });
+    }
+  }, {
+    key: 'getFriends',
+    value: function getFriends() {
+      (0, _client2.default)({ method: 'GET', path: '/users/' }).then(function (response) {
+        console.log(response);
+      });
+    }
+  }, {
+    key: 'inputChangeHandler',
+    value: function inputChangeHandler(event) {
+      this.setState({
+        search: event.target.value.toLowerCase()
+      });
+    }
+  }, {
+    key: 'onSearch',
+    value: function onSearch(event) {
+      var _this3 = this;
+
+      event.preventDefault();
+      if (this.state.search === "") {
+        this.getUsers();
+        return;
+      }
+      var usersToDisplay = [].concat(_toConsumableArray(this.state.users));
+      usersToDisplay = usersToDisplay.filter(function (user) {
+        return user.firstName.toLowerCase().includes(_this3.state.search) || user.lastName.toLowerCase().includes(_this3.state.search) || user.email.toLowerCase().includes(_this3.state.search);
+      });
+      this.setState({
+        displayedUsers: usersToDisplay
       });
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this4 = this;
+
       var users = _react2.default.createElement(_Spinner2.default, null);
 
       if (this.state.loaded) {
-        users = this.state.users.map(function (user) {
+        users = this.state.displayedUsers.map(function (user) {
           return _react2.default.createElement(_User2.default, {
             key: user.id,
-            user: user });
+            user: user
+          });
         });
       }
       return _react2.default.createElement(
         _Aux2.default,
         null,
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.onSearch },
+          _react2.default.createElement('input', { type: 'text', value: this.state.search, onChange: function onChange(event) {
+              return _this4.inputChangeHandler(event);
+            } }),
+          _react2.default.createElement(
+            _Button2.default,
+            { btnType: 'Success' },
+            'Search'
+          )
+        ),
+        _react2.default.createElement(
+          _Button2.default,
+          { btnType: 'Success', clicked: this.getFriends },
+          'Test Friends'
+        ),
         _react2.default.createElement(
           'p',
           null,
@@ -37314,6 +37389,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Button = __webpack_require__(/*! ../UI/Button/Button */ "./src/main/js/components/UI/Button/Button.js");
+
+var _Button2 = _interopRequireDefault(_Button);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Post = function Post(props) {
@@ -37322,9 +37401,18 @@ var Post = function Post(props) {
 		{ className: 'post-main' },
 		_react2.default.createElement(
 			'div',
+			{ className: 'post-author' },
+			'By: ' + props.post.user.firstName + ' ' + props.post.user.lastName
+		),
+		_react2.default.createElement(
+			'div',
 			{ className: 'post-content' },
-			props.post.content,
-			props.post.user
+			props.post.content
+		),
+		_react2.default.createElement(
+			_Button2.default,
+			{ btnType: 'Danger', clicked: props.deletePost },
+			'Delete'
 		)
 	);
 };
@@ -37356,6 +37444,10 @@ var _react2 = _interopRequireDefault(_react);
 var _post = __webpack_require__(/*! ./post */ "./src/main/js/components/posts/post.js");
 
 var _post2 = _interopRequireDefault(_post);
+
+var _client = __webpack_require__(/*! ../../client */ "./src/main/js/client.js");
+
+var _client2 = _interopRequireDefault(_client);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37398,8 +37490,16 @@ var Posts = function (_React$Component) {
   }, {
     key: 'getPosts',
     value: function getPosts() {
+      var _this2 = this;
+
       return this.props.posts.map(function (post) {
-        return _react2.default.createElement(_post2.default, { key: post._links.self.href, post: post });
+        return _react2.default.createElement(_post2.default, {
+          key: post.id,
+          post: post,
+          deletePost: function deletePost() {
+            return _this2.props.deletePost(post.id);
+          }
+        });
       });
     }
   }]);
@@ -37461,45 +37561,98 @@ var PostsBuilder = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (PostsBuilder.__proto__ || Object.getPrototypeOf(PostsBuilder)).call(this, props));
 
-    _this.state = { posts: [] };
-    _this.postTester = _this.postTester.bind(_this);
+    _this.state = { posts: [], newPostText: "" };
+    _this.deletePost = _this.deletePost.bind(_this);
+    _this.getPosts = _this.getPosts.bind(_this);
+    _this.createPost = _this.createPost.bind(_this);
     return _this;
   }
 
   _createClass(PostsBuilder, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.getPosts();
+    }
+  }, {
+    key: 'getPosts',
+    value: function getPosts() {
       var _this2 = this;
 
       console.log("get posts");
-      client({ method: 'GET', path: '/api/posts' }).then(function (response) {
+      client({ method: 'GET', path: '/posts' }).then(function (response) {
         console.log(response);
-        _this2.setState({ posts: response.entity._embedded.posts });
+        _this2.setState({ posts: response.entity });
       });
     }
   }, {
-    key: 'postTester',
-    value: function postTester() {
+    key: 'deletePost',
+    value: function deletePost(id) {
+      var _this3 = this;
+
+      console.log("deleting");
+      client({ method: 'DELETE',
+        path: '/api/posts/' + id
+      }).then(function (response) {
+        console.log(response);
+        _this3.getPosts();
+      });
+    }
+  }, {
+    key: 'inputChangeHandler',
+    value: function inputChangeHandler(event) {
+      this.setState({
+        newPostText: event.target.value
+      });
+    }
+  }, {
+    key: 'createPost',
+    value: function createPost(event) {
+      var _this4 = this;
+
+      event.preventDefault();
       client({ method: 'POST',
-        path: '/api/posts',
-        entity: { "content": "Test Post", "user_id": 2 },
+        path: '/posts',
+        entity: { "content": this.state.newPostText, "user_id": this.props.user.id },
         headers: { "Content-Type": "application/json" }
       }).then(function (response) {
         console.log(response);
+        _this4.getPosts();
+        _this4.setState({
+          newPostText: ""
+        });
       });
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this5 = this;
+
       return _react2.default.createElement(
         _Aux2.default,
         null,
         _react2.default.createElement(
-          _Button2.default,
-          { btnType: 'Success', clicked: this.postTester },
-          'Test Post'
+          'h3',
+          null,
+          'New Post'
         ),
-        _react2.default.createElement(_posts2.default, { posts: this.state.posts })
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.createPost },
+          _react2.default.createElement('textarea', {
+            cols: '80',
+            rows: '6',
+            value: this.state.newPostText,
+            onChange: function onChange(event) {
+              return _this5.inputChangeHandler(event);
+            } }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            _Button2.default,
+            { btnType: 'Success' },
+            'Post'
+          )
+        ),
+        _react2.default.createElement(_posts2.default, { posts: this.state.posts, deletePost: this.deletePost })
       );
     }
   }]);

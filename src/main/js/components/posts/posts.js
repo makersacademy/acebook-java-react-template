@@ -1,5 +1,6 @@
 import React from 'react';
 import Post from './post'
+import client from '../../client';
 
 class Posts extends React.Component {
   constructor(props) {
@@ -22,7 +23,11 @@ class Posts extends React.Component {
 
   getPosts() {
     return this.props.posts.map(post =>
-			<Post key={post._links.self.href} post={post}/>
+			<Post
+          key={post.id}
+          post={post}
+          deletePost={() => this.props.deletePost(post.id)}
+          />
 		);
   }
 }
