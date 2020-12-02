@@ -37,8 +37,10 @@ public class HomeController {
 			return "login";
 		}
 
+
 		return "index";
 	}
+
 
 	@GetMapping("/all")
 	//READS ALL RECORDS IN POSTS TABLE
@@ -97,5 +99,6 @@ public class HomeController {
 			}
 		}
 	}
+
 
 }

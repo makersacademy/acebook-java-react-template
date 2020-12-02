@@ -37176,18 +37176,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var User = function User(props) {
   return _react2.default.createElement(
-    'div',
+    "div",
     null,
     _react2.default.createElement(
-      'p',
+      "p",
       null,
-      'Name: ',
-      props.user.firstName
+      "Name: ",
+      props.user.firstName + " " + props.user.lastName
     ),
     _react2.default.createElement(
-      'p',
+      "p",
       null,
-      'Email: ',
+      "Email: ",
       props.user.email
     )
   );
