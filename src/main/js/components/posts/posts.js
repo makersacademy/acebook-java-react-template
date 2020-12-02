@@ -25,8 +25,13 @@ class Posts extends React.Component {
     return this.props.posts.map(post =>
 			<Post
           key={post.id}
+          user={this.props.user}
           post={post}
           deletePost={() => this.props.deletePost(post.id)}
+          comments={post.comments}
+          displayComments={post.id == this.props.showCommentId}
+          showComments={() => this.props.showComments(post.id)}
+          updateComments={this.props.updateComments}
           />
 		);
   }

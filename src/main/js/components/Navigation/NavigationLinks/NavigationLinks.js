@@ -8,6 +8,7 @@ const NavigationLinks = (props) => {
           <NavigationLink link="/" exact>Home</NavigationLink>
           <NavigationLink link="/posts" exact>Posts</NavigationLink>
           <NavigationLink link="/users" exact>Users</NavigationLink>
+          <NavigationLink link="/logout" exact>Logout</NavigationLink>
         </ul>
       </div>
   )

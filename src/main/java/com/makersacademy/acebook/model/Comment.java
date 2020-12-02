@@ -1,11 +1,12 @@
 package com.makersacademy.acebook.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-@Data
+
 @Entity
 @Table(name = "COMMENTS")
 public class Comment {
@@ -60,6 +61,14 @@ public class Comment {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                '}';
     }
 
     @Override
