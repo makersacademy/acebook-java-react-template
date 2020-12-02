@@ -7,6 +7,7 @@ import javax.persistence.Table;
 import javax.persistence.GenerationType;
 
 import lombok.Data;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -17,10 +18,13 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
+    private LocalDate postdate;
+
 
     private Post() {}
 
     public Post(String content) {
+        this.postdate = postdate;
         this.content = content;
     }
 
