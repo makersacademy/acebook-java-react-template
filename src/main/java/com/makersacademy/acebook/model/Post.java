@@ -1,9 +1,6 @@
 package com.makersacademy.acebook.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "POSTS")
@@ -15,11 +12,15 @@ public class Post {
     private Long id;
     private String content;
 
+
+
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
     public Post() {}
+
+
 
     public Post(String content) {
         this.content = content;
