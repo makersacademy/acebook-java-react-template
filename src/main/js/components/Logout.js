@@ -10,6 +10,7 @@ class Logout extends Component {
   }
 
   render() {
+    window.location.reload(true);
     return <Redirect to="/" />;
   }
 }

@@ -36838,10 +36838,10 @@ var App = function (_React$Component) {
 					_reactRouterDom.Switch,
 					null,
 					React.createElement(_reactRouterDom.Route, { path: '/logout', component: _Logout2.default }),
-					React.createElement(_reactRouterDom.Route, { path: '/users', render: function render(props) {
+					React.createElement(_reactRouterDom.Route, { path: '/userslist', render: function render(props) {
 							return React.createElement(_Users2.default, _extends({}, props, { user: _this3.state.user }));
 						} }),
-					React.createElement(_reactRouterDom.Route, { path: '/posts', render: function render(props) {
+					React.createElement(_reactRouterDom.Route, { path: '/newsfeed', render: function render(props) {
 							return React.createElement(_postsBuilder2.default, _extends({}, props, { user: _this3.state.user }));
 						} }),
 					React.createElement(_reactRouterDom.Route, { path: '/', exact: true, render: function render(props) {
@@ -37207,6 +37207,7 @@ var Logout = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      window.location.reload(true);
       return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
     }
   }]);
@@ -37303,12 +37304,12 @@ var NavigationLinks = function NavigationLinks(props) {
       ),
       _react2.default.createElement(
         _NavigationLink2.default,
-        { link: '/posts', exact: true },
+        { link: '/newsfeed', exact: true },
         'Posts'
       ),
       _react2.default.createElement(
         _NavigationLink2.default,
-        { link: '/users', exact: true },
+        { link: '/userslist', exact: true },
         'Users'
       ),
       _react2.default.createElement(

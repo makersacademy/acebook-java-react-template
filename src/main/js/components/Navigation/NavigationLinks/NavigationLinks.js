@@ -6,8 +6,8 @@ const NavigationLinks = (props) => {
       <div className="NavBar">
         <ul className="NavLinks">
           <NavigationLink link="/" exact>Home</NavigationLink>
-          <NavigationLink link="/posts" exact>Posts</NavigationLink>
-          <NavigationLink link="/users" exact>Users</NavigationLink>
+          <NavigationLink link="/newsfeed" exact>Posts</NavigationLink>
+          <NavigationLink link="/userslist" exact>Users</NavigationLink>
           <NavigationLink link="/logout" exact>Logout</NavigationLink>
         </ul>
       </div>

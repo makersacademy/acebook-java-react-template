@@ -30,8 +30,8 @@ class App extends React.Component {
 			routes = (
 					<Switch>
 						<Route path="/logout" component={Logout} />
-						<Route path="/users" render={(props) => <Users {...props} user={this.state.user} />} />
-						<Route path="/posts" render={(props) => <PostsBuilder {...props} user={this.state.user} />} />
+						<Route path="/userslist" render={(props) => <Users {...props} user={this.state.user} />} />
+						<Route path="/newsfeed" render={(props) => <PostsBuilder {...props} user={this.state.user} />} />
 						<Route path="/" exact render={(props) => <Home {...props} user={this.state.user} />} />
 						<Redirect to="/" />
 					</Switch>
