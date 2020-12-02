@@ -1,15 +1,20 @@
 package com.makersacademy.acebook.services;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import com.makersacademy.acebook.dao.UserDAO;
 import com.makersacademy.acebook.model.User;
+
+import org.junit.jupiter.api.Test;
+
 import org.junit.Test;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DataJpaTest
