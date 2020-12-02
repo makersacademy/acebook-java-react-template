@@ -5,8 +5,6 @@ import com.makersacademy.acebook.model.User;
 
 import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

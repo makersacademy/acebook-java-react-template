@@ -6,6 +6,7 @@ import PostsBuilder from './components/posts/postsBuilder';
 import Layout from "./hoc/Layout/Layout";
 import Home from "./components/Home/Home";
 import Users from "./components/Users/Users";
+import Logout from "./components/Logout";
 
 class App extends React.Component {
 	constructor(props) {
@@ -28,6 +29,7 @@ class App extends React.Component {
 		if(this.state.loaded) {
 			routes = (
 					<Switch>
+						<Route path="/logout" component={Logout} />
 						<Route path="/users" render={(props) => <Users {...props} user={this.state.user} />} />
 						<Route path="/posts" render={(props) => <PostsBuilder {...props} user={this.state.user} />} />
 						<Route path="/" exact render={(props) => <Home {...props} user={this.state.user} />} />
