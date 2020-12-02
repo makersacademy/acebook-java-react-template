@@ -27,6 +27,9 @@ class Posts extends React.Component {
           key={post.id}
           post={post}
           deletePost={() => this.props.deletePost(post.id)}
+          comments={post.comments}
+          displayComments={post.id == this.props.showCommentId}
+          showComments={() => this.props.showComments(post.id)}
           />
 		);
   }

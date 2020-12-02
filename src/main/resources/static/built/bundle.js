@@ -36895,6 +36895,56 @@ module.exports = rest.wrap(mime, { registry: registry }).wrap(errorCode).wrap(de
 
 /***/ }),
 
+/***/ "./src/main/js/components/Comments/Comment.js":
+/*!****************************************************!*\
+  !*** ./src/main/js/components/Comments/Comment.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Button = __webpack_require__(/*! ../UI/Button/Button */ "./src/main/js/components/UI/Button/Button.js");
+
+var _Button2 = _interopRequireDefault(_Button);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Comment = function Comment(props) {
+  return _react2.default.createElement(
+    'div',
+    { className: 'comment-main' },
+    _react2.default.createElement(
+      'div',
+      { className: 'comment-author' },
+      'By: ' + props.comment.user.firstName + ' ' + props.comment.user.lastName
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'comment-content' },
+      props.comment.content
+    ),
+    _react2.default.createElement(
+      _Button2.default,
+      { btnType: 'Danger' },
+      'Delete'
+    )
+  );
+};
+
+exports.default = Comment;
+
+/***/ }),
+
 /***/ "./src/main/js/components/Home/Home.js":
 /*!*********************************************!*\
   !*** ./src/main/js/components/Home/Home.js ***!
@@ -37393,27 +37443,53 @@ var _Button = __webpack_require__(/*! ../UI/Button/Button */ "./src/main/js/comp
 
 var _Button2 = _interopRequireDefault(_Button);
 
+var _Comment = __webpack_require__(/*! ../Comments/Comment */ "./src/main/js/components/Comments/Comment.js");
+
+var _Comment2 = _interopRequireDefault(_Comment);
+
+var _Aux = __webpack_require__(/*! ../../hoc/Aux/Aux */ "./src/main/js/hoc/Aux/Aux.js");
+
+var _Aux2 = _interopRequireDefault(_Aux);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Post = function Post(props) {
+	var comments = null;
+	if (props.displayComments) {
+		comments = props.comments.map(function (comment) {
+			return _react2.default.createElement(_Comment2.default, {
+				key: comment.id,
+				comment: comment });
+		});
+	}
 	return _react2.default.createElement(
-		'div',
-		{ className: 'post-main' },
+		_Aux2.default,
+		null,
 		_react2.default.createElement(
-			'div',
-			{ className: 'post-author' },
-			'By: ' + props.post.user.firstName + ' ' + props.post.user.lastName
+			"div",
+			{ className: "post-main" },
+			_react2.default.createElement(
+				"div",
+				{ className: "post-author" },
+				"By: " + props.post.user.firstName + " " + props.post.user.lastName
+			),
+			_react2.default.createElement(
+				"div",
+				{ className: "post-content" },
+				props.post.content
+			),
+			_react2.default.createElement(
+				_Button2.default,
+				{ btnType: "Danger", clicked: props.deletePost },
+				"Delete"
+			),
+			_react2.default.createElement(
+				_Button2.default,
+				{ btnType: "Success", clicked: props.showComments },
+				props.displayComments ? "Hide Comments" : "Show Comments"
+			)
 		),
-		_react2.default.createElement(
-			'div',
-			{ className: 'post-content' },
-			props.post.content
-		),
-		_react2.default.createElement(
-			_Button2.default,
-			{ btnType: 'Danger', clicked: props.deletePost },
-			'Delete'
-		)
+		comments
 	);
 };
 
@@ -37498,6 +37574,11 @@ var Posts = function (_React$Component) {
           post: post,
           deletePost: function deletePost() {
             return _this2.props.deletePost(post.id);
+          },
+          comments: post.comments,
+          displayComments: post.id == _this2.props.showCommentId,
+          showComments: function showComments() {
+            return _this2.props.showComments(post.id);
           }
         });
       });
@@ -37545,6 +37626,8 @@ var _Button2 = _interopRequireDefault(_Button);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -37561,11 +37644,17 @@ var PostsBuilder = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (PostsBuilder.__proto__ || Object.getPrototypeOf(PostsBuilder)).call(this, props));
 
-    _this.state = { posts: [], newPostText: "" };
+    _this.state = {
+      posts: [],
+      newPostText: "",
+      showCommentId: null
+    };
     _this.deletePost = _this.deletePost.bind(_this);
     _this.getPosts = _this.getPosts.bind(_this);
     _this.createPost = _this.createPost.bind(_this);
     _this.createComment = _this.createComment.bind(_this);
+    _this.getComments = _this.getComments.bind(_this);
+    _this.showComments = _this.showComments.bind(_this);
     return _this;
   }
 
@@ -37582,20 +37671,56 @@ var PostsBuilder = function (_React$Component) {
       console.log("get posts");
       client({ method: 'GET', path: '/posts' }).then(function (response) {
         console.log(response);
-        _this2.setState({ posts: response.entity });
+        var posts = response.entity;
+        _this2.setState({
+          posts: []
+        });
+        posts.forEach(function (post) {
+          _this2.getComments(post);
+        });
       });
+    }
+  }, {
+    key: 'getComments',
+    value: function getComments(post) {
+      var _this3 = this;
+
+      client({ method: 'GET', path: '/comments/' + post.id }).then(function (response) {
+        console.log(response);
+        post.comments = response.entity;
+        var posts = [].concat(_toConsumableArray(_this3.state.posts));
+        posts.push(post);
+        _this3.setState({
+          posts: posts
+        });
+      });
+    }
+  }, {
+    key: 'showComments',
+    value: function showComments(post_id) {
+      console.log("show comments called");
+      console.log(post_id);
+      if (this.state.showCommentId == post_id) {
+        this.setState({
+          showCommentId: null
+        });
+      } else {
+        this.setState({
+          showCommentId: post_id
+        });
+      }
     }
   }, {
     key: 'deletePost',
     value: function deletePost(id) {
-      var _this3 = this;
+      var _this4 = this;
 
       console.log("deleting");
       client({ method: 'DELETE',
         path: '/api/posts/' + id
       }).then(function (response) {
         console.log(response);
-        _this3.getPosts();
+        _this4.getPosts();
       });
     }
   }, {
@@ -37608,7 +37733,7 @@ var PostsBuilder = function (_React$Component) {
   }, {
     key: 'createPost',
     value: function createPost(event) {
-      var _this4 = this;
+      var _this5 = this;
 
       event.preventDefault();
       client({ method: 'POST',
@@ -37617,8 +37742,8 @@ var PostsBuilder = function (_React$Component) {
         headers: { "Content-Type": "application/json" }
       }).then(function (response) {
         console.log(response);
-        _this4.getPosts();
-        _this4.setState({
+        _this5.getPosts();
+        _this5.setState({
           newPostText: ""
         });
       });
@@ -37638,7 +37763,7 @@ var PostsBuilder = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       return _react2.default.createElement(
         _Aux2.default,
@@ -37661,7 +37786,7 @@ var PostsBuilder = function (_React$Component) {
             rows: '6',
             value: this.state.newPostText,
             onChange: function onChange(event) {
-              return _this5.inputChangeHandler(event);
+              return _this6.inputChangeHandler(event);
             } }),
           _react2.default.createElement('br', null),
           _react2.default.createElement(
@@ -37670,7 +37795,11 @@ var PostsBuilder = function (_React$Component) {
             'Post'
           )
         ),
-        _react2.default.createElement(_posts2.default, { posts: this.state.posts, deletePost: this.deletePost })
+        _react2.default.createElement(_posts2.default, {
+          posts: this.state.posts,
+          deletePost: this.deletePost,
+          showCommentId: this.state.showCommentId,
+          showComments: this.showComments })
       );
     }
   }]);

@@ -7,11 +7,17 @@ const client = require('../../client');
 class PostsBuilder extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {posts: [], newPostText: ""};
+    this.state = {
+      posts: [],
+      newPostText: "",
+      showCommentId: null
+    };
     this.deletePost = this.deletePost.bind(this);
     this.getPosts = this.getPosts.bind(this);
     this.createPost = this.createPost.bind(this);
     this.createComment = this.createComment.bind(this);
+    this.getComments = this.getComments.bind(this);
+    this.showComments = this.showComments.bind(this);
   }
 
   componentDidMount() {
@@ -22,8 +28,40 @@ class PostsBuilder extends React.Component {
     console.log("get posts")
     client({method: 'GET', path: '/posts'}).then(response => {
       console.log(response);
-      this.setState({posts: response.entity});
+      let posts = response.entity;
+      this.setState({
+        posts: []
+      })
+      posts.forEach(post => {
+        this.getComments(post);
+      })
     });
+  }
+
+  getComments(post) {
+    client({method: 'GET', path: '/comments/' + post.id}).then(response => {
+      console.log(response);
+      post.comments = response.entity;
+      let posts = [...this.state.posts];
+      posts.push(post);
+      this.setState({
+        posts: posts
+      });
+    });
+  }
+
+  showComments(post_id) {
+    console.log("show comments called")
+    console.log(post_id);
+    if(this.state.showCommentId == post_id) {
+      this.setState({
+        showCommentId: null
+      });
+    } else {
+      this.setState({
+        showCommentId: post_id
+      });
+    }
   }
 
   deletePost(id) {
@@ -82,7 +120,11 @@ class PostsBuilder extends React.Component {
             <br/>
             <Button btnType="Success">Post</Button>
           </form>
-          <Posts posts={this.state.posts} deletePost={this.deletePost}/>
+          <Posts
+              posts={this.state.posts}
+              deletePost={this.deletePost}
+              showCommentId={this.state.showCommentId}
+              showComments={this.showComments}/>
         </Aux>
 		)
 	}
