@@ -1,24 +1,26 @@
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="/main.css">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Acebook | Sign Up</title>
 </head>
 <body>
-<div class="login-card">
+<div class="signup-card">
     <h1>Sign Up to Acebook!</h1><br>
     <form th:action="@{/register}" th:object="${users}" method="post">
-        <input type="text" class="form-control" placeholder="First Name" id="firstName" th:field="*{firstName}">
-        <input type="text" class="form-control" placeholder="Last Name" id="lastName" th:field="*{lastName}">
-        <input type="text" class="form-control" placeholder="Email" id="email" th:field="*{email}">
-        <input type="password" placeholder="Enter your Password"  id="password" class="form-control" th:field="*{password}">
-        <input type="submit" name="login" class="login login-submit" value="Submit">
+        <input type="text" class="form-control" placeholder="First Name" id="firstName" th:field="*{firstName}"><br><br>
+        <input type="text" class="form-control" placeholder="Last Name" id="lastName" th:field="*{lastName}"><br><br>
+        <input type="text" class="form-control" placeholder="Email" id="email" th:field="*{email}"><br><br>
+        <input type="password" placeholder="Enter your Password"  id="password" class="form-control" th:field="*{password}"><br><br>
+        <input type="submit" id="register" class="login login-submit" value="Submit"><br><br>
     </form>
 
-    <div class="login-help">
-        <a href="/login">Log In</a>
-    </div>
+    <form action="/login">
+        <input type="submit" id="login-btn" value="Log In" />
+    </form>
 </div>
 </body>
 </html>
