@@ -5,9 +5,6 @@ import com.makersacademy.acebook.model.User;
 
 import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -33,7 +30,7 @@ public class UserServiceTest {
     //Users user = new Users("test@gmail.com","bob","billybob","china");
 
     @Test
-    public void UserServiceTest() {
+    public void createUserTest() {
         entityManager.persist(new User("test@gmail.com","bob","billybob","china"));
         //userDao.save(user);
         User user = userDao.findByEmail("test@gmail.com");
