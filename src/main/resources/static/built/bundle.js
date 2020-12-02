@@ -37565,6 +37565,7 @@ var PostsBuilder = function (_React$Component) {
     _this.deletePost = _this.deletePost.bind(_this);
     _this.getPosts = _this.getPosts.bind(_this);
     _this.createPost = _this.createPost.bind(_this);
+    _this.createComment = _this.createComment.bind(_this);
     return _this;
   }
 
@@ -37623,6 +37624,18 @@ var PostsBuilder = function (_React$Component) {
       });
     }
   }, {
+    key: 'createComment',
+    value: function createComment(event) {
+      event.preventDefault();
+      client({ method: 'POST',
+        path: '/comments',
+        entity: { "content": "test comment", "user_id": this.props.user.id, "post_id": 1 },
+        headers: { "Content-Type": "application/json" }
+      }).then(function (response) {
+        console.log(response);
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this5 = this;
@@ -37634,6 +37647,11 @@ var PostsBuilder = function (_React$Component) {
           'h3',
           null,
           'New Post'
+        ),
+        _react2.default.createElement(
+          _Button2.default,
+          { btnType: 'Success', clicked: this.createComment },
+          'Test comment'
         ),
         _react2.default.createElement(
           'form',
