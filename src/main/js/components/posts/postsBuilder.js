@@ -18,6 +18,7 @@ class PostsBuilder extends React.Component {
     this.createComment = this.createComment.bind(this);
     this.getComments = this.getComments.bind(this);
     this.showComments = this.showComments.bind(this);
+    this.updateComments = this.updateComments.bind(this);
   }
 
   componentDidMount() {
@@ -25,9 +26,7 @@ class PostsBuilder extends React.Component {
   }
 
   getPosts() {
-    console.log("get posts")
     client({method: 'GET', path: '/posts'}).then(response => {
-      console.log(response);
       let posts = response.entity;
       this.setState({
         posts: []
@@ -40,7 +39,6 @@ class PostsBuilder extends React.Component {
 
   getComments(post) {
     client({method: 'GET', path: '/comments/' + post.id}).then(response => {
-      console.log(response);
       post.comments = response.entity;
       let posts = [...this.state.posts];
       posts.push(post);
@@ -50,9 +48,20 @@ class PostsBuilder extends React.Component {
     });
   }
 
+  updateComments(post_id) {
+    client({method: 'GET', path: '/comments/' + post_id}).then(response => {
+      let posts = [...this.state.posts];
+      let postToUpdate = posts.find(post => post.id == post_id);
+      let indexToUpdate = posts.indexOf(postToUpdate);
+      postToUpdate.comments = response.entity;
+      posts[indexToUpdate] = postToUpdate
+      this.setState({
+        posts: posts
+      });
+    });
+  }
+
   showComments(post_id) {
-    console.log("show comments called")
-    console.log(post_id);
     if(this.state.showCommentId == post_id) {
       this.setState({
         showCommentId: null
@@ -65,11 +74,9 @@ class PostsBuilder extends React.Component {
   }
 
   deletePost(id) {
-    console.log("deleting")
     client({method: 'DELETE',
-      path: '/api/posts/' + id
+      path: '/posts/' + id
     }).then(response => {
-      console.log(response);
       this.getPosts();
     })
   }
@@ -87,7 +94,6 @@ class PostsBuilder extends React.Component {
       entity: {"content": this.state.newPostText, "user_id": this.props.user.id },
       headers: {"Content-Type": "application/json"}
     }).then(response => {
-      console.log(response);
       this.getPosts();
       this.setState({
         newPostText: ""
@@ -121,10 +127,12 @@ class PostsBuilder extends React.Component {
             <Button btnType="Success">Post</Button>
           </form>
           <Posts
+              user={this.props.user}
               posts={this.state.posts}
               deletePost={this.deletePost}
               showCommentId={this.state.showCommentId}
-              showComments={this.showComments}/>
+              showComments={this.showComments}
+              updateComments={this.updateComments}/>
         </Aux>
 		)
 	}

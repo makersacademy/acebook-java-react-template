@@ -36787,6 +36787,10 @@ var _Users = __webpack_require__(/*! ./components/Users/Users */ "./src/main/js/
 
 var _Users2 = _interopRequireDefault(_Users);
 
+var _Logout = __webpack_require__(/*! ./components/Logout */ "./src/main/js/components/Logout.js");
+
+var _Logout2 = _interopRequireDefault(_Logout);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36833,6 +36837,7 @@ var App = function (_React$Component) {
 				routes = React.createElement(
 					_reactRouterDom.Switch,
 					null,
+					React.createElement(_reactRouterDom.Route, { path: '/logout', component: _Logout2.default }),
 					React.createElement(_reactRouterDom.Route, { path: '/users', render: function render(props) {
 							return React.createElement(_Users2.default, _extends({}, props, { user: _this3.state.user }));
 						} }),
@@ -36934,14 +36939,171 @@ var Comment = function Comment(props) {
       props.comment.content
     ),
     _react2.default.createElement(
-      _Button2.default,
-      { btnType: 'Danger' },
-      'Delete'
+      'div',
+      { className: 'controls' },
+      _react2.default.createElement(
+        _Button2.default,
+        { btnType: 'Danger', clicked: props.deleteComment },
+        'Delete'
+      )
     )
   );
 };
 
 exports.default = Comment;
+
+/***/ }),
+
+/***/ "./src/main/js/components/Comments/Comments.js":
+/*!*****************************************************!*\
+  !*** ./src/main/js/components/Comments/Comments.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _client = __webpack_require__(/*! ../../client */ "./src/main/js/client.js");
+
+var _client2 = _interopRequireDefault(_client);
+
+var _Comment = __webpack_require__(/*! ./Comment */ "./src/main/js/components/Comments/Comment.js");
+
+var _Comment2 = _interopRequireDefault(_Comment);
+
+var _Button = __webpack_require__(/*! ../UI/Button/Button */ "./src/main/js/components/UI/Button/Button.js");
+
+var _Button2 = _interopRequireDefault(_Button);
+
+var _Aux = __webpack_require__(/*! ../../hoc/Aux/Aux */ "./src/main/js/hoc/Aux/Aux.js");
+
+var _Aux2 = _interopRequireDefault(_Aux);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Comments = function (_Component) {
+  _inherits(Comments, _Component);
+
+  function Comments(props) {
+    _classCallCheck(this, Comments);
+
+    var _this = _possibleConstructorReturn(this, (Comments.__proto__ || Object.getPrototypeOf(Comments)).call(this, props));
+
+    _this.state = {
+      newCommentText: ""
+    };
+    _this.createComment = _this.createComment.bind(_this);
+    return _this;
+  }
+
+  _createClass(Comments, [{
+    key: 'inputChangeHandler',
+    value: function inputChangeHandler(event) {
+      this.setState({
+        newCommentText: event.target.value
+      });
+    }
+  }, {
+    key: 'createComment',
+    value: function createComment(event) {
+      var _this2 = this;
+
+      event.preventDefault();
+      (0, _client2.default)({ method: 'POST',
+        path: '/comments',
+        entity: {
+          "content": this.state.newCommentText,
+          "user_id": this.props.user.id,
+          "post_id": this.props.post_id },
+        headers: { "Content-Type": "application/json" }
+      }).then(function (response) {
+        _this2.props.updateComments(_this2.props.post_id);
+        _this2.setState({
+          newCommentText: ""
+        });
+      });
+    }
+  }, {
+    key: 'deleteComment',
+    value: function deleteComment(id) {
+      var _this3 = this;
+
+      (0, _client2.default)({ method: 'DELETE',
+        path: '/api/comments/' + id
+      }).then(function (response) {
+        _this3.props.updateComments(_this3.props.post_id);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this4 = this;
+
+      var comments = this.props.comments.map(function (comment) {
+        return _react2.default.createElement(_Comment2.default, {
+          key: comment.id,
+          comment: comment,
+          deleteComment: function deleteComment() {
+            return _this4.deleteComment(comment.id);
+          } });
+      });
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'comment-container' },
+        _react2.default.createElement(
+          'h4',
+          null,
+          'New Comment'
+        ),
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.createComment },
+          _react2.default.createElement('textarea', {
+            cols: '40',
+            rows: '4',
+            value: this.state.newCommentText,
+            onChange: function onChange(event) {
+              return _this4.inputChangeHandler(event);
+            } }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            _Button2.default,
+            { btnType: 'Success' },
+            'Comment'
+          )
+        ),
+        _react2.default.createElement(
+          'h4',
+          null,
+          'Comments'
+        ),
+        comments
+      );
+    }
+  }]);
+
+  return Comments;
+}(_react.Component);
+
+exports.default = Comments;
 
 /***/ }),
 
@@ -36989,6 +37151,70 @@ var Home = function Home(props) {
 };
 
 exports.default = Home;
+
+/***/ }),
+
+/***/ "./src/main/js/components/Logout.js":
+/*!******************************************!*\
+  !*** ./src/main/js/components/Logout.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+var _client = __webpack_require__(/*! ../client */ "./src/main/js/client.js");
+
+var _client2 = _interopRequireDefault(_client);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Logout = function (_Component) {
+  _inherits(Logout, _Component);
+
+  function Logout() {
+    _classCallCheck(this, Logout);
+
+    return _possibleConstructorReturn(this, (Logout.__proto__ || Object.getPrototypeOf(Logout)).apply(this, arguments));
+  }
+
+  _createClass(Logout, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      (0, _client2.default)({ method: 'GET', path: '/logout' }).then(function (response) {
+        console.log("logging out");
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
+    }
+  }]);
+
+  return Logout;
+}(_react.Component);
+
+exports.default = Logout;
 
 /***/ }),
 
@@ -37084,6 +37310,11 @@ var NavigationLinks = function NavigationLinks(props) {
         _NavigationLink2.default,
         { link: '/users', exact: true },
         'Users'
+      ),
+      _react2.default.createElement(
+        _NavigationLink2.default,
+        { link: '/logout', exact: true },
+        'Logout'
       )
     )
   );
@@ -37451,17 +37682,23 @@ var _Aux = __webpack_require__(/*! ../../hoc/Aux/Aux */ "./src/main/js/hoc/Aux/A
 
 var _Aux2 = _interopRequireDefault(_Aux);
 
+var _Comments = __webpack_require__(/*! ../Comments/Comments */ "./src/main/js/components/Comments/Comments.js");
+
+var _Comments2 = _interopRequireDefault(_Comments);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Post = function Post(props) {
 	var comments = null;
 	if (props.displayComments) {
-		comments = props.comments.map(function (comment) {
-			return _react2.default.createElement(_Comment2.default, {
-				key: comment.id,
-				comment: comment });
+		comments = _react2.default.createElement(_Comments2.default, {
+			comments: props.comments,
+			user: props.user,
+			post_id: props.post.id,
+			updateComments: props.updateComments
 		});
 	}
+
 	return _react2.default.createElement(
 		_Aux2.default,
 		null,
@@ -37479,14 +37716,21 @@ var Post = function Post(props) {
 				props.post.content
 			),
 			_react2.default.createElement(
-				_Button2.default,
-				{ btnType: "Danger", clicked: props.deletePost },
-				"Delete"
-			),
-			_react2.default.createElement(
-				_Button2.default,
-				{ btnType: "Success", clicked: props.showComments },
-				props.displayComments ? "Hide Comments" : "Show Comments"
+				"div",
+				{ className: "controls" },
+				_react2.default.createElement(
+					_Button2.default,
+					{ btnType: "Danger", clicked: props.deletePost },
+					"Delete"
+				),
+				_react2.default.createElement(
+					_Button2.default,
+					{
+						btnType: "Success",
+						clicked: props.showComments,
+						disabled: props.comments.length == 0 },
+					props.displayComments ? "Hide Comments" : "Show Comments (" + props.comments.length + ")"
+				)
 			)
 		),
 		comments
@@ -37571,6 +37815,7 @@ var Posts = function (_React$Component) {
       return this.props.posts.map(function (post) {
         return _react2.default.createElement(_post2.default, {
           key: post.id,
+          user: _this2.props.user,
           post: post,
           deletePost: function deletePost() {
             return _this2.props.deletePost(post.id);
@@ -37579,7 +37824,8 @@ var Posts = function (_React$Component) {
           displayComments: post.id == _this2.props.showCommentId,
           showComments: function showComments() {
             return _this2.props.showComments(post.id);
-          }
+          },
+          updateComments: _this2.props.updateComments
         });
       });
     }
@@ -37655,6 +37901,7 @@ var PostsBuilder = function (_React$Component) {
     _this.createComment = _this.createComment.bind(_this);
     _this.getComments = _this.getComments.bind(_this);
     _this.showComments = _this.showComments.bind(_this);
+    _this.updateComments = _this.updateComments.bind(_this);
     return _this;
   }
 
@@ -37668,9 +37915,7 @@ var PostsBuilder = function (_React$Component) {
     value: function getPosts() {
       var _this2 = this;
 
-      console.log("get posts");
       client({ method: 'GET', path: '/posts' }).then(function (response) {
-        console.log(response);
         var posts = response.entity;
         _this2.setState({
           posts: []
@@ -37686,7 +37931,6 @@ var PostsBuilder = function (_React$Component) {
       var _this3 = this;
 
       client({ method: 'GET', path: '/comments/' + post.id }).then(function (response) {
-        console.log(response);
         post.comments = response.entity;
         var posts = [].concat(_toConsumableArray(_this3.state.posts));
         posts.push(post);
@@ -37696,10 +37940,26 @@ var PostsBuilder = function (_React$Component) {
       });
     }
   }, {
+    key: 'updateComments',
+    value: function updateComments(post_id) {
+      var _this4 = this;
+
+      client({ method: 'GET', path: '/comments/' + post_id }).then(function (response) {
+        var posts = [].concat(_toConsumableArray(_this4.state.posts));
+        var postToUpdate = posts.find(function (post) {
+          return post.id == post_id;
+        });
+        var indexToUpdate = posts.indexOf(postToUpdate);
+        postToUpdate.comments = response.entity;
+        posts[indexToUpdate] = postToUpdate;
+        _this4.setState({
+          posts: posts
+        });
+      });
+    }
+  }, {
     key: 'showComments',
     value: function showComments(post_id) {
-      console.log("show comments called");
-      console.log(post_id);
       if (this.state.showCommentId == post_id) {
         this.setState({
           showCommentId: null
@@ -37713,14 +37973,12 @@ var PostsBuilder = function (_React$Component) {
   }, {
     key: 'deletePost',
     value: function deletePost(id) {
-      var _this4 = this;
+      var _this5 = this;
 
-      console.log("deleting");
       client({ method: 'DELETE',
-        path: '/api/posts/' + id
+        path: '/posts/' + id
       }).then(function (response) {
-        console.log(response);
-        _this4.getPosts();
+        _this5.getPosts();
       });
     }
   }, {
@@ -37733,7 +37991,7 @@ var PostsBuilder = function (_React$Component) {
   }, {
     key: 'createPost',
     value: function createPost(event) {
-      var _this5 = this;
+      var _this6 = this;
 
       event.preventDefault();
       client({ method: 'POST',
@@ -37741,9 +37999,8 @@ var PostsBuilder = function (_React$Component) {
         entity: { "content": this.state.newPostText, "user_id": this.props.user.id },
         headers: { "Content-Type": "application/json" }
       }).then(function (response) {
-        console.log(response);
-        _this5.getPosts();
-        _this5.setState({
+        _this6.getPosts();
+        _this6.setState({
           newPostText: ""
         });
       });
@@ -37763,7 +38020,7 @@ var PostsBuilder = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this6 = this;
+      var _this7 = this;
 
       return _react2.default.createElement(
         _Aux2.default,
@@ -37786,7 +38043,7 @@ var PostsBuilder = function (_React$Component) {
             rows: '6',
             value: this.state.newPostText,
             onChange: function onChange(event) {
-              return _this6.inputChangeHandler(event);
+              return _this7.inputChangeHandler(event);
             } }),
           _react2.default.createElement('br', null),
           _react2.default.createElement(
@@ -37796,10 +38053,12 @@ var PostsBuilder = function (_React$Component) {
           )
         ),
         _react2.default.createElement(_posts2.default, {
+          user: this.props.user,
           posts: this.state.posts,
           deletePost: this.deletePost,
           showCommentId: this.state.showCommentId,
-          showComments: this.showComments })
+          showComments: this.showComments,
+          updateComments: this.updateComments })
       );
     }
   }]);

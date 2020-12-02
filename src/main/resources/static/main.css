@@ -21,8 +21,16 @@
     padding: 5px;
 }
 
-.comment-main {
+.controls {
+    padding: 5px;
+}
+
+.comment-container {
     margin-left: 80px;
+}
+
+
+.comment-main {
     border: 1px solid #999;
     text-align: left;
     margin-bottom: 0.5rem;
@@ -151,7 +159,7 @@ body {
     outline: none;
     cursor: pointer;
     font: inherit;
-    padding: 10px 24px;
+    padding: 8px 18px;
     margin: 10px 10px 10px 0px;
     font-weight: bold;
     border-radius: 4px;

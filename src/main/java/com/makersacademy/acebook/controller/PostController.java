@@ -1,16 +1,13 @@
 package com.makersacademy.acebook.controller;
 
+import com.makersacademy.acebook.dao.CommentDAO;
 import com.makersacademy.acebook.dao.PostDAO;
 import com.makersacademy.acebook.dao.UserDAO;
+import com.makersacademy.acebook.model.Comment;
 import com.makersacademy.acebook.model.Post;
 import com.makersacademy.acebook.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,10 +16,12 @@ public class PostController {
 
   private final PostDAO postDAO;
   private final UserDAO userDAO;
+  private final CommentDAO commentDAO;
 
-  public PostController(PostDAO postDAO, UserDAO userDAO) {
+  public PostController(PostDAO postDAO, UserDAO userDAO, CommentDAO commentDAO) {
     this.postDAO = postDAO;
     this.userDAO = userDAO;
+    this.commentDAO = commentDAO;
   }
 
   //get all posts
@@ -42,5 +41,14 @@ public class PostController {
     //set that user as the user_id of the post, then save it to the database
     newPost.setUser(author.get());
     return postDAO.save(newPost);
+  }
+
+  @DeleteMapping("/posts/{post_id}")
+  public void deletePost(@PathVariable(value="post_id") Post post) {
+    Iterable<Comment> comments = commentDAO.findByPost(post);
+    for(Comment comment : comments) {
+      commentDAO.delete(comment);
+    }
+    postDAO.delete(post);
   }
 }

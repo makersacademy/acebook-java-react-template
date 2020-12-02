@@ -10,7 +10,9 @@ const Comment = (props) => {
         <div className='comment-content'>
           {props.comment.content}
         </div>
-        <Button btnType="Danger" >Delete</Button>
+        <div className="controls">
+          <Button btnType="Danger" clicked={props.deleteComment}>Delete</Button>
+        </div>
       </div>
   )
 }
