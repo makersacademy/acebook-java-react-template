@@ -31,7 +31,7 @@ public class UserServiceTest {
     //Users user = new Users("test@gmail.com","bob","billybob","china");
 
     @Test
-    public void UserServiceTest() {
+    public void createUserTest() {
         entityManager.persist(new User("test@gmail.com","bob","billybob","china"));
         //userDao.save(user);
         User user = userDao.findByEmail("test@gmail.com");
