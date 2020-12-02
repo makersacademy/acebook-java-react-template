@@ -11,8 +11,8 @@ class Posts extends React.Component {
 
   handleDelete(event) {
   const id = event.target.id;
-  console.log(id)
   		this.props.onDelete(id);
+        window.location.reload(false);
   }
 
 	render() {

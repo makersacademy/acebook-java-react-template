@@ -16,7 +16,6 @@ class PostsBuilder extends React.Component {
   }
 
   onDelete(post) {
-  console.log(post);
   	client({method: 'DELETE', path: post})
   }
 
