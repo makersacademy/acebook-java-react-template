@@ -57,6 +57,41 @@ body {
     sans-serif;
 }
 
+div.signup-card{
+    display: block;
+    text-align: center;
+    background-color: #00487C;
+    color: white;
+    margin: auto;
+}
+
+
+#signup-btn:hover{
+background-color: #00BFFF;
+}
+
+#login-btn:hover{
+background-color: #00BFFF;
+}
+
+#login:hover{
+background-color: #00BFFF;
+}
+
+#register:hover{
+background-color: #00BFFF;
+}
+
+div.login-card{
+    display: block;
+    text-align: center;
+    background-color: #00487C;
+    color: white;
+    margin: auto;
+
+}
+
+
 .Content {
     margin: 72px 20px 20px 20px;
 }
