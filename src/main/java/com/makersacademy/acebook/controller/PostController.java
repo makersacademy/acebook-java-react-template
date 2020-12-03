@@ -8,6 +8,7 @@ import com.makersacademy.acebook.model.Post;
 import com.makersacademy.acebook.model.User;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.Map;
 import java.util.Optional;
 
@@ -38,6 +39,7 @@ public class PostController {
     newPost.setContent(body.get("content").toString());
     //convert user_id from int to string then to long, and use long to find the correct user
     Optional<User> author = userDAO.findById(Long.parseLong(body.get("user_id").toString()));
+    newPost.setCreated_at(Instant.now());
     //set that user as the user_id of the post, then save it to the database
     newPost.setUser(author.get());
     return postDAO.save(newPost);

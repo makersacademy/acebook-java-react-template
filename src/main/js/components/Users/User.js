@@ -4,7 +4,7 @@ import Button from "../UI/Button/Button";
 const User = (props) => {
   let controls = <Button btnType="Success" clicked={props.addFriend}>Add Friend</Button>;
   if(props.friend) {
-    controls = <Button btnType="Success">Friends</Button>;
+    controls = <Button btnType="Danger" clicked={props.deleteFriend}>Unfriend</Button>;
   }
   return (
       <div className='post-main'>

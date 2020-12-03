@@ -64,7 +64,7 @@ class Comments extends Component {
             <br/>
             <Button btnType="Success">Comment</Button>
           </form>
-          <h4>Comments</h4>
+          {comments.length == 0 ? null : <h4>Comments</h4>}
           {comments}
         </div>
 

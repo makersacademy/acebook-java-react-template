@@ -11,9 +11,9 @@ class Posts extends React.Component {
 	render() {
 		return (
       <article className='posts-main'>
-        <h1 className='posts-title'>
+        <h3 className='posts-title'>
           Posts
-        </h1>
+        </h3>
   			<div className='posts-items'>
   				{this.getPosts()}
   			</div>

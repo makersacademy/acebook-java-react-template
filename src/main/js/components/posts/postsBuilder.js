@@ -33,7 +33,20 @@ class PostsBuilder extends React.Component {
       posts.forEach(post => {
         this.getComments(post);
       })
+      this.sortPosts();
     });
+  }
+
+  sortPosts() {
+    let posts = [...this.state.posts];
+    posts = posts.sort((a, b) => {
+      let aDate = new Date(a.created_at);
+      let bDate = new Date(b.created_at);
+      return bDate - aDate;
+    });
+    this.setState({
+      posts: posts
+    })
   }
 
   getComments(post) {

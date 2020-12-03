@@ -15,9 +15,14 @@ class App extends React.Component {
 			user: null,
 			loaded: false
 		};
+		this.getCurrentUser = this.getCurrentUser.bind(this);
 	}
 
 	componentDidMount() {
+		this.getCurrentUser();
+	}
+
+	getCurrentUser() {
 		client({method: 'GET', path: '/getuser'}).then(response => {
 			console.log(response);
 			let user = {
@@ -37,7 +42,7 @@ class App extends React.Component {
 			routes = (
 					<Switch>
 						<Route path="/logout" component={Logout} />
-						<Route path="/userslist" render={(props) => <Users {...props} user={this.state.user} />} />
+						<Route path="/userslist" render={(props) => <Users {...props} user={this.state.user} getCurrentUser={this.getCurrentUser}/>} />
 						<Route path="/newsfeed" render={(props) => <PostsBuilder {...props} user={this.state.user} />} />
 						<Route path="/" exact render={(props) => <Home {...props} user={this.state.user} />} />
 						<Redirect to="/" />
