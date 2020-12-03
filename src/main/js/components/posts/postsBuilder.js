@@ -2,6 +2,7 @@ import React from 'react';
 import Posts from './posts'
 import Aux from "../../hoc/Aux/Aux";
 import Button from "../UI/Button/Button";
+import Spinner from "../UI/Spinner/Spinner";
 const client = require('../../client');
 
 class PostsBuilder extends React.Component {
@@ -10,7 +11,8 @@ class PostsBuilder extends React.Component {
     this.state = {
       posts: [],
       newPostText: "",
-      showCommentId: null
+      showCommentId: null,
+      loaded: false
     };
     this.deletePost = this.deletePost.bind(this);
     this.getPosts = this.getPosts.bind(this);
@@ -18,6 +20,7 @@ class PostsBuilder extends React.Component {
     this.getComments = this.getComments.bind(this);
     this.showComments = this.showComments.bind(this);
     this.updateComments = this.updateComments.bind(this);
+    this.sortPosts = this.sortPosts.bind(this);
   }
 
   componentDidMount() {
@@ -30,23 +33,32 @@ class PostsBuilder extends React.Component {
       this.setState({
         posts: []
       })
+      let friendIds = []
+      this.props.user.friends.forEach(friend => {
+        friendIds.push(friend.id);
+      })
+      posts = posts.filter(post => {
+        return post.user.id === this.props.user.id || friendIds.includes(post.user.id);
+      });
       posts.forEach(post => {
         this.getComments(post);
       })
-      this.sortPosts();
+      //if there are no posts get Comments never gets called, so we have to set loaded here instead
+      if(posts.length === 0) {
+        this.setState({
+          loaded: true
+        })
+      }
     });
   }
 
-  sortPosts() {
-    let posts = [...this.state.posts];
-    posts = posts.sort((a, b) => {
+  sortPosts(posts) {
+    let sortedPosts = posts.sort((a, b) => {
       let aDate = new Date(a.created_at);
       let bDate = new Date(b.created_at);
       return bDate - aDate;
     });
-    this.setState({
-      posts: posts
-    })
+    return sortedPosts;
   }
 
   getComments(post) {
@@ -54,8 +66,10 @@ class PostsBuilder extends React.Component {
       post.comments = response.entity;
       let posts = [...this.state.posts];
       posts.push(post);
+      let sortedPosts = this.sortPosts(posts);
       this.setState({
-        posts: posts
+        posts: sortedPosts,
+        loaded: true
       });
     });
   }
@@ -114,6 +128,17 @@ class PostsBuilder extends React.Component {
   }
 
 	render() {
+    let posts = <Spinner />
+    if(this.state.loaded) {
+      posts = <Posts
+                user={this.props.user}
+                posts={this.state.posts}
+                deletePost={this.deletePost}
+                showCommentId={this.state.showCommentId}
+                showComments={this.showComments}
+                updateComments={this.updateComments}/>
+    }
+
 		return (
 		    <Aux>
           <h3>New Post</h3>
@@ -126,13 +151,7 @@ class PostsBuilder extends React.Component {
             <br/>
             <Button btnType="Success">Post</Button>
           </form>
-          <Posts
-              user={this.props.user}
-              posts={this.state.posts}
-              deletePost={this.deletePost}
-              showCommentId={this.state.showCommentId}
-              showComments={this.showComments}
-              updateComments={this.updateComments}/>
+          {posts}
         </Aux>
 		)
 	}

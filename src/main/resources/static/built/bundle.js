@@ -59570,6 +59570,10 @@ var _Button = __webpack_require__(/*! ../UI/Button/Button */ "./src/main/js/comp
 
 var _Button2 = _interopRequireDefault(_Button);
 
+var _Spinner = __webpack_require__(/*! ../UI/Spinner/Spinner */ "./src/main/js/components/UI/Spinner/Spinner.js");
+
+var _Spinner2 = _interopRequireDefault(_Spinner);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -59593,7 +59597,8 @@ var PostsBuilder = function (_React$Component) {
     _this.state = {
       posts: [],
       newPostText: "",
-      showCommentId: null
+      showCommentId: null,
+      loaded: false
     };
     _this.deletePost = _this.deletePost.bind(_this);
     _this.getPosts = _this.getPosts.bind(_this);
@@ -59601,6 +59606,7 @@ var PostsBuilder = function (_React$Component) {
     _this.getComments = _this.getComments.bind(_this);
     _this.showComments = _this.showComments.bind(_this);
     _this.updateComments = _this.updateComments.bind(_this);
+    _this.sortPosts = _this.sortPosts.bind(_this);
     return _this;
   }
 
@@ -59619,24 +59625,36 @@ var PostsBuilder = function (_React$Component) {
         _this2.setState({
           posts: []
         });
+        console.log(posts);
+        console.log(_this2.props);
+        var friendIds = [];
+        _this2.props.user.friends.forEach(function (friend) {
+          friendIds.push(friend.id);
+        });
+        posts = posts.filter(function (post) {
+          return post.user.id === _this2.props.user.id || friendIds.includes(post.user.id);
+        });
+        console.log(posts);
         posts.forEach(function (post) {
           _this2.getComments(post);
         });
-        _this2.sortPosts();
+        //if there are no posts get Comments never gets called, so we have to set loaded here instead
+        if (posts.length === 0) {
+          _this2.setState({
+            loaded: true
+          });
+        }
       });
     }
   }, {
     key: 'sortPosts',
-    value: function sortPosts() {
-      var posts = [].concat(_toConsumableArray(this.state.posts));
-      posts = posts.sort(function (a, b) {
+    value: function sortPosts(posts) {
+      var sortedPosts = posts.sort(function (a, b) {
         var aDate = new Date(a.created_at);
         var bDate = new Date(b.created_at);
         return bDate - aDate;
       });
-      this.setState({
-        posts: posts
-      });
+      return sortedPosts;
     }
   }, {
     key: 'getComments',
@@ -59647,8 +59665,10 @@ var PostsBuilder = function (_React$Component) {
         post.comments = response.entity;
         var posts = [].concat(_toConsumableArray(_this3.state.posts));
         posts.push(post);
+        var sortedPosts = _this3.sortPosts(posts);
         _this3.setState({
-          posts: posts
+          posts: sortedPosts,
+          loaded: true
         });
       });
     }
@@ -59723,6 +59743,17 @@ var PostsBuilder = function (_React$Component) {
     value: function render() {
       var _this7 = this;
 
+      var posts = _react2.default.createElement(_Spinner2.default, null);
+      if (this.state.loaded) {
+        posts = _react2.default.createElement(_posts2.default, {
+          user: this.props.user,
+          posts: this.state.posts,
+          deletePost: this.deletePost,
+          showCommentId: this.state.showCommentId,
+          showComments: this.showComments,
+          updateComments: this.updateComments });
+      }
+
       return _react2.default.createElement(
         _Aux2.default,
         null,
@@ -59748,13 +59779,7 @@ var PostsBuilder = function (_React$Component) {
             'Post'
           )
         ),
-        _react2.default.createElement(_posts2.default, {
-          user: this.props.user,
-          posts: this.state.posts,
-          deletePost: this.deletePost,
-          showCommentId: this.state.showCommentId,
-          showComments: this.showComments,
-          updateComments: this.updateComments })
+        posts
       );
     }
   }]);
