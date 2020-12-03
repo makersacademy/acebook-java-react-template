@@ -1,10 +1,22 @@
 import React from 'react';
+import Button from "../UI/Button/Button";
 
 const User = (props) => {
+  let controls = <Button btnType="Success" clicked={props.addFriend}>Add Friend</Button>;
+  if(props.friend) {
+    controls = <Button btnType="Success">Friends</Button>;
+  }
   return (
-      <div>
-        <p>Name: { props.user.firstName + " " + props.user.lastName }</p>
-        <p>Email: { props.user.email }</p>
+      <div className='post-main'>
+        <div className="post-author">
+          {`${props.user.firstName} ${props.user.lastName}`}
+        </div>
+        <div className='post-content'>
+          <p>Email: {props.user.email}</p>
+        </div>
+        <div className="controls">
+          {controls}
+        </div>
       </div>
   )
 }

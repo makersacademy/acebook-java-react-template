@@ -20,7 +20,14 @@ class App extends React.Component {
 	componentDidMount() {
 		client({method: 'GET', path: '/getuser'}).then(response => {
 			console.log(response);
-			this.setState({user: response.entity, loaded: true});
+			let user = {
+				...response.entity.user,
+				friends: response.entity.friends
+			}
+			this.setState({
+				user: user,
+				loaded: true
+			});
 		});
 	}
 

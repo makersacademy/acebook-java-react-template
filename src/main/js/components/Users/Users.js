@@ -17,6 +17,8 @@ class Users extends Component {
     this.getUsers = this.getUsers.bind(this);
     this.getFriends = this.getFriends.bind(this);
     this.onSearch = this.onSearch.bind(this);
+    this.checkFriend = this.checkFriend.bind(this);
+    this.addFriend = this.addFriend.bind(this);
   }
 
   componentDidMount() {
@@ -24,11 +26,11 @@ class Users extends Component {
   }
 
   getUsers() {
-    client({method: 'GET', path: '/api/users'}).then(response => {
+    client({method: 'GET', path: '/users'}).then(response => {
       console.log(response);
       this.setState({
-        users: response.entity._embedded.users,
-        displayedUsers: response.entity._embedded.users,
+        users: response.entity,
+        displayedUsers: response.entity,
         loaded: true});
     });
   }
@@ -62,6 +64,27 @@ class Users extends Component {
     });
   }
 
+  checkFriend(user) {
+    let isFriend = false;
+    this.props.user.friends.forEach(friend => {
+      if(friend.id == user.id) {
+        isFriend = true;
+      }
+    })
+    return isFriend;
+  }
+
+  addFriend(friendAddedId) {
+    console.log(friendAddedId)
+    client({method: 'POST',
+      path: '/friends',
+      entity: {"person_id": this.props.user.id, "friend_id": friendAddedId },
+      headers: {"Content-Type": "application/json"}
+    }).then(response => {
+      console.log(response)
+    })
+  }
+
   render() {
     let users = <Spinner />
 
@@ -70,6 +93,8 @@ class Users extends Component {
         return <User
             key={user.id}
             user={user}
+            friend={this.checkFriend(user)}
+            addFriend={() => this.addFriend(user.id)}
             />
       });
     }

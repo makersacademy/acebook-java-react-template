@@ -36824,7 +36824,13 @@ var App = function (_React$Component) {
 
 			(0, _client2.default)({ method: 'GET', path: '/getuser' }).then(function (response) {
 				console.log(response);
-				_this2.setState({ user: response.entity, loaded: true });
+				var user = _extends({}, response.entity.user, {
+					friends: response.entity.friends
+				});
+				_this2.setState({
+					user: user,
+					loaded: true
+				});
 			});
 		}
 	}, {
@@ -37454,23 +37460,47 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Button = __webpack_require__(/*! ../UI/Button/Button */ "./src/main/js/components/UI/Button/Button.js");
+
+var _Button2 = _interopRequireDefault(_Button);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var User = function User(props) {
+  var controls = _react2.default.createElement(
+    _Button2.default,
+    { btnType: "Success", clicked: props.addFriend },
+    "Add Friend"
+  );
+  if (props.friend) {
+    controls = _react2.default.createElement(
+      _Button2.default,
+      { btnType: "Success" },
+      "Friends"
+    );
+  }
   return _react2.default.createElement(
     "div",
-    null,
+    { className: "post-main" },
     _react2.default.createElement(
-      "p",
-      null,
-      "Name: ",
+      "div",
+      { className: "post-author" },
       props.user.firstName + " " + props.user.lastName
     ),
     _react2.default.createElement(
-      "p",
-      null,
-      "Email: ",
-      props.user.email
+      "div",
+      { className: "post-content" },
+      _react2.default.createElement(
+        "p",
+        null,
+        "Email: ",
+        props.user.email
+      )
+    ),
+    _react2.default.createElement(
+      "div",
+      { className: "controls" },
+      controls
     )
   );
 };
@@ -37546,6 +37576,8 @@ var Users = function (_Component) {
     _this.getUsers = _this.getUsers.bind(_this);
     _this.getFriends = _this.getFriends.bind(_this);
     _this.onSearch = _this.onSearch.bind(_this);
+    _this.checkFriend = _this.checkFriend.bind(_this);
+    _this.addFriend = _this.addFriend.bind(_this);
     return _this;
   }
 
@@ -37559,11 +37591,11 @@ var Users = function (_Component) {
     value: function getUsers() {
       var _this2 = this;
 
-      (0, _client2.default)({ method: 'GET', path: '/api/users' }).then(function (response) {
+      (0, _client2.default)({ method: 'GET', path: '/users' }).then(function (response) {
         console.log(response);
         _this2.setState({
-          users: response.entity._embedded.users,
-          displayedUsers: response.entity._embedded.users,
+          users: response.entity,
+          displayedUsers: response.entity,
           loaded: true });
       });
     }
@@ -37600,6 +37632,29 @@ var Users = function (_Component) {
       });
     }
   }, {
+    key: 'checkFriend',
+    value: function checkFriend(user) {
+      var isFriend = false;
+      this.props.user.friends.forEach(function (friend) {
+        if (friend.id == user.id) {
+          isFriend = true;
+        }
+      });
+      return isFriend;
+    }
+  }, {
+    key: 'addFriend',
+    value: function addFriend(friendAddedId) {
+      console.log(friendAddedId);
+      (0, _client2.default)({ method: 'POST',
+        path: '/friends',
+        entity: { "person_id": this.props.user.id, "friend_id": friendAddedId },
+        headers: { "Content-Type": "application/json" }
+      }).then(function (response) {
+        console.log(response);
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this4 = this;
@@ -37610,7 +37665,11 @@ var Users = function (_Component) {
         users = this.state.displayedUsers.map(function (user) {
           return _react2.default.createElement(_User2.default, {
             key: user.id,
-            user: user
+            user: user,
+            friend: _this4.checkFriend(user),
+            addFriend: function addFriend() {
+              return _this4.addFriend(user.id);
+            }
           });
         });
       }
@@ -37728,8 +37787,7 @@ var Post = function Post(props) {
 					_Button2.default,
 					{
 						btnType: "Success",
-						clicked: props.showComments,
-						disabled: props.comments.length == 0 },
+						clicked: props.showComments },
 					props.displayComments ? "Hide Comments" : "Show Comments (" + props.comments.length + ")"
 				)
 			)
