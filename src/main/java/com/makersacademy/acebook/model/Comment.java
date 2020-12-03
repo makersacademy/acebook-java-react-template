@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.Objects;
 
 
@@ -16,6 +17,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
+    private Instant created_at;
 
     @ManyToOne
     @JoinColumn(name="user_id")
@@ -61,6 +63,14 @@ public class Comment {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public Instant getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Instant created_at) {
+        this.created_at = created_at;
     }
 
     @Override

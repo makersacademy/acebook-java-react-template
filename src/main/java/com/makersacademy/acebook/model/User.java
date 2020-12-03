@@ -19,7 +19,9 @@ This is just how JPA is designed- needs a bare minimum of
 (Because no @Table annotation exists, it is assumed that this
 entity is mapped to a table named Users)
  */
-@JsonIgnoreProperties(value={"posts", "role"})
+
+//values reference model properties, not tables
+@JsonIgnoreProperties(value={"posts", "role", "friendOf", "friends"})
 @Entity
 @Table(name = "USERS")
 /* This is where you create variables for your class,
@@ -68,11 +70,41 @@ public class User implements Serializable {
     // A list of roles
     private List<Role> role;
 
+    @ManyToMany
+    @JoinTable(name="friends",
+            joinColumns=@JoinColumn(name="person_id"),
+            inverseJoinColumns=@JoinColumn(name="friend_id")
+    )
+    private List<User> friends;
+
+    @ManyToMany
+    @JoinTable(name="friends",
+            joinColumns=@JoinColumn(name="friend_id"),
+            inverseJoinColumns=@JoinColumn(name="person_id")
+    )
+    private List<User> friendOf;
+
     /* getters & setters act as encapsulation (the aim is to make sure
     that sensitive data is hidden from users. To achieve this you:
         - declare class variable as private;
         - create public get & set methods to access the value;
      */
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
+    }
+
+    public List<User> getFriendOf() {
+        return friendOf;
+    }
+
+    public void setFriendOf(List<User> friendOf) {
+        this.friendOf = friendOf;
+    }
 
     public String getEmail() {
         return email;

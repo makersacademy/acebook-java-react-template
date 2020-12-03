@@ -15,8 +15,10 @@ class Users extends Component {
       search: ""
     }
     this.getUsers = this.getUsers.bind(this);
-    this.getFriends = this.getFriends.bind(this);
     this.onSearch = this.onSearch.bind(this);
+    this.checkFriend = this.checkFriend.bind(this);
+    this.addFriend = this.addFriend.bind(this);
+    this.deleteFriend = this.deleteFriend.bind(this);
   }
 
   componentDidMount() {
@@ -24,18 +26,15 @@ class Users extends Component {
   }
 
   getUsers() {
-    client({method: 'GET', path: '/api/users'}).then(response => {
-      console.log(response);
+    client({method: 'GET', path: '/users'}).then(response => {
+      let users = response.entity
+      users = users.filter(user => {
+        return user.id != this.props.user.id;
+      })
       this.setState({
-        users: response.entity._embedded.users,
-        displayedUsers: response.entity._embedded.users,
+        users: users,
+        displayedUsers: users,
         loaded: true});
-    });
-  }
-
-  getFriends() {
-    client({method: 'GET', path: '/users/'}).then(response => {
-      console.log(response);
     });
   }
 
@@ -62,6 +61,36 @@ class Users extends Component {
     });
   }
 
+  checkFriend(user) {
+    let isFriend = false;
+    this.props.user.friends.forEach(friend => {
+      if(friend.id == user.id) {
+        isFriend = true;
+      }
+    })
+    return isFriend;
+  }
+
+  addFriend(friend) {
+    client({method: 'POST',
+      path: '/friends',
+      entity: {"person_id": this.props.user.id, "friend_id": friend.id },
+      headers: {"Content-Type": "application/json"}
+    }).then(response => {
+      this.props.getCurrentUser();
+    })
+  }
+
+  deleteFriend(friend) {
+    client({method: 'POST',
+      path: '/delete-friends',
+      entity: {"person_id": this.props.user.id, "friend_id": friend.id },
+      headers: {"Content-Type": "application/json"}
+    }).then(response => {
+      this.props.getCurrentUser();
+    })
+  }
+
   render() {
     let users = <Spinner />
 
@@ -70,6 +99,9 @@ class Users extends Component {
         return <User
             key={user.id}
             user={user}
+            friend={this.checkFriend(user)}
+            addFriend={() => this.addFriend(user)}
+            deleteFriend={() => this.deleteFriend(user)}
             />
       });
     }
@@ -79,8 +111,6 @@ class Users extends Component {
             <input type="text" value={this.state.search} onChange={(event) => this.inputChangeHandler(event)}/>
             <Button btnType="Success">Search</Button>
           </form>
-          <Button btnType="Success" clicked={this.getFriends}>Test Friends</Button>
-          <p>There are {this.state.users.length} users in the database.</p>
           {users}
         </Aux>
     )

@@ -4,6 +4,7 @@
   "description": "A template project for spring boot/react.js",
   "main": "index.js",
   "dependencies": {
+    "moment": "^2.29.1",
     "react": "^16.14.0",
     "react-dom": "^16.4.0",
     "react-router-dom": "^5.2.0",

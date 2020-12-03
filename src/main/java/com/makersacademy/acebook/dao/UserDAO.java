@@ -3,6 +3,9 @@ package com.makersacademy.acebook.dao;
 import com.makersacademy.acebook.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 /* JpaRepository & CrudRepository are the same thing except Jpa
 has extended functionality. Google for more info.
 
@@ -19,6 +22,7 @@ CMD + click opens up all the methods added by JpaRepository
 public interface UserDAO extends JpaRepository<User, Long> {
 
     User findByEmail(String email);
+
 }
 
 /* UserDAO extends the JpaRepository interface. The type of entity and ID

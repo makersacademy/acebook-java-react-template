@@ -1,8 +1,10 @@
 import React from 'react';
+import moment from 'moment';
 import Button from "../UI/Button/Button";
 import Comment from "../Comments/Comment";
 import Aux from "../../hoc/Aux/Aux";
 import Comments from "../Comments/Comments";
+
 
 const Post = (props) => {
 	let comments = null;
@@ -14,12 +16,14 @@ const Post = (props) => {
 									updateComments={props.updateComments}
 		/>
 	}
+	let date = new Date(props.post.created_at);
+	let formattedDate = moment(date).fromNow();
 
 	return (
 			<Aux>
 		<div className='post-main'>
 			<div className="post-author">
-				{`By: ${props.post.user.firstName} ${props.post.user.lastName}`}
+				<span>{`By: ${props.post.user.firstName} ${props.post.user.lastName}`}</span><span>{formattedDate}</span>
 			</div>
 			<div className='post-content'>
 				{props.post.content}
@@ -28,8 +32,7 @@ const Post = (props) => {
 				<Button btnType="Danger" clicked={props.deletePost}>Delete</Button>
 				<Button
 						btnType="Success"
-						clicked={props.showComments}
-						disabled={props.comments.length == 0}>
+						clicked={props.showComments}>
 					{props.displayComments ? "Hide Comments" : `Show Comments (${props.comments.length})`  }
 				</Button>
 			</div>

@@ -1,6 +1,7 @@
 package com.makersacademy.acebook.model;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 @Entity
 @Table(name = "POSTS")
@@ -11,15 +12,13 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
-
-
+    private Instant created_at;
 
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
     public Post() {}
-
 
 
     public Post(String content) {
@@ -48,6 +47,14 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Instant getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Instant created_at) {
+        this.created_at = created_at;
     }
 
     @Override
