@@ -8,7 +8,8 @@
     <title>Acebook | Sign Up</title>
 </head>
 <body>
-<div class="signup-card">
+<div class="card">
+    <div class="form-container">
     <h1>Sign Up to Acebook!</h1><br>
     <form th:action="@{/register}" th:object="${users}" method="post">
         <input type="text" class="form-control" placeholder="First Name" id="firstName" th:field="*{firstName}"><br><br>
@@ -21,6 +22,7 @@
     <form action="/login">
         <input type="submit" id="login-btn" value="Log In" />
     </form>
+    </div>
 </div>
 </body>
 </html>
