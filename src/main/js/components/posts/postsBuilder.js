@@ -15,7 +15,6 @@ class PostsBuilder extends React.Component {
     this.deletePost = this.deletePost.bind(this);
     this.getPosts = this.getPosts.bind(this);
     this.createPost = this.createPost.bind(this);
-    this.createComment = this.createComment.bind(this);
     this.getComments = this.getComments.bind(this);
     this.showComments = this.showComments.bind(this);
     this.updateComments = this.updateComments.bind(this);
@@ -101,22 +100,10 @@ class PostsBuilder extends React.Component {
     })
   }
 
-  createComment(event) {
-      event.preventDefault();
-      client({method: 'POST',
-        path: '/comments',
-        entity: {"content": "test comment", "user_id": this.props.user.id, "post_id": 1 },
-        headers: {"Content-Type": "application/json"}
-      }).then(response => {
-        console.log(response);
-      })
-    }
-
 	render() {
 		return (
 		    <Aux>
           <h3>New Post</h3>
-          <Button btnType="Success" clicked={this.createComment}>Test comment</Button>
           <form onSubmit={this.createPost}>
             <textarea
                 cols="80"
