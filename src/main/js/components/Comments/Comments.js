@@ -57,7 +57,7 @@ class Comments extends Component {
           <h4>New Comment</h4>
           <form onSubmit={this.createComment}>
             <textarea
-                cols="40"
+                cols="50"
                 rows="4"
                 value={this.state.newCommentText}
                 onChange={(event) => this.inputChangeHandler(event)}></textarea>

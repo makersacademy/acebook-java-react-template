@@ -58708,7 +58708,7 @@ var Comments = function (_Component) {
           'form',
           { onSubmit: this.createComment },
           _react2.default.createElement('textarea', {
-            cols: '40',
+            cols: '50',
             rows: '4',
             value: this.state.newCommentText,
             onChange: function onChange(event) {
@@ -59606,7 +59606,7 @@ var PostsBuilder = function (_React$Component) {
     _this.getComments = _this.getComments.bind(_this);
     _this.showComments = _this.showComments.bind(_this);
     _this.updateComments = _this.updateComments.bind(_this);
-    _this.sortPosts = _this.sortPosts.bind(_this);
+    _this.sortByDate = _this.sortByDate.bind(_this);
     return _this;
   }
 
@@ -59625,16 +59625,16 @@ var PostsBuilder = function (_React$Component) {
         _this2.setState({
           posts: []
         });
-        console.log(posts);
-        console.log(_this2.props);
+        //get an array of friend's ids
         var friendIds = [];
         _this2.props.user.friends.forEach(function (friend) {
           friendIds.push(friend.id);
         });
+        //use that array to remove any posts not by the logged in user or their friends
         posts = posts.filter(function (post) {
           return post.user.id === _this2.props.user.id || friendIds.includes(post.user.id);
         });
-        console.log(posts);
+        //find comments for each post we're going to display
         posts.forEach(function (post) {
           _this2.getComments(post);
         });
@@ -59647,14 +59647,15 @@ var PostsBuilder = function (_React$Component) {
       });
     }
   }, {
-    key: 'sortPosts',
-    value: function sortPosts(posts) {
-      var sortedPosts = posts.sort(function (a, b) {
+    key: 'sortByDate',
+    value: function sortByDate(array) {
+      //sort posts, newest first
+      var sortedArray = array.sort(function (a, b) {
         var aDate = new Date(a.created_at);
         var bDate = new Date(b.created_at);
         return bDate - aDate;
       });
-      return sortedPosts;
+      return sortedArray;
     }
   }, {
     key: 'getComments',
@@ -59662,10 +59663,12 @@ var PostsBuilder = function (_React$Component) {
       var _this3 = this;
 
       client({ method: 'GET', path: '/comments/' + post.id }).then(function (response) {
-        post.comments = response.entity;
+        var comments = response.entity;
+        comments = _this3.sortByDate(comments);
+        post.comments = comments;
         var posts = [].concat(_toConsumableArray(_this3.state.posts));
         posts.push(post);
-        var sortedPosts = _this3.sortPosts(posts);
+        var sortedPosts = _this3.sortByDate(posts);
         _this3.setState({
           posts: sortedPosts,
           loaded: true

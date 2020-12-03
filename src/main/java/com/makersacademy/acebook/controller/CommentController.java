@@ -8,6 +8,7 @@ import com.makersacademy.acebook.model.Post;
 import com.makersacademy.acebook.model.User;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.Map;
 import java.util.Optional;
 
@@ -37,6 +38,7 @@ public class CommentController {
     Optional<Post> parentPost = postDAO.findById(Long.parseLong(body.get("post_id").toString()));
     newComment.setUser(author.get());
     newComment.setPost(parentPost.get());
+    newComment.setCreated_at(Instant.now());
     return commentDAO.save(newComment);
   }
 
