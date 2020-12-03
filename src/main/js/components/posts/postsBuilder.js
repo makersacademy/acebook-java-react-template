@@ -19,6 +19,7 @@ class PostsBuilder extends React.Component {
     this.getComments = this.getComments.bind(this);
     this.showComments = this.showComments.bind(this);
     this.updateComments = this.updateComments.bind(this);
+    this.createLike = this.createLike.bind(this);
   }
 
   componentDidMount() {
@@ -112,11 +113,22 @@ class PostsBuilder extends React.Component {
       })
     }
 
+  createLike(event) {
+        event.preventDefault();
+        client({method: 'POST',
+          path: '/likes',
+          entity: {"user_id": this.props.user.id, "post_id": 1 },
+          headers: {"Content-Type": "application/json"}
+        }).then(response => {
+          console.log(response);
+        })
+      }
+
 	render() {
 		return (
 		    <Aux>
           <h3>New Post</h3>
-          <Button btnType="Success" clicked={this.createComment}>Test comment</Button>
+          <Button btnType="Success" clicked={this.createLike}>Test like</Button>
           <form onSubmit={this.createPost}>
             <textarea
                 cols="80"

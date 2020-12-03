@@ -37902,6 +37902,7 @@ var PostsBuilder = function (_React$Component) {
     _this.getComments = _this.getComments.bind(_this);
     _this.showComments = _this.showComments.bind(_this);
     _this.updateComments = _this.updateComments.bind(_this);
+    _this.createLike = _this.createLike.bind(_this);
     return _this;
   }
 
@@ -38018,6 +38019,18 @@ var PostsBuilder = function (_React$Component) {
       });
     }
   }, {
+    key: 'createLike',
+    value: function createLike(event) {
+      event.preventDefault();
+      client({ method: 'POST',
+        path: '/likes',
+        entity: { "user_id": this.props.user.id, "post_id": 1 },
+        headers: { "Content-Type": "application/json" }
+      }).then(function (response) {
+        console.log(response);
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this7 = this;
@@ -38032,8 +38045,8 @@ var PostsBuilder = function (_React$Component) {
         ),
         _react2.default.createElement(
           _Button2.default,
-          { btnType: 'Success', clicked: this.createComment },
-          'Test comment'
+          { btnType: 'Success', clicked: this.createLike },
+          'Test like'
         ),
         _react2.default.createElement(
           'form',
