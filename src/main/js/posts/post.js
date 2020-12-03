@@ -10,6 +10,7 @@ const Post = (props) => {
 			    {props.post.postdate}
 			</div>
         <button id={props.post._links.self.href} onClick={props.handleDelete}>Delete</button>
+        <button onClick={props.update}>Delete</button>
         <h1> {props.post._links.self.href} </h1>
 		</div>
 	)

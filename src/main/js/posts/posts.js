@@ -15,6 +15,10 @@ class Posts extends React.Component {
   		this.props.onDelete(id);
   }
 
+   update() {
+    this
+   }
+
 	render() {
 		return (
       <article className='posts-main'>
@@ -30,7 +34,7 @@ class Posts extends React.Component {
 
   getPosts() {
     return this.props.posts.map(post =>
-			<Post key={post._links.self.href} post={post} handleDelete={this.handleDelete}/>
+			<Post key={post._links.self.href} post={post} handleDelete={this.handleDelete} update={this.update}/>
 
 		);
   }
