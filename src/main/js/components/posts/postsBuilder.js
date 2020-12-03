@@ -20,7 +20,7 @@ class PostsBuilder extends React.Component {
     this.getComments = this.getComments.bind(this);
     this.showComments = this.showComments.bind(this);
     this.updateComments = this.updateComments.bind(this);
-    this.sortPosts = this.sortPosts.bind(this);
+    this.sortByDate = this.sortByDate.bind(this);
   }
 
   componentDidMount() {
@@ -33,13 +33,16 @@ class PostsBuilder extends React.Component {
       this.setState({
         posts: []
       })
+      //get an array of friend's ids
       let friendIds = []
       this.props.user.friends.forEach(friend => {
         friendIds.push(friend.id);
       })
+      //use that array to remove any posts not by the logged in user or their friends
       posts = posts.filter(post => {
         return post.user.id === this.props.user.id || friendIds.includes(post.user.id);
       });
+      //find comments for each post we're going to display
       posts.forEach(post => {
         this.getComments(post);
       })
@@ -52,21 +55,24 @@ class PostsBuilder extends React.Component {
     });
   }
 
-  sortPosts(posts) {
-    let sortedPosts = posts.sort((a, b) => {
+  sortByDate(array) {
+    //sort posts, newest first
+    let sortedArray = array.sort((a, b) => {
       let aDate = new Date(a.created_at);
       let bDate = new Date(b.created_at);
       return bDate - aDate;
     });
-    return sortedPosts;
+    return sortedArray;
   }
 
   getComments(post) {
     client({method: 'GET', path: '/comments/' + post.id}).then(response => {
-      post.comments = response.entity;
+      let comments = response.entity
+      comments = this.sortByDate(comments);
+      post.comments = comments;
       let posts = [...this.state.posts];
       posts.push(post);
-      let sortedPosts = this.sortPosts(posts);
+      let sortedPosts = this.sortByDate(posts);
       this.setState({
         posts: sortedPosts,
         loaded: true
