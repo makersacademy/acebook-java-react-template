@@ -27,6 +27,7 @@ public class SessionController {
     HashMap<String, Object> userMap = new HashMap<>();
     userMap.put("user", user);
     userMap.put("friends", user.getFriends());
+    userMap.put("friendOf", user.getFriendOf());
     //return that object to the frontend
     return userMap;
   }

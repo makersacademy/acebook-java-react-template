@@ -27,7 +27,8 @@ class App extends React.Component {
 			console.log(response);
 			let user = {
 				...response.entity.user,
-				friends: response.entity.friends
+				friends: response.entity.friends,
+				friendOf: response.entity.friendOf
 			}
 			this.setState({
 				user: user,

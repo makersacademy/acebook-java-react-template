@@ -58435,7 +58435,8 @@ var App = function (_React$Component) {
 			(0, _client2.default)({ method: 'GET', path: '/getuser' }).then(function (response) {
 				console.log(response);
 				var user = _extends({}, response.entity.user, {
-					friends: response.entity.friends
+					friends: response.entity.friends,
+					friendOf: response.entity.friendOf
 				});
 				_this2.setState({
 					user: user,
@@ -59092,16 +59093,39 @@ var _Button2 = _interopRequireDefault(_Button);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var User = function User(props) {
-  var controls = _react2.default.createElement(
-    _Button2.default,
-    { btnType: "Success", clicked: props.addFriend },
-    "Add Friend"
-  );
-  if (props.friend) {
+  var controls = null;
+
+  if (props.friendMeWithThem && props.friendThemWithMe) {
+    //if we're friends with each other, show unfriend button
     controls = _react2.default.createElement(
       _Button2.default,
       { btnType: "Danger", clicked: props.deleteFriend },
       "Unfriend"
+    );
+  } else if (props.friendMeWithThem && !props.friendThemWithMe) {
+    //if I'm friends with them but not them with me, show that my friend request has been sent and disable button
+    controls = _react2.default.createElement(
+      _Button2.default,
+      { btnType: "Success", disabled: true },
+      "Request sent"
+    );
+  } else if (!props.friendMeWithThem && props.friendThemWithMe) {
+    //if they're friends with me but not me with them show accept or reject buttons
+    controls = [_react2.default.createElement(
+      _Button2.default,
+      { btnType: "Success", clicked: props.acceptFriend },
+      "Accept"
+    ), _react2.default.createElement(
+      _Button2.default,
+      { btnType: "Danger", clicked: props.rejectFriend },
+      "Reject"
+    )];
+  } else {
+    //if neither are true then we're not friends, show add friend button
+    controls = _react2.default.createElement(
+      _Button2.default,
+      { btnType: "Success", clicked: props.addFriend },
+      "Add Friend"
     );
   }
   return _react2.default.createElement(
@@ -59200,9 +59224,14 @@ var Users = function (_Component) {
     };
     _this.getUsers = _this.getUsers.bind(_this);
     _this.onSearch = _this.onSearch.bind(_this);
-    _this.checkFriend = _this.checkFriend.bind(_this);
+    _this.checkFriendMeWithThem = _this.checkFriendMeWithThem.bind(_this);
+    _this.checkFriendThemWithMe = _this.checkFriendThemWithMe.bind(_this);
     _this.addFriend = _this.addFriend.bind(_this);
     _this.deleteFriend = _this.deleteFriend.bind(_this);
+    _this.getFriendData = _this.getFriendData.bind(_this);
+    _this.acceptFriend = _this.acceptFriend.bind(_this);
+    _this.rejectFriend = _this.rejectFriend.bind(_this);
+
     return _this;
   }
 
@@ -59210,6 +59239,7 @@ var Users = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.getUsers();
+      this.getFriendData();
     }
   }, {
     key: 'getUsers',
@@ -59228,6 +59258,33 @@ var Users = function (_Component) {
       });
     }
   }, {
+    key: 'getFriendData',
+    value: function getFriendData() {
+      var _this3 = this;
+
+      (0, _client2.default)({ method: 'GET', path: '/friends' }).then(function (response) {
+        var friendData = response.entity;
+        friendData = _this3.mapFriendData(friendData);
+        _this3.setState({
+          friendData: friendData
+        });
+      });
+    }
+  }, {
+    key: 'mapFriendData',
+    value: function mapFriendData(data) {
+      data = data.map(function (entry) {
+        return {
+          id: entry[0],
+          person_id: entry[1],
+          friend_id: entry[2],
+          accepted: entry[3]
+        };
+      });
+      console.log(data);
+      return data;
+    }
+  }, {
     key: 'inputChangeHandler',
     value: function inputChangeHandler(event) {
       this.setState({
@@ -59237,7 +59294,7 @@ var Users = function (_Component) {
   }, {
     key: 'onSearch',
     value: function onSearch(event) {
-      var _this3 = this;
+      var _this4 = this;
 
       event.preventDefault();
       if (this.state.search === "") {
@@ -59246,15 +59303,15 @@ var Users = function (_Component) {
       }
       var usersToDisplay = [].concat(_toConsumableArray(this.state.users));
       usersToDisplay = usersToDisplay.filter(function (user) {
-        return user.firstName.toLowerCase().includes(_this3.state.search) || user.lastName.toLowerCase().includes(_this3.state.search) || user.email.toLowerCase().includes(_this3.state.search);
+        return user.firstName.toLowerCase().includes(_this4.state.search) || user.lastName.toLowerCase().includes(_this4.state.search) || user.email.toLowerCase().includes(_this4.state.search);
       });
       this.setState({
         displayedUsers: usersToDisplay
       });
     }
   }, {
-    key: 'checkFriend',
-    value: function checkFriend(user) {
+    key: 'checkFriendMeWithThem',
+    value: function checkFriendMeWithThem(user) {
       var isFriend = false;
       this.props.user.friends.forEach(function (friend) {
         if (friend.id == user.id) {
@@ -59264,25 +59321,23 @@ var Users = function (_Component) {
       return isFriend;
     }
   }, {
-    key: 'addFriend',
-    value: function addFriend(friend) {
-      var _this4 = this;
-
-      (0, _client2.default)({ method: 'POST',
-        path: '/friends',
-        entity: { "person_id": this.props.user.id, "friend_id": friend.id },
-        headers: { "Content-Type": "application/json" }
-      }).then(function (response) {
-        _this4.props.getCurrentUser();
+    key: 'checkFriendThemWithMe',
+    value: function checkFriendThemWithMe(user) {
+      var isFriend = false;
+      this.props.user.friendOf.forEach(function (friend) {
+        if (friend.id == user.id) {
+          isFriend = true;
+        }
       });
+      return isFriend;
     }
   }, {
-    key: 'deleteFriend',
-    value: function deleteFriend(friend) {
+    key: 'addFriend',
+    value: function addFriend(friend) {
       var _this5 = this;
 
       (0, _client2.default)({ method: 'POST',
-        path: '/delete-friends',
+        path: '/friends',
         entity: { "person_id": this.props.user.id, "friend_id": friend.id },
         headers: { "Content-Type": "application/json" }
       }).then(function (response) {
@@ -59290,9 +59345,48 @@ var Users = function (_Component) {
       });
     }
   }, {
+    key: 'deleteFriend',
+    value: function deleteFriend(friend) {
+      var _this6 = this;
+
+      (0, _client2.default)({ method: 'POST',
+        path: '/delete-friends',
+        entity: { "person_id": this.props.user.id, "friend_id": friend.id },
+        headers: { "Content-Type": "application/json" }
+      }).then(function (response) {
+        _this6.props.getCurrentUser();
+      });
+    }
+  }, {
+    key: 'acceptFriend',
+    value: function acceptFriend(friend) {
+      var _this7 = this;
+
+      (0, _client2.default)({ method: 'POST',
+        path: '/accept-friends',
+        entity: { "person_id": this.props.user.id, "friend_id": friend.id },
+        headers: { "Content-Type": "application/json" }
+      }).then(function (response) {
+        _this7.props.getCurrentUser();
+      });
+    }
+  }, {
+    key: 'rejectFriend',
+    value: function rejectFriend(friend) {
+      var _this8 = this;
+
+      (0, _client2.default)({ method: 'POST',
+        path: '/reject-friends',
+        entity: { "person_id": friend.id, "friend_id": this.props.user.id },
+        headers: { "Content-Type": "application/json" }
+      }).then(function (response) {
+        _this8.props.getCurrentUser();
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this6 = this;
+      var _this9 = this;
 
       var users = _react2.default.createElement(_Spinner2.default, null);
 
@@ -59301,12 +59395,19 @@ var Users = function (_Component) {
           return _react2.default.createElement(_User2.default, {
             key: user.id,
             user: user,
-            friend: _this6.checkFriend(user),
+            friendMeWithThem: _this9.checkFriendMeWithThem(user),
+            friendThemWithMe: _this9.checkFriendThemWithMe(user),
+            acceptFriend: function acceptFriend() {
+              return _this9.acceptFriend(user);
+            },
+            rejectFriend: function rejectFriend() {
+              return _this9.rejectFriend(user);
+            },
             addFriend: function addFriend() {
-              return _this6.addFriend(user);
+              return _this9.addFriend(user);
             },
             deleteFriend: function deleteFriend() {
-              return _this6.deleteFriend(user);
+              return _this9.deleteFriend(user);
             }
           });
         });
@@ -59318,7 +59419,7 @@ var Users = function (_Component) {
           'form',
           { onSubmit: this.onSearch },
           _react2.default.createElement('input', { type: 'text', value: this.state.search, onChange: function onChange(event) {
-              return _this6.inputChangeHandler(event);
+              return _this9.inputChangeHandler(event);
             } }),
           _react2.default.createElement(
             _Button2.default,

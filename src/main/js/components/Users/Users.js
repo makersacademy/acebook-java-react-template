@@ -16,13 +16,19 @@ class Users extends Component {
     }
     this.getUsers = this.getUsers.bind(this);
     this.onSearch = this.onSearch.bind(this);
-    this.checkFriend = this.checkFriend.bind(this);
+    this.checkFriendMeWithThem = this.checkFriendMeWithThem.bind(this);
+    this.checkFriendThemWithMe = this.checkFriendThemWithMe.bind(this);
     this.addFriend = this.addFriend.bind(this);
     this.deleteFriend = this.deleteFriend.bind(this);
+    this.getFriendData = this.getFriendData.bind(this);
+    this.acceptFriend = this.acceptFriend.bind(this);
+    this.rejectFriend = this.rejectFriend.bind(this);
+
   }
 
   componentDidMount() {
     this.getUsers();
+    this.getFriendData();
   }
 
   getUsers() {
@@ -36,6 +42,29 @@ class Users extends Component {
         displayedUsers: users,
         loaded: true});
     });
+  }
+
+  getFriendData() {
+    client({method: 'GET', path: '/friends'}).then(response => {
+      let friendData = response.entity
+      friendData = this.mapFriendData(friendData)
+      this.setState({
+        friendData: friendData
+      });
+    })
+  }
+
+  mapFriendData(data) {
+    data = data.map(entry => {
+      return {
+        id: entry[0],
+        person_id: entry[1],
+        friend_id: entry[2],
+        accepted: entry[3]
+      }
+    })
+    console.log(data)
+    return data;
   }
 
   inputChangeHandler(event) {
@@ -61,9 +90,19 @@ class Users extends Component {
     });
   }
 
-  checkFriend(user) {
+  checkFriendMeWithThem(user) {
     let isFriend = false;
     this.props.user.friends.forEach(friend => {
+      if(friend.id == user.id) {
+        isFriend = true;
+      }
+    })
+    return isFriend;
+  }
+
+  checkFriendThemWithMe(user) {
+    let isFriend = false;
+    this.props.user.friendOf.forEach(friend => {
       if(friend.id == user.id) {
         isFriend = true;
       }
@@ -91,6 +130,26 @@ class Users extends Component {
     })
   }
 
+  acceptFriend(friend) {
+    client({method: 'POST',
+      path: '/accept-friends',
+      entity: {"person_id": this.props.user.id, "friend_id": friend.id },
+      headers: {"Content-Type": "application/json"}
+    }).then(response => {
+      this.props.getCurrentUser();
+    })
+  }
+
+  rejectFriend(friend) {
+    client({method: 'POST',
+      path: '/reject-friends',
+      entity: {"person_id": friend.id, "friend_id": this.props.user.id },
+      headers: {"Content-Type": "application/json"}
+    }).then(response => {
+      this.props.getCurrentUser();
+    })
+  }
+
   render() {
     let users = <Spinner />
 
@@ -99,7 +158,10 @@ class Users extends Component {
         return <User
             key={user.id}
             user={user}
-            friend={this.checkFriend(user)}
+            friendMeWithThem={this.checkFriendMeWithThem(user)}
+            friendThemWithMe={this.checkFriendThemWithMe(user)}
+            acceptFriend={() => this.acceptFriend(user)}
+            rejectFriend={() => this.rejectFriend(user)}
             addFriend={() => this.addFriend(user)}
             deleteFriend={() => this.deleteFriend(user)}
             />
