@@ -4,29 +4,60 @@ import React from 'react';
 class PostForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = {
+      value: '',
+      username: '',
+      content: ''
+    };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  handleInputChange(event) {
+    const target = event.target;
+    const name = target.name;
+    // const value = target.value;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleNameChange(event) {
+    this.setState({username: event.target.value});
+  }
+
+  handleContentChange(event) {
+    this.setState({content: event.target.value});
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
+    alert('Your post was submitted, ' + this.state.username);
     event.preventDefault();
-  }
+
+    axios({
+      method: 'post',
+      url: '/api/posts',
+      data: {
+        userName: this.state.username,
+        content: this.state.content,
+        date: 'today biatch!'
+      }
+    });
+  };
+
+
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          Name:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
+          Message:
+           <textarea name="content" placeholder="enter post" onChange={this.handleInputChange} />
+		   <p><input type="text" name="username" placeholder="enter username" onChange={this.handleInputChange} /></p>
         </label>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Post" />
       </form>
     );
   }
