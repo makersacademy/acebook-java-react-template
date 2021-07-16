@@ -59,3 +59,34 @@ Flyway is being used to manage your database migrations. Use the flyway docs to 
 ### CI
 
 - to be configured
+
+### User Stories
+```
+As a user
+So that I can let people know what I'm up to
+I would like to be able to create a post
+```
+
+```
+As a user
+So that I can find out what others are up to
+I would like to be able to see other people's posts
+```
+
+```
+As a user
+So that I can keep people up-to-date
+I would like to be able to edit my posts
+```
+
+```
+As a user
+So that I can manage my digital footprint
+I would like to be able to delete my posts
+```
+
+```
+As a coder of Acebook
+So that I can learn more Java
+I would like to play with some new features that require Java business logic
+```
