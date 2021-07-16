@@ -1,7 +1,7 @@
 import React from 'react';
-const client = require('../client');
 
-class postForm extends React.Component {
+
+class PostForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: ''};
@@ -32,4 +32,4 @@ class postForm extends React.Component {
   }
 }
 
-export default postForm;
+export default PostForm;

@@ -35,7 +35,7 @@ public class Post {
     public void createDateTimeStamp() {
     	DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
     	LocalDateTime now = LocalDateTime.now();  
-    	System.out.println(dateTimeFormatter.format(now));  
+//    	System.out.println(dateTimeFormatter.format(now));  
         
         this.setDate(dateTimeFormatter.format(now));
       }
