@@ -10,7 +10,8 @@ class PostForm extends React.Component {
       content: ''
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleContentChange = this.handleContentChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -54,8 +55,8 @@ class PostForm extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <label>
           Message:
-           <textarea name="content" placeholder="enter post" onChange={this.handleInputChange} />
-		   <p><input type="text" name="username" placeholder="enter username" onChange={this.handleInputChange} /></p>
+           <textarea name="content" placeholder="enter post" onChange={this.handleContentChange} />
+		   <p><input type="text" name="username" placeholder="enter username" onChange={this.handleNameChange} /></p>
         </label>
         <input type="submit" value="Post" />
       </form>
