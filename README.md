@@ -5,8 +5,7 @@ This is a java/springboot and react project to be developed on.
 It uses:
   - `maven` to build the project
   - `webpack` to bundle the javascript
-  - `thymeleaf` to serve `index.html`
-  - `react` to make requests to the api and render the component views
+  - `thymeleaf` for templating
   - `flyway` to manage `postgres` db migrations
 
 ### Card wall
@@ -15,14 +14,19 @@ REPLACE THIS TEXT WITH A LINK TO YOUR CARD WALL
 
 ### Design
 
-This app has a somewhat typical API structure: in this case a springboot API serving data which a react frontend consumes.
+This app uses a structure that is similar to Bookmark Manager. The biggest difference is that here, the repository 
+pattern is used. The repository pattern separates out the business logic of models from the responsibility of 
+connecting to the database and making queries. Take a look in the `src/main/java/repository` and you'll find 
+`PostRepository` which generates and executes queries to CRUD posts.
+
 
 **IMPORTANT:** Test your understanding by diagramming the request/response cycles that occur when you load the app by visiting `localhost:8080`
 
 ### Learning Plan
 
 This project will ultimately be really rewarding if you follow these three points:
-  1. **Work as a team.** Don't be tempted to split up to learn solo. At the very least pair on learning, and share knowledge as a team.
+  1. **Work as a team.** Don't be tempted to split up to learn solo. At the very least pair on learning, and share 
+     knowledge as a team.
   2. As a team, **plan your learning**. There's a ton of new things in this project, purposefully so. That's ok. As always with everything, **take it slowly & in small steps**: ask a coach if you want more ideas how to plan your team learning.
   3. As an individual, **plan your learning**. Use `Diode` to keep yourself focused on setting and achieving your learning goals.
 
@@ -34,13 +38,6 @@ This project will ultimately be really rewarding if you follow these three point
 - Install Maven `brew install maven`
 - Build the app and start the server, using the Maven command `mvn spring-boot:run`
 - Visit `localhost:8080`
-
-- Temporarily, if you want to add some posts you can use `curl` to post data to the API and then refresh the page.
-```
-curl -X POST 'localhost:8080/api/posts' -d '{"content": "Hi, Folks!"}' -H 'Content-Type: application/json'
-```
-
-(At some point a form would be implemented sends data to the API)
 
 ### Database
 
