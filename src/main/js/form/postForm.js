@@ -45,12 +45,14 @@ class PostForm extends React.Component {
       data: {
         userName: this.state.username,
         content: this.state.content,
-        date: 'today biatch!'
+        // date: this.date,
       }
     });
   };
 
-
+  getDate(){
+    
+  };
 
   render() {
     return (
