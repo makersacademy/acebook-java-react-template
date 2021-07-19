@@ -35,7 +35,7 @@ class PostForm extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('In handleSubmit, username: ' + this.state.username + ', content: ' + this.state.content);
+    alert('Your post was submitted, ' + this.state.username);
     event.preventDefault();
 
     axios({
@@ -48,10 +48,11 @@ class PostForm extends React.Component {
         // date: this.date,
       }
     });
+    location.reload();
   };
 
   getDate(){
-    
+
   };
 
   render() {
