@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 
 class PostForm extends React.Component {
@@ -34,12 +35,13 @@ class PostForm extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('Your post was submitted, ' + this.state.username);
+    alert('In handleSubmit, username: ' + this.state.username + ', content: ' + this.state.content);
     event.preventDefault();
 
     axios({
       method: 'post',
       url: '/api/posts',
+      headers: { 'Content-Type': 'application/json' },
       data: {
         userName: this.state.username,
         content: this.state.content,
