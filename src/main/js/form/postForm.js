@@ -37,6 +37,7 @@ class PostForm extends React.Component {
   handleSubmit(event) {
     alert('Your post was submitted, ' + this.state.username);
     event.preventDefault();
+   // const date = this.getDate();
 
     axios({
       method: 'post',
@@ -45,14 +46,20 @@ class PostForm extends React.Component {
       data: {
         userName: this.state.username,
         content: this.state.content,
-        // date: this.date,
+        date: this.getDate()
       }
     });
-    location.reload();
+    setTimeout(location.reload.bind(location), 3000);
   };
 
   getDate(){
-
+    const months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+    const date = new Date();
+    // const mins = date.getMinutes();
+    const mins = `${(date.getMinutes()<10?'0':'')}` + `${date.getMinutes()}`;
+    const today = `${date.getDate()} ${months[date.getMonth()]} at ${date.getHours()}:${mins}`;
+  return today;
+    
   };
 
   render() {

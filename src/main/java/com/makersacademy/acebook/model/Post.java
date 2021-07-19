@@ -30,6 +30,7 @@ public class Post {
         this.setContent(content);
         this.setUserName("TestUser123");
         this.createDateTimeStamp();
+        this.id = null;
     }
     
     public void createDateTimeStamp() {
@@ -63,6 +64,21 @@ public class Post {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	public Long getID() {
+		return id;
+	}
+	
+	public void setID(Long id) {
+		this.id = id;
+	}
+	
+	  @Override
+	  public String toString() {
+	    return String.format(
+	        "Post[id=%d, content='%s', userName='%s']",
+	        id, content, userName);
+	  }
 
 }
 //

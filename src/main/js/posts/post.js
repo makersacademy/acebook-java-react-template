@@ -13,11 +13,21 @@ const Post = (props) => {
 				{props.post.userName}
 				</p>
 				<p>
-				at: {props.post.date}
+					at: {props.post.date}
 				</p>
+				<p>
+					post id: {props.post.id}
+					
+				</p>
+				<p>
+					<a href>Expand</a>
+				</p>				
 			</div>
+			
 		</div>
 	)
 }
+
+
 
 export default Post;
