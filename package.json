@@ -4,6 +4,7 @@
   "description": "A template project for spring boot/react.js",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.21.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "rest": "^2.0.0",

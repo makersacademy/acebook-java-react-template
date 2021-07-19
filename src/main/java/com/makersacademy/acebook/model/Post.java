@@ -1,12 +1,13 @@
 package com.makersacademy.acebook.model;
 
 import javax.persistence.Entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.GenerationType;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;  
+import java.time.LocalDateTime; 
 import java.util.Date;
 
 import lombok.Data;
@@ -26,12 +27,41 @@ public class Post {
     private Post() {}
 
     public Post(String content) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date dateObject = new Date();
-
-        this.content = content;
-        this.userName = "";
-        this.date = dateFormat.format(dateObject);
+        this.setContent(content);
+        this.setUserName("TestUser123");
+        this.createDateTimeStamp();
     }
+    
+    public void createDateTimeStamp() {
+    	DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+    	LocalDateTime now = LocalDateTime.now();  
+//    	System.out.println(dateTimeFormatter.format(now));  
+        
+        this.setDate(dateTimeFormatter.format(now));
+      }
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
 
 }
