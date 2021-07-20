@@ -49,7 +49,7 @@ class PostForm extends React.Component {
         date: this.getDate(),
       }
     });
-    location.reload();
+    setTimeout(location.reload.bind(location), 3000);
   };
 
   getDate(){
@@ -66,7 +66,7 @@ class PostForm extends React.Component {
         <div class="panel profile-info text-center">
           <form onSubmit={this.handleSubmit}>
               <textarea name="content" class="form-control input-lg p-text-area" rows="2" placeholder="What's going on?" onChange={this.handleContentChange}></textarea>
-              <textarea name="username" class="form-control p-text-area" rows="1" placeholder="Username" onChange={this.handleNameChange}></textarea>
+              <input type = 'text' name="username" class="form-control p-text-area" placeholder="Username" onChange={this.handleNameChange} />
               <input type="submit" class="btn btn-info pull-left" value="Post" />
            </form>
         </div>
