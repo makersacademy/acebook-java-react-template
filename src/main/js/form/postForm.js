@@ -61,23 +61,6 @@ class PostForm extends React.Component {
       return today;
   };
 
-  /*render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Message:
-           <textarea name="content" placeholder="enter post" onChange={this.handleContentChange} />
-       <p><input type="text" name="username" placeholder="enter username" onChange={this.handleNameChange} /></p>
-                    
-       <input type="text" name="username" placeholder="Username" onChange={this.handleNameChange} />
-
-        </label>
-        <input type="submit" value="Post" />
-      </form>
-    );
-  }
-}*/
-
   render() {
     return (
         <div class="panel profile-info text-center">
