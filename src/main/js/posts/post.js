@@ -38,9 +38,9 @@ const Post = (props) => {
                   <div class="actions">
 					  <p><a href="#" title="Edit">Edit</a></p>
 					
-					<p><button class='btn btn-secondary' onClick={() => setCount(count + 1)}> &#128077;({count}) </button></p>
-					<p><button class='btn btn-danger' onClick={() => { handleDeleteClick(props.id) }}> Delete </button></p>
-					
+					<p><button class='btn btn-secondary' onClick={() => setCount(count + 1)}> &#128077;({count}) </button>
+					<span> - </span>
+					<button class='btn btn-danger' onClick={() => { handleDeleteClick(props.id) }}> Delete </button></p>			
 					
 
 				  </div>
