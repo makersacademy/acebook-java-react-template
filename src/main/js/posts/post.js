@@ -1,6 +1,8 @@
-import React from 'react';
+ import React, { useState } from 'react'; 
+/* import React from 'react'; */
 
 const Post = (props) => {
+	const [count, setCount] = useState(0); 
 	return (
 		
 	<div class="container">
@@ -16,7 +18,8 @@ const Post = (props) => {
               <div class="status-container border-a">
                   <div class="actions">
 					  <p><a href="#" title="Edit">Edit</a></p>
-                      <p><a href="#" title="Like">Like</a></p>
+					
+					<p><button class='btn-secondary' onClick={() => setCount(count + 1)}> Like ({count}) </button></p>
 				  </div>
 			  </div>
 			   <div class="actions">
@@ -34,3 +37,6 @@ const Post = (props) => {
 }
 
 export default Post;
+
+/*  
+*/

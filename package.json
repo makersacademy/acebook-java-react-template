@@ -6,8 +6,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "eslint": "^7.31.0",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
     "rest": "^2.0.0",
     "webpack": "^4.10.2",
     "webpack-cli": "^2.1.4"
