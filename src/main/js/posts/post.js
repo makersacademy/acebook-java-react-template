@@ -1,6 +1,14 @@
 import React from 'react';
 
+
 const Post = (props) => {
+	 // console.log(props.key)
+	 // console.log(props.post.key)
+	// console.log(props)
+	 // console.log(props.post.id)
+	 //console.log(props.post._links.self.href)
+	 console.log(props.id)
+
 	return (
 		<div className='post-main'>
 			<div className='post-content'>
@@ -16,11 +24,11 @@ const Post = (props) => {
 					at: {props.post.date}
 				</p>
 				<p>
-					post id: {props.post.id}
+					post id: {props.id}
 					
 				</p>
 				<p>
-					<a href>Expand</a>
+				<a href={props.post._links.self.href}>Linky</a>
 				</p>				
 			</div>
 			
