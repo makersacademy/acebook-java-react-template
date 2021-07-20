@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "axios": "^0.21.1",
+    "eslint": "^7.31.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "rest": "^2.0.0",
