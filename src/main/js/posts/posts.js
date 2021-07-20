@@ -10,14 +10,15 @@ class Posts extends React.Component {
 
 	render() {
 		return (
+      <div class="row">
       <article className='posts-main'>
         <h1 className='posts-title'>
-          Posts
         </h1>
   			<div className='posts-items'>
   				{this.getPosts()}
   			</div>
       </article>
+    </div>
 		)
 	}
 
