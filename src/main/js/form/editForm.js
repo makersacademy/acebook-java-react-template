@@ -6,9 +6,9 @@ class EditForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: {props.post.content},
-      username: {props.post.userName},
-      content: {props.post.content}
+      // value: {props.post.content},
+      // username: {props.post.userName},
+      // content: {props.post.content}
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);

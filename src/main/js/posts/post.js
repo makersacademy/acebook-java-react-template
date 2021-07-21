@@ -1,5 +1,6 @@
  import React, { useState } from 'react';
  import axios from 'axios';
+ // import EditForm from '../form/editForm';
  import PostForm from '../form/postForm';
 
 
@@ -15,7 +16,23 @@ const handleDeleteClick = (id) => {
 	setTimeout(location.reload.bind(location), 3000);
 }
 
+const handleSubmit = (event) => {
+  alert('Your post was updated, ' + this.state.username);
+  event.preventDefault();
 
+  axios({
+    method: 'put',
+    url: `/api/posts/${props.id}`,
+    headers: { 'Content-Type': 'application/json' },
+    data: {
+      userName: this.state.username,
+      content: this.state.content,
+      id: this.state.id,
+      date: this.getDate(),
+    }
+  });
+  setTimeout(location.reload.bind(location), 3000);
+};
 
 
 const Post = (props) => {
@@ -32,7 +49,23 @@ const Post = (props) => {
 
   const EditForm = () => <div><PostForm /></div>;
 
+  const InLineEditForm = () =>
+  <div>
+    <div class="panel profile-info text-center">
+      <form >
+          <textarea name="content" class="form-control input-lg p-text-area" rows="2" value={props.post.content}></textarea>
+          <button class='btn btn-danger' onClick={onEditBtnClick}> Cancel </button>
+          <span>        </span>
+          <input type="submit" class="btn btn-success" value="Update" />
 
+       </form>
+    </div>
+  </div>;
+
+  const TestEditForm = () =>
+    <div>
+      testing working
+    </div>;
 
 	return (
 
@@ -69,7 +102,7 @@ const Post = (props) => {
   					</p>
 				  </div>
           <div>
-            {showEditForm ? <EditForm /> : null}
+            {showEditForm ? <InLineEditForm /> : null}
           </div>
 		  </div>
 		</div>
