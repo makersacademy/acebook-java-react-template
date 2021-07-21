@@ -18,10 +18,6 @@ const handleDeleteClick = (id) => {
 }
 
 
-
-
-
-
 const Post = (props) => {
 	const [count, setCount] = useState(0);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -42,14 +38,14 @@ const Post = (props) => {
       // setNewContent(event.target.value);
       // console.log(updatedContent);
       tempContent = event.target.value;
-      console.log('in handle' + tempContent);
+      // console.log('in handle' + tempContent);
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(tempContent);
-    setNewContent(tempContent);
-    console.log(updatedContent);
+    // console.log(tempContent);
+    // setNewContent(tempContent);
+    // console.log(updatedContent);
     alert('Your post was updated');
 
 
