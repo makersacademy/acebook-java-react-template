@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>Acebook</title>
+    <link rel="stylesheet" href="/main.css" />
+</head>
+<body>
+
+<form action="http://localhost:8080/api/posts" method="POST">
+    <input type="text" name="content"/>
+    <input type="submit"/>
+</form>
+
+<div th:each="post : ${posts}">
+    <p th:text="${post.content}"></p>
+</div>
+
+    <script src="built/bundle.js"></script>
+
+</body>
+</html>
