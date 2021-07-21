@@ -1,7 +1,8 @@
  import React, { useState } from 'react';
  import axios from 'axios';
  // import EditForm from '../form/editForm';
- import PostForm from '../form/postForm';
+ // import PostForm from '../form/postForm';
+ import GetDate from '../form/getDate';
 
 
 const deletePost = (id) => {
@@ -16,28 +17,16 @@ const handleDeleteClick = (id) => {
 	setTimeout(location.reload.bind(location), 3000);
 }
 
-const handleSubmit = (event) => {
-  alert('Your post was updated, ' + this.state.username);
-  event.preventDefault();
 
-  axios({
-    method: 'put',
-    url: `/api/posts/${props.id}`,
-    headers: { 'Content-Type': 'application/json' },
-    data: {
-      userName: this.state.username,
-      content: this.state.content,
-      id: this.state.id,
-      date: this.getDate(),
-    }
-  });
-  setTimeout(location.reload.bind(location), 3000);
-};
+
+
 
 
 const Post = (props) => {
 	const [count, setCount] = useState(0);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [updatedContent, setNewContent] = useState(props.post.content);
+  let tempContent = '';
 
   const onEditBtnClick = () => {
     if (showEditForm === false) {
@@ -47,25 +36,52 @@ const Post = (props) => {
     };
   };
 
-  const EditForm = () => <div><PostForm /></div>;
+
+  const handleContentChange = (event) => {
+      // console.log(event.target.value);
+      // setNewContent(event.target.value);
+      // console.log(updatedContent);
+      tempContent = event.target.value;
+      console.log('in handle' + tempContent);
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(tempContent);
+    setNewContent(tempContent);
+    console.log(updatedContent);
+    alert('Your post was updated');
+
+
+    axios({
+      method: 'put',
+      url: `/api/posts/${props.id}`,
+      headers: { 'Content-Type': 'application/json' },
+      data: {
+        userName: props.post.userName,
+        content: tempContent,
+        id: props.id,
+        date: `updated ${GetDate.getDate()}`,
+      }
+    });
+    setTimeout(location.reload.bind(location), 3000);
+  };
+
+  // const EditForm = () => <div><PostForm /></div>;
 
   const InLineEditForm = () =>
   <div>
     <div class="panel profile-info text-center">
-      <form >
-          <textarea name="content" class="form-control input-lg p-text-area" rows="2" value={props.post.content}></textarea>
+      <form onSubmit={handleSubmit}>
+          <textarea name="content" class="form-control input-lg p-text-area" rows="2" defaultValue={updatedContent} onChange={handleContentChange} autoFocus></textarea>
           <button class='btn btn-danger' onClick={onEditBtnClick}> Cancel </button>
           <span>        </span>
           <input type="submit" class="btn btn-success" value="Update" />
-
        </form>
     </div>
   </div>;
 
-  const TestEditForm = () =>
-    <div>
-      testing working
-    </div>;
+// Return output below
 
 	return (
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import GetDate from './getDate';
 
 
 class PostForm extends React.Component {
@@ -46,20 +47,12 @@ class PostForm extends React.Component {
         userName: this.state.username,
         content: this.state.content,
         id: this.state.id,
-        date: this.getDate(),
+        date: `posted ${GetDate.getDate()}`,
       }
     });
     setTimeout(location.reload.bind(location), 3000);
   };
 
-  getDate(){
-      const months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-      const date = new Date();
-      const mins = `${(date.getMinutes()<10?'0':'')}` + `${date.getMinutes()}`;
-      const today = `${date.getDate()} ${months[date.getMonth()]} at ${date.getHours()}:${mins}`;
-
-      return today;
-  };
 
   render() {
     return (
