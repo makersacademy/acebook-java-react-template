@@ -22,7 +22,7 @@ public class PostsController {
         Iterable<Post> posts = repository.findAll();
         model.addAttribute("posts", posts);
         model.addAttribute("post", new Post());
-        return "index";
+        return "posts/index";
     }
 
     @PostMapping("/posts")
