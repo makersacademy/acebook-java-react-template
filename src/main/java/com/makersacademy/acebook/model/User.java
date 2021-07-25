@@ -21,17 +21,17 @@ public class User {
     private String password;
     private boolean enabled;
 
-    public User() {}
+    public User() {
+        this.enabled = TRUE;
+    }
 
     public User(String username, String password) {
-        System.out.println("CREATING A USER: 27");
         this.username = username;
         this.password = password;
         this.enabled = TRUE;
     }
 
     public User(String username, String password, boolean enabled) {
-        System.out.println("CREATING A USER: 34");
         this.username = username;
         this.password = password;
         this.enabled = enabled;

@@ -6,6 +6,7 @@ import com.makersacademy.acebook.repository.AuthoritiesRepository;
 import com.makersacademy.acebook.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,20 +21,16 @@ public class UsersController {
     AuthoritiesRepository authoritiesRepository;
 
     @GetMapping("/users/new")
-    public String signup() {
+    public String signup(Model model) {
+        model.addAttribute("user", new User());
         return "users/new";
     }
 
     @PostMapping("/users")
     public RedirectView signup(@ModelAttribute User user) {
-        System.out.println("about to save user");
         userRepository.save(user);
-        System.out.println("user saved");
         Authority authority = new Authority(user.getUsername(), "ROLE_USER");
-        System.out.println("about to save auth");
         authoritiesRepository.save(authority);
-        System.out.println("auth saved");
-        System.out.println("redirecting");
         return new RedirectView("/login");
     }
 }
