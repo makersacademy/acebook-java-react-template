@@ -33,6 +33,10 @@
 		       <id>projectlombok.org</id>
 		       <url>https://projectlombok.org/edge-releases</url>
 	     </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -45,41 +49,52 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
-      			<groupId>org.springframework.boot</groupId>
-      			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-    		</dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
-    		<dependency>
-      			<groupId>org.springframework.boot</groupId>
-      			<artifactId>spring-boot-starter-data-jpa</artifactId>
-    		</dependency>
-    		<dependency>
-      			<groupId>org.springframework.boot</groupId>
-      			<artifactId>spring-boot-starter-data-rest</artifactId>
-    		</dependency>
-    		<dependency>
-      			<groupId>org.springframework.boot</groupId>
-      			<artifactId>spring-boot-devtools</artifactId>
-    		</dependency>
         <dependency>
-		        <groupId>org.projectlombok</groupId>
-		        <artifactId>lombok</artifactId>
-		        <version>edge-SNAPSHOT</version>
-		        <scope>provided</scope>
-	      </dependency>
-    		<dependency>
-      			<groupId>com.h2database</groupId>
-      			<artifactId>h2</artifactId>
-      			<scope>runtime</scope>
-    		</dependency>
-    		<dependency>
-      			<groupId>org.springframework.boot</groupId>
-      			<artifactId>spring-boot-starter-test</artifactId>
-      			<scope>test</scope>
-    		</dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>edge-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>0.15</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
