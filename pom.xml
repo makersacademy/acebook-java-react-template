@@ -14,22 +14,13 @@
     </properties>
 
     <build>
-         <plugins>
-             <plugin>
-                 <groupId>org.springframework.boot</groupId>
-                 <artifactId>spring-boot-maven-plugin</artifactId>
-             </plugin>
-
-             <plugin>
-                 <groupId>com.github.eirslett</groupId>
-                 <artifactId>frontend-maven-plugin</artifactId>
-                 <version>1.2</version>
-                 <configuration>
-              	    <installDirectory>target</installDirectory>
-                 </configuration>
-              </plugin>
-         </plugins>
-     </build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -57,6 +48,10 @@
       			<groupId>org.springframework.boot</groupId>
       			<artifactId>spring-boot-starter-thymeleaf</artifactId>
     		</dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+        </dependency>
     		<dependency>
       			<groupId>org.springframework.boot</groupId>
       			<artifactId>spring-boot-starter-data-jpa</artifactId>
