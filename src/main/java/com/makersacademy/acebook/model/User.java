@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 
 import lombok.Data;
 
+import static java.lang.Boolean.TRUE;
+
 @Data
 @Entity
 @Table(name = "USERS")
@@ -16,15 +18,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
-    private String email;
     private String password;
+    private boolean enabled;
 
     public User() {}
 
-    public User(String username, String email, String password) {
+    public User(String username, String password) {
+        System.out.println("CREATING A USER: 27");
         this.username = username;
-        this.email = email;
         this.password = password;
+        this.enabled = TRUE;
     }
 
+    public User(String username, String password, boolean enabled) {
+        System.out.println("CREATING A USER: 34");
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+    }
 }
