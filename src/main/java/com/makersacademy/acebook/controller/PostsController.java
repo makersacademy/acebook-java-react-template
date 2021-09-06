@@ -30,4 +30,10 @@ public class PostsController {
         repository.save(post);
         return new RedirectView("/posts");
     }
+
+    @DeleteMapping("/posts/delete")
+    public RedirectView delete(@ModelAttribute Post post) {
+        repository.deleteById(post.getId());
+        return new RedirectView("/posts");
+    }
 }
