@@ -32,8 +32,8 @@ public class PostsController {
     }
 
     @DeleteMapping("/posts/delete")
-    public RedirectView delete(@ModelAttribute Post post) {
-        repository.deleteById(post.getId());
+    public RedirectView delete(@RequestParam long id) {
+        repository.deleteById(id);
         return new RedirectView("/posts");
     }
 }

@@ -19,11 +19,13 @@
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 
-    <ul th:each="post: ${posts}" th:object="${post}">
+    <ul th:each="post: ${posts}">
         <li>
             <p th:text="${post.content}">
-            <form action="#" th:action="@{/posts/delete/${post.id}" method="post">
-                <input type="submit" value="Delete" id="${post.id}"/> </p>
+            <form action="#" th:action="@{/posts/delete}" method="post">
+                <input type="hidden" name="_method" value="delete">
+                <input type="hidden" th:name="id" th:value="${post.id}">
+                <input type="submit" value="Delete" th:id="${post.id}"/> </p>
             </form>
         </li>
     </ul>
