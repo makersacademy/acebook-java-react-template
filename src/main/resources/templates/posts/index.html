@@ -10,7 +10,7 @@
 
     <h1>Posts</h1>
 
-    <div sec:authorize="isAuthenticated()">
+    <div sec:authorize="isAuthenticated()" id="welcome-message">
         Signed in as <span sec:authentication="name"></span>
     </div>
 
@@ -20,7 +20,14 @@
     </form>
 
     <ul th:each="post: ${posts}">
-        <li th:text="${post.content}" />
+        <li>
+            <p th:text="${post.content}">
+            <form action="#" th:action="@{/posts/delete}" method="post">
+                <input type="hidden" name="_method" value="delete">
+                <input type="hidden" th:name="id" th:value="${post.id}">
+                <input type="submit" value="Delete" th:id="${post.id}"/> </p>
+            </form>
+        </li>
     </ul>
 
     </body>

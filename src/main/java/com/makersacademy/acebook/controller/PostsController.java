@@ -30,4 +30,10 @@ public class PostsController {
         repository.save(post);
         return new RedirectView("/posts");
     }
+
+    @DeleteMapping("/posts/delete")
+    public RedirectView delete(@RequestParam long id) {
+        repository.deleteById(id);
+        return new RedirectView("/posts");
+    }
 }
