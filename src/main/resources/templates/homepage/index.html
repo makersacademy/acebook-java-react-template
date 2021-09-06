@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+</head>
+<body>
+  <h1>Welcome to Acebook!</h1>
+
+  <form action="#" th:action="@{/login}" method="get">
+      <input type="submit" value="Login!">
+  </form>
+  <br>
+  <form action="#" th:action="@{/users/new}" method="get">
+      <input type="submit" value="Sign up!">
+  </form>
+</body>
+</html>
