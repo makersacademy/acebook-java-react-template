@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 @Data
 @Entity
 @Table(name = "POSTS")
@@ -23,5 +26,4 @@ public class Post {
     public Post(String content) {
         this.content = content;
     }
-
 }
