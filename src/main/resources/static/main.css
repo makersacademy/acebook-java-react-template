@@ -8,3 +8,47 @@
     text-align: left;
     margin-bottom: 0.5rem;;
 }
+
+button {
+    border: none;
+    background: none;
+    color: inherit;
+    outline: inherit;
+    cursor: inherit;
+    font: inherit;
+    padding: 0;
+}
+
+.link-muted {
+    color: #aaa;
+}
+
+.link-muted:hover {
+    text-decoration: none;
+    color: #1266f1;
+
+}
+
+.inputButtons {
+    padding: 4px;
+    margin-top: 5px;
+    text-align: left;
+    justify-content: end;
+    padding-left: 0.5px;
+
+}
+a {
+    text-decoration: none;
+}
+
+ul {
+    padding-left: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+.profileImage {
+    border-radius: 50%;
+}
