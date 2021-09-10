@@ -52,3 +52,11 @@ li {
 .profileImage {
     border-radius: 50%;
 }
+.jumbotron {
+    padding: 10px;
+
+}
+
+.signUpForm{
+    padding: 15px;
+}
